@@ -11,10 +11,11 @@ Projeto do Grupo 3 da disciplina de Resolução de Problemas IV - UNIPAMPA/RS
 ## Roadmap
 
 - [x] Elicitação dos Requisitos
-
-- [ ] Prototipação de Alta Fidelidade das Telas
-
-
+- [ ] Especificação dos Requisitos
+- [ ] Diagramas
+- [ ] Requisitos Específicos
+- [ ] Protótipos
+- [ ] Matriz de Rastreabilidade
 
 ## Autores
 
