@@ -6,16 +6,25 @@
 
 Projeto do Grupo 3 da disciplina de Resolução de Problemas IV - UNIPAMPA/RS
 
-- **Sistema para Controle de Investimentos Digitais na Bolsa de Valores**
+- **Sistema Web para Controle de Investimentos Digitais na Bolsa de Valores**
 
 ## Roadmap
 
-- [x] Elicitação dos Requisitos
-- [ ] Especificação dos Requisitos
-- [ ] Diagramas
-- [ ] Requisitos Específicos
-- [ ] Protótipos
-- [ ] Matriz de Rastreabilidade
+- **Elicitação dos Requisitos:**
+    - [ ] Especificação dos Requisitos
+    - [ ] Diagramas
+    - [ ] Requisitos Específicos
+    - [ ] Protótipos
+    - [ ] Matriz de Rastreabilidade
+
+- **Processo de Desenvolvimento:**
+    - [ ] Template SpringBoot MVC
+
+- **Verificação e Validação:**
+    - [ ] Casos de Teste
+    - [ ] Testes Unitários
+    - [ ] Testes de Integração
+    - [ ] Teste de Sistema
 
 ## Autores
 
@@ -26,7 +35,6 @@ Projeto do Grupo 3 da disciplina de Resolução de Problemas IV - UNIPAMPA/RS
 
 ## Referência
 
- - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
+ - [Engenharia de Software Moderna - Marco Túlio Valente](https://awesomeopensource.com/project/elangosundar/awesome-README-templates](https://engsoftmoderna.info/cap1.html)https://engsoftmoderna.info/cap1.html)
+
 
