@@ -26,6 +26,15 @@ Projeto do Grupo 3 da disciplina de Resolução de Problemas IV - UNIPAMPA/RS
     - [ ] Testes de Integração
     - [ ] Teste de Sistema
 
+## Tecnologias Usadas
+    - Java
+    - Springboot
+    - Thymeleaf
+    - Html
+    - Css
+    - Bootstrap
+    - Postgresql
+
 ## Autores
 
 - [@Felipe Cardoso](https://www.github.com/FCardozera)
