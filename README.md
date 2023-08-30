@@ -29,6 +29,7 @@ Projeto do Grupo 3 da disciplina de Resolução de Problemas IV - UNIPAMPA/RS
 ## Tecnologias Usadas
 * Java
 * Springboot
+* JPA
 * Thymeleaf
 * Html
 * Css
