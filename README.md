@@ -27,13 +27,13 @@ Projeto do Grupo 3 da disciplina de Resolução de Problemas IV - UNIPAMPA/RS
     - [ ] Teste de Sistema
 
 ## Tecnologias Usadas
-    - Java
-    - Springboot
-    - Thymeleaf
-    - Html
-    - Css
-    - Bootstrap
-    - Postgresql
+* Java
+* Springboot
+* Thymeleaf
+* Html
+* Css
+* Bootstrap
+* Postgresql
 
 ## Autores
 
