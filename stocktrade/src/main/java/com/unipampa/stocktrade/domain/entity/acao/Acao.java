@@ -26,6 +26,6 @@ public class Acao {
 
     private String sigla;
 
-    private double valor;
+    private Double valor;
 
 }
