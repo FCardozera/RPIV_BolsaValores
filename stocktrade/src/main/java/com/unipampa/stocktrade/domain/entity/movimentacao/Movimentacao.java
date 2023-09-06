@@ -2,6 +2,8 @@ package com.unipampa.stocktrade.domain.entity.movimentacao;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.UUID;
+
 import com.unipampa.stocktrade.domain.entity.movimentacao.enums.TipoMovimentacao;
 import com.unipampa.stocktrade.domain.entity.usuario.cliente.Cliente;
 
@@ -28,8 +30,8 @@ public class Movimentacao implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private Double valor;
 

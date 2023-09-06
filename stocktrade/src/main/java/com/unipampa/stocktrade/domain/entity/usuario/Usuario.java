@@ -1,6 +1,7 @@
 package com.unipampa.stocktrade.domain.entity.usuario;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Column;
@@ -26,8 +27,8 @@ public abstract class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(unique = true)
     private String email;
