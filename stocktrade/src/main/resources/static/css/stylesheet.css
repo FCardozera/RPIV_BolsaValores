@@ -39,10 +39,29 @@
 
 /* CSS */
 
+
+
 body {
   background-color: #010725;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .botao1 {
   background-color: #0328EE;
+  border-radius: 20px;
+  border-style: none;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  transition: background-color 0.3s;
+}
+
+.botao1:hover {
+  background-color: #031FB4;
+}
+
+
+.text-color-white{
+color: #fff;
 }

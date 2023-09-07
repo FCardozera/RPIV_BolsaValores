@@ -40,9 +40,13 @@
 
     <!-- Custom styles for this template -->
     <link href="..//static/css/stylesheet.css" rel="stylesheet" />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap");
+    </style>
   </head>
   <body>
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+    <svg xmlns="../static/images/logo-bg-off.png" style="display: none">
       <symbol id="bootstrap" viewBox="0 0 118 94">
         <title>Bootstrap</title>
         <path
@@ -84,12 +88,13 @@
       </symbol>
     </svg>
 
+
     <main>
       <div class="container">
         <header
-          class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4"
         >
-          <a
+          <!-- <a
             href="/"
             class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
           >
@@ -102,22 +107,26 @@
             >
               <use xlink:href="#bootstrap" />
             </svg>
-          </a>
+          </a> -->
+
+          <img src="../static/images/logo-bg-off.png" alt="Logo" class="logo" />
 
           <ul
             class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
           >
-            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Invista</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Sobre</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Contato</a></li>
+            <li><a href="#" class="nav-link px-2 link-secondary text-color-white">Home</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark text-color-white">Invista</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark text-color-white">Sobre</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark text-color-white">Contato</a></li>
           </ul>
 
           <div class="col-md-3 text-end">
             <button type="button" class="btn btn-outline-primary me-2 botao1">
               Login
             </button>
-            <button type="button" class="btn btn-primary">Cadastre-se</button>
+            <button type="button" class="btn btn-primary botao1">
+              Cadastre-se
+            </button>
           </div>
         </header>
       </div>
