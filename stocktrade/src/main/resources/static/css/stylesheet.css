@@ -1,50 +1,40 @@
-/* Headers CSS */
-
-.b-example-divider {
-  height: 3rem;
-  background-color: rgba(0, 0, 0, 0.1);
-  border: solid rgba(0, 0, 0, 0.15);
-  border-width: 1px 0;
-  box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1),
-    inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
-}
-
-.form-control-dark {
-  color: #fff;
-  background-color: var(--bs-dark);
-  border-color: var(--bs-gray);
-}
-.form-control-dark:focus {
-  color: #fff;
-  background-color: var(--bs-dark);
-  border-color: #fff;
-  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
-}
-
-.bi {
-  vertical-align: -0.125em;
-  fill: currentColor;
-}
-
-.text-small {
-  font-size: 85%;
-}
-
-.dropdown-toggle {
-  outline: 0;
-}
-
-
-
-
 /* CSS */
-
-
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap");
 
 body {
   background-color: #010725;
   color: #fff;
   font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+}
+
+.smaller-logo {
+  max-width: 15%;
+  height: auto;
+}
+
+.xsmaller-logo {
+  max-width: 10%;
+  height: auto;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.move-left {
+  margin-right: auto !important;
+}
+
+.no-flex-wrap {
+  flex-wrap: nowrap !important;
+}
+
+.nav li a.nav-link:hover {
+  /* color: #0328EE !important; */
+  text-decoration: underline;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
 .botao1 {
@@ -55,13 +45,31 @@ body {
   text-transform: uppercase;
   padding: 15px 30px;
   transition: background-color 0.3s;
+  font-size: 16px;
 }
 
 .botao1:hover {
   background-color: #031FB4;
 }
 
+.texts{
+  padding-left: 12rem!important;
+  padding-top: 9rem!important;
+}
 
-.text-color-white{
-color: #fff;
+.h1{
+  font-size: 80px;
+}
+
+.max-width-600px {
+  max-width: 600px;
+}
+
+.max-width-500px {
+  max-width: 500px;
+}
+
+footer{
+  background-color: #010D50;
+
 }

@@ -4,11 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
-    <meta
-      name="author"
-      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
-    />
-    <meta name="generator" content="Hugo 0.84.0" />
+
     <title>StockTrade</title>
 
     <link
@@ -41,9 +37,11 @@
     <!-- Custom styles for this template -->
     <link href="..//static/css/stylesheet.css" rel="stylesheet" />
 
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap");
-    </style>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../static/images/only-logo-bg-off.png"
+    />
   </head>
   <body>
     <svg xmlns="../static/images/logo-bg-off.png" style="display: none">
@@ -88,40 +86,51 @@
       </symbol>
     </svg>
 
-
     <main>
-      <div class="container">
+      <div class="container-fluid pt-3">
         <header
-          class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4"
+          class="d-flex align-items-center justify-content-between py-3 mb-4 no-flex-wrap mx-5"
         >
-          <!-- <a
-            href="/"
-            class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
-          >
-            <svg
-              class="bi me-2"
-              width="40"
-              height="32"
-              role="img"
-              aria-label="Bootstrap"
-            >
-              <use xlink:href="#bootstrap" />
-            </svg>
-          </a> -->
+          <!-- logo -->
+          <img
+            src="../static/images/logo-bg-off.png"
+            alt="Logo"
+            class="img-fluid logo smaller-logo me-5"
+          />
 
-          <img src="../static/images/logo-bg-off.png" alt="Logo" class="logo" />
-
-          <ul
-            class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
-          >
-            <li><a href="#" class="nav-link px-2 link-secondary text-color-white">Home</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark text-color-white">Invista</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark text-color-white">Sobre</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark text-color-white">Contato</a></li>
+          <ul class="nav col-12 col-md-auto mb-2 mb-md-0 move-left">
+            <li>
+              <a
+                href="#"
+                class="nav-link px-2 link-secondary text-color-white text-uppercase text-white"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link px-2 link-dark text-color-white text-uppercase text-white"
+                >Invista</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link px-2 link-dark text-color-white text-uppercase text-white"
+                >Sobre</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link px-2 link-dark text-color-white text-uppercase text-white"
+                >Contato</a
+              >
+            </li>
           </ul>
 
           <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2 botao1">
+            <button type="button" class="btn btn-outline-primary botao1 me-4">
               Login
             </button>
             <button type="button" class="btn btn-primary botao1">
@@ -130,8 +139,98 @@
           </div>
         </header>
       </div>
+
+      <div class="container-fluid mt-4">
+        <div class="row ms-5">
+          <div class="col-md-6 mt-5 texts">
+            <h1 class="titulo1 h1 max-width-600px">Compre e Venda suas ações</h1>
+            <p class="fs-6 mt-4 mb-3 max-width-500px">
+              A StockTrade oferece um amplo leque de ativos e um expressivo
+              compromisso com a transparência e a educação do investidor,
+              tornando mais fácil e seguro a tomada de decisões e auxiliando o
+              consumidor a construir um futuro financeiro sólido.
+            </p>
+          </div>
+          <div class="col-md-6 d-flex justify-content-end">
+            <img
+              src="../static/images/laptop-home.png"
+              alt="Imagem laptop"
+              class="img-fluid"
+              style="width: 90%;"
+            />
+          </div>
+          
+        </div>
+      </div>
+
+      <footer class="footer py-3 container-fluid mt-5">
+        <div class="mx-5 d-flex justify-content-between align-items-center border-bottom border-white pb-4 pt-2 pe-5">
+          <!-- Logo à esquerda -->
+          <img
+            src="../static/images/logo-bg-off.png"
+            alt="Logo"
+            class="img-fluid logo xsmaller-logo ps-5"
+          />
+      
+          <!-- Imagens à direita -->
+          <div class="d-flex">
+            <img
+              src="../static/images/insta.png"
+              alt="Instagram"
+              class="img-fluid logo small-logo me-1"
+            />
+      
+            <img
+              src="../static/images/facebook.png"
+              alt="Facebook"
+              class="img-fluid logo small-logo me-1"
+            />
+      
+            <img
+              src="../static/images/linkedin.png"
+              alt="LinkedIn"
+              class="img-fluid logo small-logo me-1"
+            />
+          </div>
+        </div>
+
+        <div class="mx-5 d-flex justify-content-between align-items-center pb-2 ps-5">
+          <ul class="nav col-12 col-md-auto mb-2 mb-md-0 move-left">
+            <li>
+              <li>
+                <a
+                  href="#"
+                  class="nav-link px-2 link-secondary text-color-white text-uppercase text-white"
+                  >Home</a
+                >
+              </li>
+              <a
+                href="#"
+                class="nav-link px-2 link-dark text-color-white text-uppercase text-white"
+                >Invista</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link px-2 link-dark text-color-white text-uppercase text-white"
+                >Sobre</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link px-2 link-dark text-color-white text-uppercase text-white"
+                >Contato</a
+              >
+            </li>
+          </ul>
+        </div>
+      </footer>
+      
     </main>
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    
   </body>
 </html>
