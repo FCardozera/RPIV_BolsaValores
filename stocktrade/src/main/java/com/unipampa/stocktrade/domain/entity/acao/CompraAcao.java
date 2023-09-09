@@ -1,33 +1,35 @@
-package com.unipampa.stocktrade.domain.entity.movimentacao;
+package com.unipampa.stocktrade.domain.entity.acao;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
-import com.unipampa.stocktrade.domain.entity.movimentacao.enums.TipoMovimentacao;
 import com.unipampa.stocktrade.domain.entity.usuario.cliente.Cliente;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity(name = "movimentacao")
-@Table(name = "tb_movimentacao")
+@Entity(name = "compraAcao")
+@Table(name = "tb_compra_acao")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Movimentacao implements Serializable {
+public class CompraAcao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,13 +37,17 @@ public class Movimentacao implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Double valor;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn(name="id_acao", referencedColumnName="id")
+    private Acao acao;
 
-    private Instant data;
-
-    private TipoMovimentacao tipo;
-
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn(name="id_cliente", referencedColumnName="id")
     private Cliente cliente;
+
+    @Column(name = "valor_compra")
+    private Double valorCompra;
+
+    @Column(name = "data_compra")
+    private Instant dataCompra;
 }

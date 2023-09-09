@@ -10,11 +10,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity(name = "usuario")
 @NoArgsConstructor
@@ -22,6 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@ToString
 public abstract class Usuario implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -29,6 +30,9 @@ public abstract class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(name = "senha_autenticacao")
+    private String senhaAutenticacao;
 
     @Column(unique = true)
     private String email;
