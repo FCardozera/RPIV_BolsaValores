@@ -1,5 +1,6 @@
 package com.unipampa.stocktrade.domain.entity.acao;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import com.unipampa.stocktrade.domain.entity.empresa.Empresa;
@@ -26,7 +27,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Acao {
+public class Acao implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -1,6 +1,7 @@
 package com.unipampa.stocktrade.domain.entity.empresa;
 
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,7 +27,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Empresa {
+public class Empresa implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
