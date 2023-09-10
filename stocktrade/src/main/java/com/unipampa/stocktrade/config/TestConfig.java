@@ -10,19 +10,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.unipampa.stocktrade.domain.entity.acao.Acao;
-import com.unipampa.stocktrade.domain.entity.acao.CompraAcao;
-import com.unipampa.stocktrade.domain.entity.acao.VendaAcao;
-import com.unipampa.stocktrade.domain.entity.empresa.Empresa;
-import com.unipampa.stocktrade.domain.entity.movimentacao.Movimentacao;
-import com.unipampa.stocktrade.domain.entity.movimentacao.enums.TipoMovimentacao;
-import com.unipampa.stocktrade.domain.entity.usuario.cliente.Cliente;
-import com.unipampa.stocktrade.repository.acao.AcaoRepository;
-import com.unipampa.stocktrade.repository.acao.CompraAcaoRepository;
-import com.unipampa.stocktrade.repository.acao.VendaAcaoRepository;
-import com.unipampa.stocktrade.repository.cliente.ClienteRepository;
-import com.unipampa.stocktrade.repository.empresa.EmpresaRepository;
-import com.unipampa.stocktrade.repository.movimentacao.MovimentacaoRepository;
+import com.unipampa.stocktrade.model.entity.acao.Acao;
+import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
+import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
+import com.unipampa.stocktrade.model.entity.empresa.Empresa;
+import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
+import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
+import com.unipampa.stocktrade.model.entity.usuario.cliente.Cliente;
+import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
+import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
+import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
+import com.unipampa.stocktrade.model.repository.cliente.ClienteRepository;
+import com.unipampa.stocktrade.model.repository.empresa.EmpresaRepository;
+import com.unipampa.stocktrade.model.repository.movimentacao.MovimentacaoRepository;
 
 @Configuration
 @Profile("test")
