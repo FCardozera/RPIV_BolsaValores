@@ -181,6 +181,14 @@ footer{
   /* padding-left: 20%; */
 }
 
+.card3 {
+  max-width: 500px;
+  overflow-y: auto;
+  border-radius: 20px;
+  margin-top: 30%;
+  margin-bottom: 30%;
+}
+
 .card-body{
   padding-top: 5%;
   padding-bottom: 5%;

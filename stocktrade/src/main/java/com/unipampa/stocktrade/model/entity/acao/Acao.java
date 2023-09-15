@@ -1,11 +1,11 @@
-package com.unipampa.stocktrade.domain.entity.movimentacao;
+package com.unipampa.stocktrade.model.entity.acao;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.UUID;
 
-import com.unipampa.stocktrade.domain.entity.movimentacao.enums.TipoMovimentacao;
-import com.unipampa.stocktrade.domain.entity.usuario.cliente.Cliente;
+import com.unipampa.stocktrade.model.entity.empresa.Empresa;
+import com.unipampa.stocktrade.model.entity.oferta.Oferta;
+import com.unipampa.stocktrade.model.entity.usuario.cliente.Cliente;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,14 +18,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Entity(name = "movimentacao")
-@Table(name = "tb_movimentacao")
+@Entity(name = "acao")
+@Table(name = "tb_acao")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Movimentacao implements Serializable {
+@ToString
+public class Acao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,13 +35,19 @@ public class Movimentacao implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    private String sigla;
+
     private Double valor;
 
-    private Instant data;
-
-    private TipoMovimentacao tipo;
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "oferta_id")
+    private Oferta oferta;
 }

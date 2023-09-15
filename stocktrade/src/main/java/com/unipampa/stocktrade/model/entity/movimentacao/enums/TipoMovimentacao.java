@@ -1,4 +1,4 @@
-package com.unipampa.stocktrade.domain.entity.movimentacao.enums;
+package com.unipampa.stocktrade.model.entity.movimentacao.enums;
 
 public enum TipoMovimentacao {
 
