@@ -164,11 +164,12 @@ footer{
 }
 
 .custom-card2 {
-  background-color: #010D50;
+  background-color: #0328EE;
   color: #fff;
   border: none;
-  border-radius: 65px; /* Diminuí o raio para tornar o card mais arredondado */
-  max-width: 20px;
+  border-radius: 65px;
+  width: 80px !important;
+  height: 60px !important;
 }
 
 .img-fluid {
