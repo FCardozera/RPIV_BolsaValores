@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
-import com.unipampa.stocktrade.model.entity.usuario.cliente.Cliente;
+import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,6 +42,6 @@ public class Movimentacao implements Serializable {
     private TipoMovimentacao tipo;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }

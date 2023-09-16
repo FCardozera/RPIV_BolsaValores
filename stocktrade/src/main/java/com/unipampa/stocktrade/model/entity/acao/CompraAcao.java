@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
-import com.unipampa.stocktrade.model.entity.usuario.cliente.Cliente;
+import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -42,8 +42,8 @@ public class CompraAcao implements Serializable {
     private Acao acao;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @PrimaryKeyJoinColumn(name="id_cliente", referencedColumnName="id")
-    private Cliente cliente;
+    @PrimaryKeyJoinColumn(name="id_usuario", referencedColumnName="id")
+    private Usuario usuario;
 
     @Column(name = "valor_compra")
     private Double valorCompra;

@@ -1,31 +1,34 @@
 package com.unipampa.stocktrade.model.entity.usuario;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
+import com.unipampa.stocktrade.model.entity.acao.Acao;
+import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
+import com.unipampa.stocktrade.model.entity.oferta.Oferta;
+import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
 import com.unipampa.stocktrade.util.Util;
 
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity(name = "usuario")
+@Entity(name = "tb_usuario")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @ToString
-public abstract class Usuario implements Serializable {
+public class Usuario implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
@@ -33,13 +36,30 @@ public abstract class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true)
-    private String cpf;
-
     private String nome;
 
     @Column(unique = true)
+    private String cpf;
+
+    @Column(unique = true)
     private String email;
+
+    @Column(name = "saldo")
+    private Double saldo;
+
+    @Column(name = "conta_ativa")
+    private Boolean contaAtiva;
+
+    private TipoUsuario tipo;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<Movimentacao> movimentacoes;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<Acao> acoes;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<Oferta> ofertas;
 
     @Column(name = "hash_senha")
     private String hashSenha;
@@ -51,11 +71,14 @@ public abstract class Usuario implements Serializable {
 
     private byte[] saltSenhaAutenticacao;
 
-    public Usuario(UUID id, String senhaAutenticacao, String cpf, String nome, String email, String senha) {
+    public Usuario(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao, Boolean contaAtiva, Double saldo, TipoUsuario tipo) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
+        this.contaAtiva = contaAtiva;
+        this.saldo = saldo;
+        this.tipo = tipo;
 
         this.saltSenha = Util.salt();
         this.hashSenha = Util.sha256(senha, this.saltSenha);  

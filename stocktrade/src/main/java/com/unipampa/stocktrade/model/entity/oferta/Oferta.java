@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.unipampa.stocktrade.model.entity.acao.Acao;
-import com.unipampa.stocktrade.model.entity.usuario.cliente.Cliente;
+import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,8 +42,8 @@ public class Oferta implements Serializable {
     private Set<Acao> acoes;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @Column(name = "valor_oferta")
     private Double valorOferta;
