@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-StocktradeApplication<stocktrade>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.unipampa.stocktrade.StocktradeApplication",
+            "projectName": "stocktrade",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
