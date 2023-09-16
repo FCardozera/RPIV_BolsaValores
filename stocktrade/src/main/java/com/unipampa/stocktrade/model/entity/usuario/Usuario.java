@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
+import com.unipampa.stocktrade.controller.DTO.usuario.UsuarioRequestDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
 import com.unipampa.stocktrade.model.entity.oferta.Oferta;
@@ -11,6 +12,7 @@ import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
 import com.unipampa.stocktrade.util.Util;
 
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +24,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity(name = "tb_usuario")
+@Entity(name = "usuario")
+@Table(name = "tb_usuario")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -71,19 +74,28 @@ public class Usuario implements Serializable {
 
     private byte[] saltSenhaAutenticacao;
 
-    public Usuario(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao, Boolean contaAtiva, Double saldo, TipoUsuario tipo) {
+    public Usuario(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
-        this.contaAtiva = contaAtiva;
-        this.saldo = saldo;
-        this.tipo = tipo;
+        this.contaAtiva = true;
+        this.saldo = 0.0;
+        this.tipo = TipoUsuario.CLIENTE;
 
         this.saltSenha = Util.salt();
         this.hashSenha = Util.sha256(senha, this.saltSenha);  
         
         this.saltSenhaAutenticacao = Util.salt();
         this.hashSenhaAutenticacao = Util.sha256(senhaAutenticacao, this.saltSenhaAutenticacao);
+    }
+
+    public Usuario(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao, TipoUsuario tipo) {
+        this(id, nome, cpf, email, senha, senhaAutenticacao);
+        this.tipo = tipo;
+    }
+
+    public Usuario(UsuarioRequestDTO data) {
+        this(null, data.nome(), data.cpf(), data.email(), data.senha(), data.senhaAutenticacao());
     }
 }

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="" />
+
+  <title>StockTrade - Cadastro</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+  <!-- Custom styles for this template -->
+  <link href="css/stylesheet.css" rel="stylesheet" />
+
+  <link rel="icon" type="image/x-icon" href="images/only-logo-bg-off.png" />
+</head>
+
+<body>
+  <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+
+  <main>
+    <div class="container-fluid pt-3">
+      <header class="d-flex align-items-center justify-content-between py-3 mb-4 no-flex-wrap mx-5">
+        <!-- logo -->
+        <a href="index.html">
+          <img src="images/logo-bg-off.png" alt="Logo" class="img-fluid logo small-logo2 me-5" />
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 mb-md-0 move-left">
+          <li>
+            <a href="index.html"
+              class="nav-link px-2 link-secondary text-color-white text-uppercase text-white">Home</a>
+          </li>
+          <li>
+            <a href="#" class="nav-link px-2 link-dark text-color-white text-uppercase text-white">Invista</a>
+          </li>
+          <li>
+            <a href="sobre.html" class="nav-link px-2 link-dark text-color-white text-uppercase text-white">Sobre</a>
+          </li>
+          <li>
+            <a href="contato.html"
+              class="nav-link px-2 link-dark text-color-white text-uppercase text-white">Contato</a>
+          </li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+          <a href="login.html" class="btn btn-outline-primary botao1 me-4">Login</a>
+          <a href="cadastro.html" class="btn btn-outline-primary botao1 me-4">Cadastre-se</a>
+        </div>
+      </header>
+    </div>
+
+    <div class="container-fluid container-img-background2">
+      <div class="row justify-content-end">
+        <div class="col-md-4">
+          <div class="card2">
+            <div class="card-body2">
+              <form>
+                <div class="mb-3">
+                  <label for="username" class="form-label text-color-blue text-uppercase">Nome</label>
+                  <input type="text" class="form-control custom-input" id="name"
+                    placeholder="Digite seu nome completo" oninput="validateNome(this)"/>
+                </div>
+                <div class="mb-3">
+                  <label for="username" class="form-label text-color-blue text-uppercase">CPF</label>
+                  <input type="text" class="form-control custom-input" id="cpf" placeholder="Digite seu CPF" oninput="formatCpf(this)"/>
+                </div>
+                <div class="mb-3">
+                  <label for="username" class="form-label text-color-blue text-uppercase">Email</label>
+                  <input type="text" class="form-control custom-input" id="email" placeholder="Digite seu email" />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label text-color-blue text-uppercase">Senha</label>
+                  <input type="password" class="form-control custom-input" id="password"
+                    placeholder="Digite sua senha" oninput="limitSenha(this)"/>
+                </div>
+                <div class="mb-3">
+                  <label for="username" class="form-label text-color-blue text-uppercase">Senha de Autenticação</label>
+                  <input type="password" class="form-control custom-input" id="authenticationPassword"
+                    placeholder="Digite a senha utilizada para autenticação das atividades no sistema" oninput="limitSenhaAutenticacao(this)"/>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-outline-primary botao1 mb-3 mt-3"
+                    onclick="enviarCadastro(event)">
+                    Cadastrar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer py-3 container-fluid mt-5">
+      <div class="mx-5 d-flex justify-content-between align-items-center border-bottom border-white pb-4 pt-2 pe-5">
+        <!-- Logo à esquerda -->
+        <a href="index.html">
+          <img src="images/logo-bg-off.png" alt="Logo" class="img-fluid logo small-logo2 me-5 ms-5" />
+        </a>
+
+        <!-- Imagens à direita -->
+        <div class="d-flex">
+          <img src="images/insta.png" alt="Instagram" class="img-fluid logo small-logo me-1" />
+
+          <img src="images/facebook.png" alt="Facebook" class="img-fluid logo small-logo me-1" />
+
+          <img src="images/linkedin.png" alt="LinkedIn" class="img-fluid logo small-logo me-1" />
+        </div>
+      </div>
+
+      <div class="mx-5 d-flex justify-content-between align-items-center pb-2 ps-5">
+        <ul class="nav col-12 col-md-auto mb-2 mb-md-0 move-left">
+          <li>
+            <a href="index.html"
+              class="nav-link px-2 link-secondary text-color-white text-uppercase text-white">Home</a>
+          </li>
+          <li>
+            <a href="#" class="nav-link px-2 link-dark text-color-white text-uppercase text-white">Invista</a>
+          </li>
+          <li>
+            <a href="sobre.html" class="nav-link px-2 link-dark text-color-white text-uppercase text-white">Sobre</a>
+          </li>
+          <li>
+            <a href="contato.html"
+              class="nav-link px-2 link-dark text-color-white text-uppercase text-white">Contato</a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+  </main>
+
+  <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+  <script src="/js/main.js"></script> -->
+  <script>
+    function validateNome(input) {
+      input.value = input.value.replace(/[^a-zA-Z\s]/g, ''); // permite apenas letras e espaços
+    }
+
+    function formatCpf(input) {
+      let cpf = input.value.replace(/\D/g, ""); // remove caracteres não numéricos e pontos existentes
+      if (cpf.length > 11) {
+        cpf = cpf.slice(0, 11); // limita a 11 dígitos
+      }
+      cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"); // Adiciona pontos e traço ao CPF
+      input.value = cpf;
+    }
+
+    function limitSenha(input) {
+      input.value = input.value.replace(/\D/g, ''); // permite apenas dígitos
+      if (input.value.length > 8) {
+        input.value = input.value.slice(0, 8); // limita a 8 dígitos
+      }
+    }
+
+    function limitSenhaAutenticacao(input) {
+      input.value = input.value.replace(/\D/g, ''); // permite apenas dígitos
+      if (input.value.length > 4) {
+        input.value = input.value.slice(0, 4); // limita a 4 dígitos
+      }
+    }
+
+    function enviarCadastro(event) {
+      event.preventDefault();
+      console.log("validateForm function called");
+
+      let name = document.getElementById("name").value;
+      let cpf = document.getElementById("cpf").value;
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+      let authenticationPassword = document.getElementById("authenticationPassword").value;
+      cpf = cpf.replace(/\D/g, "");
+
+      if (name === "" || cpf === "" || email === "" || password === "" || authenticationPassword === "") {
+        alert("Por favor, preencha todos os campos para efetuar o cadastro.");
+        return false;
+      }
+
+      if (name.length < 3 || name.length > 80) {
+        alert("O nome completo deve ter entre 3 e 80 caracteres.");
+        return false;
+      }
+
+      if (cpf.length !== 11) {
+        alert("O campo de CPF deve conter 11 dígitos.");
+        return false;
+      }
+
+      if (password.length !== 8) {
+        alert("A senha deve possuir 8 dígitos numéricos.");
+        return false;
+      }
+
+      if (authenticationPassword.length !== 4) {
+        alert("A senha de autenticação deve possuir 4 dígitos numéricos.");
+        return false;
+      }
+
+      if (!email.includes("@") || !email.includes(".com")) {
+        alert("E-mail inválido!");
+        return false;
+      }
+
+      const data = {
+        nome: name,
+        cpf: cpf,
+        email: email,
+        senha: password,
+        senhaAutenticacao: authenticationPassword
+      };
+
+      fetch('/cadastro', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = '/';
+          } else {
+            alert("E-mail já cadastrado!");
+          }
+        })
+        .catch(error => {
+          alert("Ocorreu um erro ao cadastrar!");
+          console.error(error);
+        });
+    }
+  </script>
+</body>
+
+</html>
