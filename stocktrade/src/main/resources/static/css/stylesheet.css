@@ -103,6 +103,10 @@ body {
   font-size: 16px;
 }
 
+.h4{
+  font-size: 56px;
+}
+
 .max-width-800px {
   max-width: 800px;
 }
@@ -122,11 +126,15 @@ body {
 footer{
   background-color: #010D50;
   bottom: 0;
-  position: fixed;
+  width: 100%;
 }
 
 .text-color-blue{
   color: #010D50;
+}
+
+.text-color-blue2{
+  color: #0328EE;
 }
 
 .custom-input {
@@ -157,6 +165,37 @@ footer{
   width: 600px !important;
   height: 200px;
   margin: 0;
+}
+
+.custom-card2 {
+  background-color: #010D50;
+  color: #fff;
+  border: none;
+  border-radius: 65px;
+  width: 80px !important;
+  height: 60px !important;
+}
+
+.custom-card3{
+  background-color: #010D50;
+  color: #fff;
+  border: none;
+  border-radius: 65px;
+  width: 300px !important;
+  height: 480px !important;   
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.img-fluid {
+  max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho do card */
+  height: auto; /* Mantém a proporção da imagem */
+}
+
+.card-text {
+  color: #fff;
+  font-size: 16px;
+  margin-top: 15px; /* Ajuste conforme necessário */
 }
 
 .text-center {
@@ -233,3 +272,12 @@ footer{
   text-decoration: underline !important;
   border-radius: 20px;
 }
+
+.no-wrap-text {
+  white-space: nowrap;
+}
+
+.negrito {
+  font-weight: bold;
+ }
+
