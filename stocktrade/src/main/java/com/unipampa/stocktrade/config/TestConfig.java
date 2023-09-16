@@ -60,8 +60,8 @@ public class TestConfig implements CommandLineRunner {
         Instant instant1 = Instant.parse("2021-03-25T19:53:07Z");
         Instant instant2 = Instant.parse("2021-12-29T19:53:07Z");
 
-        Usuario usuario1 = new Usuario(null, "Ricardo", "444444444351", "ricardo@gmail.com", "123456", "123456", true, 20.0, TipoUsuario.CLIENTE);
-        Usuario usuario2 = new Usuario(null, "Felipe", "444244444351", "felipe@gmail.com", "123456", "123456", true, 20489.0, TipoUsuario.ADMIN);
+        Usuario usuario1 = new Usuario(null, "Ricardo", "44444444435", "ricardo@gmail.com", "12345678", "1234", TipoUsuario.CLIENTE);
+        Usuario usuario2 = new Usuario(null, "Felipe", "44424444435", "felipe@gmail.com", "12345678", "1234", TipoUsuario.ADMIN);
 
         usuarioRepository.saveAll(List.of(usuario1, usuario2));
 
@@ -70,8 +70,8 @@ public class TestConfig implements CommandLineRunner {
 
         movimentacaoRepository.saveAll(List.of(mov1, mov2));
 
-        Empresa empresa1 = new Empresa(null, "Petrobras LTDA", "0001544987", null);
-        Empresa empresa2 = new Empresa(null, "Vale LTDA", "1231231233", null);
+        Empresa empresa1 = new Empresa(null, "Petrobras LTDA", "53048280000174", null);
+        Empresa empresa2 = new Empresa(null, "Vale LTDA", "50951271000109", null);
 
         empresaRepository.saveAll(List.of(empresa1, empresa2));
 
