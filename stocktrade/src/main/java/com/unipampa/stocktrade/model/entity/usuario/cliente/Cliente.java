@@ -1,6 +1,7 @@
 package com.unipampa.stocktrade.model.entity.usuario.cliente;
 
 import java.util.Set;
+import java.util.UUID;
 
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
@@ -43,14 +44,14 @@ public class Cliente extends Usuario {
     @OneToMany(mappedBy = "cliente")
     private Set<Oferta> ofertas;
 
-    public Cliente(String nome, String cpf, String email, String senha, String senhaAutenticacao, Double saldoConta, Boolean contaAtiva) {
-        super(null, senhaAutenticacao, email, cpf, nome, senha);
+    public Cliente(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao, Double saldoConta, Boolean contaAtiva) {
+        super(id, senhaAutenticacao, cpf, nome, email, senha);
         this.saldoConta = saldoConta;
         this.contaAtiva = contaAtiva;
     }
 
-    public Cliente(String email, String cpf, String nome, String senha, String senhaAutenticacao, Double saldoConta, Boolean contaAtiva, Set<Movimentacao> movimentacoes) {
-        super(null, senhaAutenticacao, email, cpf, nome, senha);
+    public Cliente(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao, Double saldoConta, Boolean contaAtiva, Set<Movimentacao> movimentacoes) {
+        super(id, senhaAutenticacao, cpf, nome, email, senha);
         this.saldoConta = saldoConta;
         this.contaAtiva = contaAtiva;
         this.movimentacoes = movimentacoes;

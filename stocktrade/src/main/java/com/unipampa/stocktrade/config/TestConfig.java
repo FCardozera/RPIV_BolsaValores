@@ -61,9 +61,8 @@ public class TestConfig implements CommandLineRunner {
         Instant instant1 = Instant.parse("2021-03-25T19:53:07Z");
         Instant instant2 = Instant.parse("2021-12-29T19:53:07Z");
 
-        Cliente cliente1 = new Cliente("Ricardo", "444444444351", "ricardo@gmail.com", "123456", "123456", 20.0, true);
-        Cliente cliente2 = new Cliente("Felipe", "444485464352", "felipe@gmail.com", "123456", "123456", 4444444444.0,
-                true);
+        Cliente cliente1 = new Cliente(null, "Ricardo", "444444444351", "ricardo@gmail.com", "123456", "123456", 1000.0, true);
+        Cliente cliente2 = new Cliente(null, "Felipe", "444444442351", "felipe@gmail.com", "123456", "123456", 100000.0, true);
 
         clienteRepository.saveAll(List.of(cliente1, cliente2));
 

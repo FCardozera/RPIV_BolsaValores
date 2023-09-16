@@ -11,8 +11,5 @@ public interface AdminRepository extends JpaRepository<Admin, UUID> {
 
     @Query("select i from admin i where i.email = :email")
     public Admin findByEmail(String email);
-
-    @Query("select j from admin j where j.email = :email and j.senha = :senha")
-    public Admin buscarLogin(String email, String senha);
     
 }

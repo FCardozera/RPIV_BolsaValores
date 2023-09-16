@@ -3,6 +3,8 @@ package com.unipampa.stocktrade.model.entity.usuario;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.unipampa.stocktrade.util.Util;
+
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,16 +33,34 @@ public abstract class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "senha_autenticacao")
-    private String senhaAutenticacao;
-
-    @Column(unique = true)
-    private String email;
-
     @Column(unique = true)
     private String cpf;
 
     private String nome;
 
-    private String senha;
+    @Column(unique = true)
+    private String email;
+
+    @Column(name = "hash_senha")
+    private String hashSenha;
+
+    private byte[] saltSenha;
+
+    @Column(name = "hash_senha_autenticacao")
+    private String hashSenhaAutenticacao;
+
+    private byte[] saltSenhaAutenticacao;
+
+    public Usuario(UUID id, String senhaAutenticacao, String cpf, String nome, String email, String senha) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+
+        this.saltSenha = Util.salt();
+        this.hashSenha = Util.sha256(senha, this.saltSenha);  
+        
+        this.saltSenhaAutenticacao = Util.salt();
+        this.hashSenhaAutenticacao = Util.sha256(senhaAutenticacao, this.saltSenhaAutenticacao);
+    }
 }

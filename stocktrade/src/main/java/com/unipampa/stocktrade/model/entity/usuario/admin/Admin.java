@@ -18,6 +18,6 @@ public class Admin extends Usuario {
     private static final long serialVersionUID = 1L;
 
     public Admin(String email, String cpf, String nome, String senha, String senhaAutenticacao) {
-        super(null, senhaAutenticacao, email, cpf, nome, senha);
+        super(null, senhaAutenticacao, cpf, nome, email, senha);
     }
 }

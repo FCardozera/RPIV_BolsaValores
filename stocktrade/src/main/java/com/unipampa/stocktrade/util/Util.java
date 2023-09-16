@@ -1,13 +1,39 @@
 package com.unipampa.stocktrade.util;
 
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class Util {
-    public static String md5(String senha) throws NoSuchAlgorithmException {
-        MessageDigest msgDig = MessageDigest.getInstance("MD5");
-        BigInteger hash = new BigInteger(1, msgDig.digest(senha.getBytes()));
-        return hash.toString(16);
+    public static String sha256(String senha, byte[] salt) {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+
+            String senhaSalt = senha + salt.toString();
+
+            byte[] hashBytes = md.digest(senhaSalt.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte hashByte : hashBytes) {
+                String hex = Integer.toHexString(0xff & hashByte);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Erro ao gerar hash da senha");
+        }
+
+    }
+
+    public static byte[] salt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[32];
+        random.nextBytes(salt);
+        return salt;
     }
 }
