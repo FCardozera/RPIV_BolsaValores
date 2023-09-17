@@ -34,13 +34,33 @@ public class LoggingAspect {
 
     }
 
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerLogin.*(..))")
+    public void loginMetodos(){
+
+    }
+
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerInvista.*(..))")
+    public void invistaMetodos(){
+
+    }
+
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerContato.*(..))")
+    public void contatoMetodos(){
+
+    }
+
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerSobre.*(..))")
+    public void sobreMetodos(){
+
+    }
+
     @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerIndex.*(..))")
     public void indexMetodos(){
 
     }
 
 
-    @AfterReturning("cadastroMetodos() || indexMetodos()")
+    @AfterReturning("cadastroMetodos() || indexMetodos() || loginMetodos()")
     public void logOperation(JoinPoint joinPoint){
         String atividade = joinPoint.getSignature().getName();
 
