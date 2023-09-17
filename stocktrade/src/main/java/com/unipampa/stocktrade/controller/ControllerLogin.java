@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.controller.DTO.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.service.ServiceLogin;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ControllerLogin {
@@ -17,9 +20,10 @@ public class ControllerLogin {
     private ServiceLogin serviceLogin;
 
     @PostMapping("/login")
-    public ModelAndView login(@RequestBody UsuarioRequestDTO dados) throws Exception {
+    public ModelAndView login(@RequestBody UsuarioRequestDTO dados, HttpSession session) throws Exception {
         ModelAndView mv = new ModelAndView("/login");
-        serviceLogin.login(dados);
+        Usuario usuario = serviceLogin.login(dados);
+        session.setAttribute("usuarioLogado", usuario);
         return mv;
     }
 

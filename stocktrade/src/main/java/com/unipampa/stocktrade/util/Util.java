@@ -10,7 +10,8 @@ public class Util {
         try {
             md = MessageDigest.getInstance("SHA-256");
 
-            String senhaSalt = senha + salt.toString();
+            String saltString = new String(salt);
+            String senhaSalt = senha.concat(saltString);
 
             byte[] hashBytes = md.digest(senhaSalt.getBytes());
 
