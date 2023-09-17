@@ -142,23 +142,5 @@
     </main>
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Verifica qual página você está com base no ID do corpo (body)
-        var currentPage = document.body.id;
-
-        // // Remove a classe 'active' de todos os links no cabeçalho
-        // var navLinks = document.querySelectorAll(".nav-link");
-        // navLinks.forEach(function (link) {
-        //   link.classList.remove("active");
-        // });
-
-        // Adiciona a classe 'active' ao link relevante com base na página atual
-        if (currentPage === "home-page") {
-          document.querySelector(".nav-link.home").classList.add("active");
-        }
-      });
-    </script>
   </body>
 </html>
