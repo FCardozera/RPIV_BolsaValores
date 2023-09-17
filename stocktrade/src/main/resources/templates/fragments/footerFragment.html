@@ -13,56 +13,23 @@
 
     <!-- Imagens à direita -->
     <div class="d-flex">
-      <img
-        src="images/insta.png"
-        alt="Instagram"
-        class="img-fluid logo small-logo me-1"
-      />
+      <a th:replace="~{fragments/footer/iconLinkFooter :: iconLinkFooter('images/insta.png', 'Instagram', 'https://www.instagram.com/stock.trade.rp4/')}"></a>
 
-      <img
-        src="images/facebook.png"
-        alt="Facebook"
-        class="img-fluid logo small-logo me-1"
-      />
+      <a th:replace="~{fragments/footer/iconLinkFooter :: iconLinkFooter('images/facebook.png', 'Facebook', 'https://www.facebook.com/?locale=pt_BR')}"></a>
 
-      <img
-        src="images/linkedin.png"
-        alt="LinkedIn"
-        class="img-fluid logo small-logo me-1"
-      />
+      <a th:replace="~{fragments/footer/iconLinkFooter :: iconLinkFooter('images/linkedin.png', 'LinkedIn', 'https://www.linkedin.com/home?originalSubdomain=br')}"></a>
     </div>
   </div>
 
   <div class="mx-5 d-flex justify-content-between align-items-center pb-2 ps-5">
     <ul class="nav col-12 col-md-auto mb-2 mb-md-0 move-left">
-      <li>
-        <a
-          href="/"
-          class="nav-link px-2 link-secondary text-color-white text-uppercase text-white"
-          >Home</a
-        >
-      </li>
-      <li>
-        <a
-          href="invista"
-          class="nav-link px-2 link-dark text-color-white text-uppercase text-white"
-          >Invista</a
-        >
-      </li>
-      <li>
-        <a
-          href="sobre"
-          class="nav-link px-2 link-dark text-color-white text-uppercase text-white"
-          >Sobre</a
-        >
-      </li>
-      <li>
-        <a
-          href="contato"
-          class="nav-link px-2 link-dark text-color-white text-uppercase text-white"
-          >Contato</a
-        >
-      </li>
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/', 'Home')}"></li>
+
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('invista', 'Invista')}"></li>
+
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('sobre', 'Sobre')}"></li>
+      
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('contato', 'Contato')}"></li>
     </ul>
   </div>
 </footer>

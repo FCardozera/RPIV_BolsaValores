@@ -1,0 +1,3 @@
+<li th:fragment="navLinkHeader(href, name, currentPage)">
+    <a th:href="${href}" class="nav-link px-2 link-secondary text-color-white text-uppercase text-white" th:classappend="${currentPage == name} ? 'active' : ''" th:text="${name}"></a>
+</li>
