@@ -187,6 +187,15 @@ footer{
   align-items: flex-start;
 }
 
+.custom-card4 {
+  background-color: #010D50;
+  color: #fff;
+  border-radius: 60px;
+  width: 470px !important;
+  height: 160px;
+  margin: 0;
+}
+
 .img-fluid {
   max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho do card */
   height: auto; /* Mantém a proporção da imagem */
@@ -280,4 +289,26 @@ footer{
 .negrito {
   font-weight: bold;
  }
+
+.cinza{
+ color: #909093;
+}
+
+.custom-padding-left {
+  padding-left: 260px;
+}
+
+.custom-padding-left2 {
+  padding-left: 40px;
+}
+
+.custom-padding-left3 {
+  padding-left: 10px;
+}
+
+.altura-card {
+  height: 25px;
+
+}
+
 

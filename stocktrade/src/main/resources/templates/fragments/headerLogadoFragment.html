@@ -1,0 +1,41 @@
+<div class="container-fluid pt-3" th:fragment="header(currentPage)">
+    <header
+      class="d-flex align-items-center justify-content-between py-3 mb-4 no-flex-wrap mx-5"
+      >
+      <!-- logo -->
+      <a href="/">
+        <img
+          src="images/logo-bg-off.png"
+          alt="Logo"
+          class="img-fluid logo small-logo2 me-5"
+        />
+      </a>
+  
+      <ul class="nav col-12 col-md-auto mb-2 mb-md-0 move-left">
+  
+        <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/indexLogado', 'Home', ${currentPage})}"></li>
+
+        <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/invista', 'Invista', ${currentPage})}"></li>
+
+        <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/sobre', 'Sobre', ${currentPage})}"></li>
+  
+        <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/contato', 'Contato', ${currentPage})}"></li>
+  
+      </ul>
+  
+      <div class="col-md-3 text-end">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+          </svg>
+
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+          </svg>
+
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+          </svg>
+      </div>
+    </header>
+  </div>
