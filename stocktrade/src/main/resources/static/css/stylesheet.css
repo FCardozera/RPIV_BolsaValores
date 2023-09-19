@@ -9,8 +9,8 @@ body {
 }
 
 .small-logo2{
-  max-width: 50%;
-  height: auto;
+  max-width: 50% !important;
+  height: auto !important;
 }
 
 .smaller-logo {
@@ -125,7 +125,6 @@ body {
 
 footer{
   background-color: #010D50;
-  bottom: 0;
   width: 100%;
 }
 
@@ -279,5 +278,8 @@ footer{
 
 .negrito {
   font-weight: bold;
- }
+}
 
+.pdb5{
+  padding-bottom: 5%;
+}
