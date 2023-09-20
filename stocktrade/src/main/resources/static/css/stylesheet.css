@@ -1,5 +1,6 @@
 /* CSS */
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,600,700');
 
 body {
   background-color: #010725;
@@ -133,6 +134,10 @@ footer{
   color: #010D50;
 }
 
+.preto{
+  color: black !important;
+}
+
 .text-color-blue2{
   color: #0328EE;
 }
@@ -192,7 +197,16 @@ footer{
   color: #fff;
   border-radius: 60px;
   width: 470px !important;
-  height: 160px;
+  height: 190px;
+  margin: 0;
+}
+
+.custom-card5 {
+  background-color: #fff;
+  color: #2DC24E;
+  border-radius: 60px;
+  width: 430px !important;
+  height: 50px;
   margin: 0;
 }
 
@@ -295,7 +309,7 @@ footer{
 }
 
 .custom-padding-left {
-  padding-left: 260px;
+  padding-left: 210px;
 }
 
 .custom-padding-left2 {
@@ -306,9 +320,89 @@ footer{
   padding-left: 10px;
 }
 
+.custom-padding-left4{
+  padding-left: 185px;
+}
+
+.custom-padding-left5{
+  padding-left: 250px;
+}
+
 .altura-card {
   height: 25px;
 
 }
 
+.home-logado-card {
+  padding-top: 0px;
+  padding-bottom: 15px;
+  padding-left: 350px;
+}
+
+.home-logado-card2{
+  margin-left: 18px;
+  padding-top: 0px;
+  margin-top: 10px;
+}
+
+.home-logado-card3{
+  padding-top: 0px;
+  margin-top: 10px;
+}
+
+.margem-esquerda{
+  margin-left: -340;
+}
+
+.fonte-arial{
+  font-family: Arial;
+}
+
+#chart, .chart-box {
+    padding-top: 20px;
+    padding-left: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 22px 35px -16px rgba(0,0,0, 0.1);
+}
+
+select.flat-select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #008FFB url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg/' width='60px' height='60px'><polyline fill='white' points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>") no-repeat scroll right 2px top 9px / 16px 16px;
+    border: 0 none;
+    border-radius: 3px;
+    color: #fff;
+    font-family: arial,tahoma;
+    font-size: 16px;
+    font-weight: bold;
+    outline: 0 none;
+    height: 33px;
+    padding: 5px 20px 5px 10px;
+    text-align: center;
+    text-indent: 0.01px;
+    text-overflow: "";
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease 0s;
+    width: auto;
+    -webkit-transition: 0.3s ease all;
+    -moz-transition: 0.3s ease all;
+    -ms-transition: 0.3s ease all;
+    -o-transition: 0.3s ease all;
+    transition: 0.3s ease all;
+  }
+  select.flat-select:focus, select.flat-select:hover {
+    border: 0;
+    outline: 0;
+  }
+
+
+.apexcharts-canvas {
+    margin: 0 auto;
+}
+
+#html {
+    display: none;
+}
 
