@@ -11,6 +11,12 @@
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
     crossorigin="anonymous"
   />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+    crossorigin="anonymous"
+  />
 
   <style>
     .bd-placeholder-img {
@@ -61,6 +67,65 @@
     // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
     // Based on https://gist.github.com/blixt/f17b47c62508be59987b
     var_seed = 42;
+    Math.random = function () {
+      _seed = (_seed * 16807) % 2147483647;
+      return (_seed - 1) / 2147483646;
+    };
+  </script>
+
+  <script src="../../assets/ohlc.js"></script>
+  <!-- HEAD DOS GRAFICOS -->
+
+  <link rel="icon" type="image/x-icon" href="images/only-logo-bg-off.png" />
+
+  <script>
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+      );
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+      );
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+      );
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+  <script>
+    // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+    // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+    var _seed = 42;
+    Math.random = function () {
+      _seed = (_seed * 16807) % 2147483647;
+      return (_seed - 1) / 2147483646;
+    };
+  </script>
+
+  <script>
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+      );
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+      );
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+      );
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+  <script>
+    // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+    // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+    var _seed = 42;
     Math.random = function () {
       _seed = (_seed * 16807) % 2147483647;
       return (_seed - 1) / 2147483646;

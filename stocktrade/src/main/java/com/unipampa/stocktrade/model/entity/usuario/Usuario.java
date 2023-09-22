@@ -55,6 +55,18 @@ public class Usuario implements Serializable {
 
     private TipoUsuario tipo;
 
+    @Column(name = "hash_senha")
+    private String hashSenha;
+
+    @Column(name = "salt_senha")
+    private byte[] saltSenha;
+
+    @Column(name = "hash_senha_autenticacao")
+    private String hashSenhaAutenticacao;
+
+    @Column(name = "salt_senha_autenticacao")
+    private byte[] saltSenhaAutenticacao;
+
     @OneToMany(mappedBy = "usuario")
     private Set<Movimentacao> movimentacoes;
 
@@ -63,16 +75,6 @@ public class Usuario implements Serializable {
 
     @OneToMany(mappedBy = "usuario")
     private Set<Oferta> ofertas;
-
-    @Column(name = "hash_senha")
-    private String hashSenha;
-
-    private byte[] saltSenha;
-
-    @Column(name = "hash_senha_autenticacao")
-    private String hashSenhaAutenticacao;
-
-    private byte[] saltSenhaAutenticacao;
 
     public Usuario(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao) {
         this.id = id;
@@ -97,5 +99,11 @@ public class Usuario implements Serializable {
 
     public Usuario(UsuarioRequestDTO data) {
         this(null, data.nome(), data.cpf(), data.email(), data.senha(), data.senhaAutenticacao());
+    }
+
+    public boolean isSenhaCorreta(String senha) {
+        String hashSenha = Util.sha256(senha, this.saltSenha);
+
+        return this.hashSenha.equals(hashSenha);
     }
 }

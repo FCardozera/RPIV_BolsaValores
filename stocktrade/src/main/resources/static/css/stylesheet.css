@@ -9,28 +9,9 @@ body {
   font-size: 14px;
 }
 
-footer {
-  background-color: var(--dark-blue);
-  bottom: 0;
-  width: 100%;
-}
-
-:root {
-  --ligther-blue: #031FB4;
-  --light-blue: #0328EE;
-  --darker-blue: #010725;
-  --dark-blue: #010D50;
-  --light-green: #2DC24E;
-  --white: #fff;
-  --black: #000;
-  --gray: #909093;
-}
-
-/* LOGO */
-.logo-small,
-.logo-smaller,
-.logo-xsmall {
-  height: auto;
+.small-logo2{
+  max-width: 50% !important;
+  height: auto !important;
 }
 
 .logo-small {
@@ -99,9 +80,19 @@ footer {
   max-width: 550px;
 }
 
-/* END CSS WIDTH */
+footer{
+  background-color: #010D50;
+  width: 100%;
+}
 
-/* CSS INPUT */
+.text-color-blue{
+  color: #010D50;
+}
+
+.text-color-blue2{
+  color: #0328EE;
+}
+
 .custom-input {
   background-color: var(--dark-blue);
   color: var(--white);
@@ -394,33 +385,20 @@ select.flat-select {
   font-family: arial, tahoma;
   font-size: 16px;
   font-weight: bold;
-  outline: 0 none;
-  height: 33px;
-  padding: 5px 20px 5px 10px;
-  text-align: center;
-  text-indent: 0.01px;
-  text-overflow: "";
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  transition: all 0.3s ease 0s;
-  width: auto;
-  -webkit-transition: 0.3s ease all;
-  -moz-transition: 0.3s ease all;
-  -ms-transition: 0.3s ease all;
-  -o-transition: 0.3s ease all;
-  transition: 0.3s ease all;
 }
 
-select.flat-select:focus,
-select.flat-select:hover {
-  border: 0;
-  outline: 0;
+.pdb5{
+  padding-bottom: 5%;
 }
 
-.apexcharts-canvas {
-  margin: 0 auto;
+#chart {
+  max-width: 650px;
+  margin: 35px auto;
+  background-color: #fff;
 }
 
-#html {
-  display: none;
+#chartVela {
+  max-width: 650px;
+  margin: 35px auto;
+  background-color: #fff;
 }
-/* END CSS GRAFICO */

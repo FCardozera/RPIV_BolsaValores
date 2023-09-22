@@ -60,7 +60,7 @@ public class LoggingAspect {
     }
 
 
-    @AfterReturning("cadastroMetodos() || indexMetodos() || loginMetodos()")
+    @AfterReturning("cadastroMetodos() || indexMetodos() || loginMetodos() || invistaMetodos() || contatoMetodos() || sobreMetodos()")
     public void logOperation(JoinPoint joinPoint){
         String atividade = joinPoint.getSignature().getName();
 
