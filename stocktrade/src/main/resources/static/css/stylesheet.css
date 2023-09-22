@@ -1,10 +1,9 @@
 /* CSS */
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap");
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400,600,700');
 
 body {
-  background-color: var(--darker-blue);
-  color: var(--white);
+  background-color: #010725;
+  color: #fff;
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
 }
@@ -14,16 +13,14 @@ body {
   height: auto !important;
 }
 
-.logo-small {
-  max-width: 50%;
-}
-
-.logo-smaller {
+.smaller-logo {
   max-width: 15%;
+  height: auto;
 }
 
-.logo-xsmall {
+.xsmaller-logo {
   max-width: 10%;
+  height: auto;
 }
 
 .logo:hover {
@@ -31,9 +28,14 @@ body {
   transition: transform 0.3s ease;
 }
 
-/* END CSS LOGO */
+.move-left {
+  margin-right: auto !important;
+}
 
-/* HEADER */
+.no-flex-wrap {
+  flex-wrap: nowrap !important;
+}
+
 .nav li a.nav-link:hover {
   transition: color 0.5s ease, text-decoration 0.5s ease;
   border-radius: 20px;
@@ -41,29 +43,70 @@ body {
   background: radial-gradient(circle, hsla(231, 98%, 16%, 1) 0%, hsla(230, 100%, 20%, 1) 100%);
   background: -moz-radial-gradient(circle, hsla(231, 98%, 16%, 1) 0%, hsla(230, 100%, 20%, 1) 100%);
   background: -webkit-radial-gradient(circle, hsla(231, 98%, 16%, 1) 0%, hsla(230, 100%, 20%, 1) 100%);
-  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#010D50", endColorstr="#001167", GradientType=1);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#010D50", endColorstr="#001167", GradientType=1 );
 }
-/* END CSS HEADER */
 
-/* CSS BOTAO */
 .botao1 {
-  background-color: var(--light-blue);
+  background-color: #0328EE;
   border-radius: 20px;
   border-style: none;
-  color: var(--white);
+  color: #fff;
   text-transform: uppercase;
   padding: 15px 30px;
   transition: background-color 0.3s;
   font-size: 16px;
 }
 
-.botao1:hover {
-  background-color: var(--ligther-blue);
+.sobreMenu {
+  background-color: #010D50;
+  border-radius: 20px;
+  border-style: none;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 60px 120px;
+  transition: background-color 0.3s;
+  font-size: 16px;
 }
 
-/* END CSS BOTAO */
+.botao1:hover {
+  background-color: #031FB4;
+}
 
-/* CSS WIDTH */
+.texts{
+  padding-top: 9rem!important;
+}
+
+.custom-sublinhado {
+  position: relative;
+  transition: color 2s ease;
+}
+
+.custom-sublinhado::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1.5px; /* Altura do sublinhado */
+  bottom: -2px; /* Ajuste a distância entre o sublinhado e a palavra aqui */
+  left: 0;
+  background-color: #031FB4; /* Cor do sublinhado */
+}
+
+.h1{
+  font-size: 80px;
+}
+
+.h2{
+  font-size: 64px; 
+}
+
+.h3{
+  font-size: 16px;
+}
+
+.h4{
+  font-size: 56px;
+}
+
 .max-width-800px {
   max-width: 800px;
 }
@@ -94,8 +137,8 @@ footer{
 }
 
 .custom-input {
-  background-color: var(--dark-blue);
-  color: var(--white);
+  background-color: #010D50;
+  color: #fff;
   border: none;
   border-radius: 20px;
   width: 100%;
@@ -103,22 +146,19 @@ footer{
 }
 
 .custom-input::placeholder {
-  color: var(--white);
+  color: #fff;
 }
 
 .custom-input:focus {
   background-color: rgb(95, 95, 95);
-  border-color: var(--gray);
+  border-color: #a0a0a0;
   box-shadow: none;
-  color: var(--dark-blue) !important;
+  color: #010D50 !important;
 }
 
-/* END CSS INPUT */
-
-/* CSS CUSTOM CARD */
 .custom-card {
-  background-color: var(--dark-blue);
-  color: var(--white);
+  background-color: #010D50;
+  color: #fff;
   border: none;
   border-radius: 60px;
   width: 600px !important;
@@ -127,41 +167,39 @@ footer{
 }
 
 .custom-card2 {
-  background-color: var(--dark-blue);
-  color: var(--white);
+  background-color: #010D50;
+  color: #fff;
   border: none;
   border-radius: 65px;
   width: 80px !important;
   height: 60px !important;
 }
 
-.custom-card3 {
-  background-color: var(--dark-blue);
-  color: var(--white);
+.custom-card3{
+  background-color: #010D50;
+  color: #fff;
   border: none;
   border-radius: 65px;
   width: 300px !important;
-  height: 480px !important;
+  height: 480px !important;   
   flex-direction: column;
   align-items: flex-start;
 }
 
-.custom-card4 {
-  background-color: var(--dark-blue);
-  color: var(--white);
-  border-radius: 60px;
-  width: 470px !important;
-  height: 190px;
-  margin: 0;
+.img-fluid {
+  max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho do card */
+  height: auto; /* Mantém a proporção da imagem */
 }
 
-.custom-card5 {
-  background-color: var(--white);
-  color: var(--light-green);
-  border-radius: 60px;
-  width: 430px !important;
-  height: 50px;
-  margin: 0;
+.card-text {
+  color: #fff;
+  font-size: 16px;
+  margin-top: 15px; /* Ajuste conforme necessário */
+}
+
+.text-center {
+  text-align: center;
+  margin-top: 15px;
 }
 
 .card {
@@ -189,58 +227,18 @@ footer{
   margin-bottom: 30%;
 }
 
-.card-body {
+.card-body{
   padding-top: 5%;
   padding-bottom: 5%;
 }
 
-.card-body2 {
+.card-body2{
   padding-top: 5%;
   padding-bottom: 5%;
   padding-left: 5%;
   padding-right: 5%;
   border-radius: 20px;
-  background-color: var(--white);
-}
-
-.card-text {
-  color: var(--white);
-  font-size: 16px;
-  margin-top: 15px;
-}
-
-.altura-card {
-  height: 25px;
-}
-
-.home-logado-card {
-  padding-top: 0px;
-  padding-bottom: 15px;
-  padding-left: 350px;
-}
-
-.home-logado-card2 {
-  margin-left: 18px;
-  padding-top: 0px;
-  margin-top: 10px;
-}
-
-.home-logado-card3 {
-  padding-top: 0px;
-  margin-top: 10px;
-}
-
-/* END CSS CUSTOM CARD */
-
-/* CSS OUTROS */
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-}
-
-.text-center {
-  text-align: center;
-  margin-top: 15px;
+  background-color: #fff;
 }
 
 .container-img-background {
@@ -254,136 +252,31 @@ footer{
   background-image: url('../images/cadastro-pic.png');
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: fixed; 
 }
 
-.form-row>div {
+.form-row > div {
   float: left;
   width: 50%;
-  padding-left: .25rem !important;
-  padding-right: .25rem !important;
+  padding-left: .25rem!important;
+  padding-right: .25rem!important;
 }
 
 .mb-10 {
   margin-bottom: 10%;
 }
 
+/* Estilo para o link ativo (sublinhado) */
 .nav-link.active {
   text-decoration: underline !important;
   border-radius: 20px;
 }
 
-.margem-esquerda {
-  margin-left: -340;
+.no-wrap-text {
+  white-space: nowrap;
 }
 
-.fonte-arial {
-  font-family: Arial;
-}
-
-.text-color-blue {
-  color: var(--dark-blue);
-}
-
-.preto {
-  color: var(--black) !important;
-}
-
-.text-color-blue2 {
-  color: var(--light-blue);
-}
-
-.cinza {
-  color: var(--gray);
-}
-
-.sobreMenu {
-  background-color: var(--dark-blue);
-  border-radius: 20px;
-  border-style: none;
-  color: var(--white);
-  text-transform: uppercase;
-  padding: 60px 120px;
-  transition: background-color 0.3s;
-  font-size: 16px;
-}
-
-.texts {
-  padding-top: 9rem !important;
-}
-
-.custom-sublinhado {
-  position: relative;
-  transition: color 2s ease;
-}
-
-.custom-sublinhado::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 1.5px;
-  bottom: -2px;
-  left: 0;
-  background-color: var(--ligther-blue);
-}
-
-h1 {
-  font-size: 80px;
-}
-
-h2 {
-  font-size: 64px;
-}
-
-h4 {
-  font-size: 56px;
-}
-
-/* END CSS OUTROS */
-
-/* CSS CUSTOM PADDING */
-.custom-padding-left {
-  padding-left: 210px;
-}
-
-.custom-padding-left2 {
-  padding-left: 40px;
-}
-
-.custom-padding-left3 {
-  padding-left: 10px;
-}
-
-.custom-padding-left4 {
-  padding-left: 185px;
-}
-
-.custom-padding-left5 {
-  padding-left: 250px;
-}
-
-/* END CSS CUSTOM PADDING */
-
-/* CSS GRAFICO */
-#chart,
-.chart-box {
-  padding-top: 20px;
-  padding-left: 10px;
-  background: var(--white);
-  border: 1px solid #ddd;
-  box-shadow: 0 22px 35px -16px rgba(0, 0, 0, 0.1);
-}
-
-select.flat-select {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  background: #008FFB url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg/' width='60px' height='60px'><polyline fill='white' points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>") no-repeat scroll right 2px top 9px / 16px 16px;
-  border: 0 none;
-  border-radius: 3px;
-  color: var(--white);
-  font-family: arial, tahoma;
-  font-size: 16px;
+.negrito {
   font-weight: bold;
 }
 
