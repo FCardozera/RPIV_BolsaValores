@@ -115,10 +115,18 @@
             email: email,
             senha: password,
           }),
+        })
+        .then(response => {
+				if (response.ok) {
+					window.location.href='/indexLogado';
+				} else {
+					alert("Usuário não encontrado. Tente novamente.");
+				}
+			  })
+        .catch(error => {
+            alert("Ocorreu um erro ao realizar login!");
+            console.error(error);
         });
-
-        alert("Login realizado com sucesso!");
-        return true;
       }
     </script>
   </body>

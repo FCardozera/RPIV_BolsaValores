@@ -23,9 +23,16 @@ public class ControllerLogin {
 
     @PostMapping
     public ModelAndView login(@RequestBody UsuarioRequestDTO dados, HttpSession session) throws Exception {
-        ModelAndView mv = new ModelAndView("/login");
-        Usuario usuario = serviceLogin.login(dados);
-        session.setAttribute("usuarioLogado", usuario);
+        ModelAndView mv = new ModelAndView();
+        
+        Usuario userLogin = serviceLogin.login(dados);
+        if (userLogin == null) {
+            mv.addObject("msg", "Usuário não encontrado. Tente novamente");
+        } else {
+            mv.addObject("usuario", userLogin);
+            mv.setViewName("/indexLogado");
+            return mv;
+        }
         return mv;
     }
 
