@@ -1,6 +1,6 @@
 <div class="container-fluid pt-3" th:fragment="header(currentPage)">
   <header
-    class="d-flex align-items-center justify-content-between py-3 mb-4 no-flex-wrap mx-5"
+    class="d-flex align-items-center justify-content-between py-3 mb-4 flex-nowrap mx-5"
     >
     <!-- logo -->
     <a href="/">
@@ -11,7 +11,7 @@
       />
     </a>
 
-    <ul class="nav col-12 col-md-auto mb-2 mb-md-0 move-left">
+    <ul class="nav col-12 col-md-auto mb-2 mb-md-0 me-auto">
 
       <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/', 'Home', ${currentPage})}"></li>
 
