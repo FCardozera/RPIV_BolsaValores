@@ -124,7 +124,7 @@ footer {
   background-color: rgb(95, 95, 95);
   border-color: var(--gray);
   box-shadow: none;
-  color: var(--dark-blue) !important;
+  color: var(--white) !important;
 }
 
 /* END CSS INPUT */
