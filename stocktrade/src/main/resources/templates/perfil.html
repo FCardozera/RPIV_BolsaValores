@@ -1,47 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
   <head
-    th:replace="~{fragments/headFragment :: head('StockTrade - Login')}"
+    th:replace="~{fragments/headFragment :: head('StockTrade - Perfil')}"
   ></head>
   <body>
     <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
 
     <main>
-      <div th:replace="~{fragments/headerFragment :: header('Login')}"></div>
+      <div
+        th:replace="~{fragments/headerLogadoFragment :: header('indexLogado')}"
+      ></div>
 
-      <div class="container-fluid mt-5 container-img-background">
+      <div class="container-fluid mt-5">
         <div class="row justify-content-center">
           <div class="col-md-4">
             <div class="card">
               <div class="card-body">
                 <form>
                   <div class="mb-3">
+                    <h3 class="text-color-blue text-uppercase">
+                      Configurações
+                    </h3>
+
                     <label
                       for="username"
                       class="form-label text-color-blue text-uppercase"
-                      >Email</label
-                    >
+                    ></label>
+                    <h5 class="text-color-blue text-uppercase">Trocar email</h5>
+                    <p class="text-color-blue text-uppercase">Email Atual</p>
                     <input
                       type="text"
                       class="form-control custom-input"
                       id="username"
-                      placeholder="Digite seu email"
+                      placeholder="Digite seu email atual"
+                    />
+                    <p class="text-color-blue text-uppercase mt-2">
+                      Novo email
+                    </p>
+                    <input
+                      type="text"
+                      class="form-control custom-input mt-3"
+                      id="newUsername"
+                      placeholder="Digite seu novo email"
+                    />
+                    <input
+                      type="text"
+                      class="form-control custom-input mt-3"
+                      id="newUsername"
+                      placeholder="Digite novamente seu novo email"
                     />
                   </div>
                   <div class="mb-3">
                     <label
                       for="password"
                       class="form-label text-color-blue text-uppercase"
-                      >Senha</label
-                    >
+                    ></label>
+                    <h5 class="text-color-blue text-uppercase">Trocar senha</h5>
+                    <p class="text-color-blue text-uppercase">Senha Atual</p>
                     <input
                       type="password"
                       class="form-control custom-input"
                       id="password"
-                      placeholder="Digite sua senha"
+                      placeholder="Digite sua senha atual"
                       oninput="limitSenha(this)"
                     />
-                    <p id="senha-error" class="text-danger mt-2"></p>
+                    <p class="text-color-blue text-uppercase mt-2">
+                      Nova senha
+                    </p>
+                    <input
+                      type="newPassword"
+                      class="form-control custom-input"
+                      id="newPassword"
+                      placeholder="Digite sua nova senha"
+                      oninput="limitSenha(this)"
+                    />
+                    <input
+                      type="newPassword"
+                      class="form-control custom-input mt-3"
+                      id="newPassword"
+                      placeholder="Confirme sua nova senha"
+                      oninput="limitSenha(this)"
+                    />
                   </div>
                   <div class="text-center">
                     <button
@@ -49,7 +88,7 @@
                       class="btn btn-outline-primary botao1 mb-3 mt-3"
                       onclick="enviarLogin(event)"
                     >
-                      Login
+                      Confirmar
                     </button>
                   </div>
                 </form>
@@ -89,20 +128,19 @@
 
         let email = document.getElementById("username").value;
         let password = document.getElementById("password").value;
-        let senhaError = document.getElementById("senha-error"); // Elemento para mostrar a mensagem de erro
 
         if (email == "" || password == "") {
-          senhaError.textContent = "Preencha todos os campos!"; // Exibe a mensagem de erro
+          alert("Preencha todos os campos!");
           return false;
         }
 
         if (password.length < 8) {
-          senhaError.textContent = "A senha deve ter no mínimo 8 caracteres!"; // Exibe a mensagem de erro
+          alert("A senha deve ter no mínimo 8 caracteres!");
           return false;
         }
 
         if (!email.includes("@") || !email.includes(".com")) {
-          senhaError.textContent = "E-mail inválido!"; // Exibe a mensagem de erro
+          alert("E-mail inválido!");
           return false;
         }
 
