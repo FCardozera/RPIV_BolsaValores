@@ -1,7 +1,5 @@
 package com.unipampa.stocktrade.service;
 
-import java.security.NoSuchAlgorithmException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +13,14 @@ public class ServiceLogin {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Usuario login(UsuarioRequestDTO dados) throws Exception{
-        try {
-
-            Usuario usuario = usuarioRepository.findByEmail(dados.email());
+    public Usuario login(UsuarioRequestDTO dados) {
+        Usuario usuario = usuarioRepository.findByEmail(dados.email());
             
-            if (usuario == null || !usuario.isSenhaCorreta(dados.senha())) {
-                throw new Exception("Email e/ou senha incorretos");
-            }
-
-            return usuario;
-
-        } catch (NoSuchAlgorithmException e) {
-            throw new Exception("Erro na criptografia da senha");
+        if (usuario == null || !usuario.isSenhaCorreta(dados.senha())) {
+            throw new RuntimeException("Email e/ou senha incorretos");
         }
+
+        return usuario;
     }
 
 }
