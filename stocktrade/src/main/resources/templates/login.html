@@ -114,13 +114,15 @@
           body: JSON.stringify({
             email: email,
             senha: password,
-          }),
+          })
         })
         .then(response => {
 				if (response.ok) {
 					window.location.href='/indexLogado';
 				} else {
-					alert("Usuário não encontrado. Tente novamente.");
+          response.json().then(data => {
+            senhaError.textContent = data.message;
+          });
 				}
 			  })
         .catch(error => {
