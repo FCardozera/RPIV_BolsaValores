@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
-import com.unipampa.stocktrade.controller.DTO.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
 import com.unipampa.stocktrade.model.entity.oferta.Oferta;

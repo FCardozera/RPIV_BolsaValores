@@ -1,4 +1,4 @@
-package com.unipampa.stocktrade.aspect;
+package com.unipampa.stocktrade.aspect.log;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -8,45 +8,46 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.unipampa.stocktrade.controller.DTO.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
 import com.unipampa.stocktrade.model.entity.registro.Registro;
 import com.unipampa.stocktrade.model.repository.registro.RegistroRepository;
 
 @Aspect
 @Component
-public class LoggingCadastroAspect {
+public class LoginLoggingAspect {
 
     @Autowired
     private RegistroRepository registroRepository;
 
-    public LoggingCadastroAspect(RegistroRepository registroRepository) {
+    public LoginLoggingAspect(RegistroRepository registroRepository) {
         this.registroRepository = registroRepository;
     }
 
-    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerCadastro.cadastrarUsuario(..))")
-    public void cadastrarUsuario() {
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerLogin.login(..))")
+    public void login() {
     }
 
-    @AfterReturning("cadastrarUsuario()")
-    public void logOperationCadastrarUsuario(JoinPoint joinPoint) {
+    @AfterReturning("login()")
+    public void logOperationLogarUsuario(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
 
         UsuarioRequestDTO usuarioRequestDTO = (UsuarioRequestDTO) args[0];
 
-        Registro registro = new Registro("Cadastro sucedido com o e-mail " + usuarioRequestDTO.email() + " e nome " + usuarioRequestDTO.nome());
+        Registro registro = new Registro("Login com sucesso com o e-mail " + usuarioRequestDTO.email());
 
         registroRepository.save(registro);
     }
 
-    @AfterThrowing(pointcut = "cadastrarUsuario()", throwing = "exception")
-    public void logOperationCadastrarUsuarioError(JoinPoint joinPoint, Exception exception) {
+    @AfterThrowing(pointcut = "login()", throwing = "exception")
+    public void logOperationLogarUsuarioException(JoinPoint joinPoint, Exception exception) {
         Object[] args = joinPoint.getArgs();
 
         UsuarioRequestDTO usuarioRequestDTO = (UsuarioRequestDTO) args[0];
 
-        Registro registro = new Registro("Erro ao cadastrar usuário com e-mail " + usuarioRequestDTO.email() + " e nome " + usuarioRequestDTO.nome() + ": " + exception.getMessage());
+        Registro registro = new Registro("Tentativa mal sucedida de login com e-mail " + usuarioRequestDTO.email() + " falhou: " + exception.getMessage());
 
         registroRepository.save(registro);
     }
+
 
 }

@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.unipampa.stocktrade.controller.DTO.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
-import com.unipampa.stocktrade.service.ServiceLogin;
+import com.unipampa.stocktrade.service.LoginService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/login")
-public class ControllerLogin {
+public class LoginController {
     
     @Autowired
-    private ServiceLogin serviceLogin;
+    private LoginService serviceLogin;
 
     @PostMapping
     public ModelAndView login(@RequestBody UsuarioRequestDTO dados, HttpSession session) throws Exception {

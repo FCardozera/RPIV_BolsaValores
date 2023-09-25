@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/perfil")
-public class ControllerPerfil {
+public class PerfilController {
     
     @GetMapping
     public ModelAndView perfilPagina() {

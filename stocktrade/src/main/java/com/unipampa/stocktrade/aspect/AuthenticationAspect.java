@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.unipampa.stocktrade.controller.DTO.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
-import com.unipampa.stocktrade.service.ServiceLogin;
+import com.unipampa.stocktrade.service.LoginService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,7 +24,7 @@ public class AuthenticationAspect {
     }
 
     @Autowired
-    private ServiceLogin serviceLogin;
+    private LoginService serviceLogin;
 
     @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerLogin.login(..))")
     public void loginPointcut() {

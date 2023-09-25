@@ -9,7 +9,7 @@ import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
 
 @Service
-public class ServiceIndex {
+public class IndexService {
 
     @Autowired
     private AcaoRepository acaoRepository;
