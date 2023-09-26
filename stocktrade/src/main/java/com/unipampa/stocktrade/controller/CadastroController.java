@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
 import com.unipampa.stocktrade.service.CadastroService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/cadastro")
 public class CadastroController {
@@ -26,8 +28,8 @@ public class CadastroController {
     }
 
     @GetMapping
-    public ModelAndView cadastroPagina() {
-        ModelAndView mv = new ModelAndView("/cadastro");
+    public ModelAndView cadastroPagina(HttpSession session) {
+        ModelAndView mv = new ModelAndView("cadastro");
         return mv;
     }
 }

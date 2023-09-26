@@ -19,10 +19,6 @@ public class CadastroLoggingAspect {
     @Autowired
     private RegistroRepository registroRepository;
 
-    public CadastroLoggingAspect(RegistroRepository registroRepository) {
-        this.registroRepository = registroRepository;
-    }
-
     @Pointcut("execution(* com.unipampa.stocktrade.controller.CadastroController.cadastrarUsuario(..))")
     public void cadastrarUsuario() {
     }

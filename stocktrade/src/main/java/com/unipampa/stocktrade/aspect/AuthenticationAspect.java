@@ -4,47 +4,35 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
-import com.unipampa.stocktrade.model.entity.usuario.Usuario;
-import com.unipampa.stocktrade.service.LoginService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Aspect
 @Component
 public class AuthenticationAspect {
-    private final HttpSession session;
 
-    public AuthenticationAspect(HttpSession session) {
-        this.session = session;
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.LoginController.loginPagina(..)) ||" +
+              "execution(* com.unipampa.stocktrade.controller.IndexController.index(..)) ||" +
+              "execution(* com.unipampa.stocktrade.controller.CadastroController.cadastroPagina(..))")
+    public void notLoggedPointcut() {
     }
 
-    @Autowired
-    private LoginService serviceLogin;
-
-    @Pointcut("execution(* com.unipampa.stocktrade.controller.LoginController.login(..))")
-    public void loginPointcut() {
-    }
-
-    @Pointcut("execution(* com.unipampa.stocktrade.controller.IndexLogadoController.*(..)) ||" +
-    "execution(* com.unipampa.stocktrade.controller.CarteiraController.*(..)) ||" +
-    "execution(* com.unipampa.stocktrade.controller.PerfilController.*(..))")
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.IndexLogadoController.indexLogado(..)) ||" +
+    "execution(* com.unipampa.stocktrade.controller.CarteiraController.carteiraPagina(..)) ||" +
+    "execution(* com.unipampa.stocktrade.controller.PerfilController.perfilPagina(..))")
     public void loggedPointcut() {
     }
 
-    @Around("loginPointcut()")
+    @Around("notLoggedPointcut()")
     public Object aroundLogin(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object[] args = joinPoint.getArgs();
-        UsuarioRequestDTO usuarioRequestDTO = (UsuarioRequestDTO) args[0];
-        Usuario userLogin = serviceLogin.login(usuarioRequestDTO);
+        HttpSession session = (HttpSession) joinPoint.getArgs()[0];
 
-        if (userLogin != null) {
-            session.setAttribute("usuarioLogado", userLogin);
-            System.out.println("Login realizado com sucesso!");
+        if (session.getAttribute("usuarioLogado") != null) {
+            ModelAndView mv = new ModelAndView("indexLogado");
+            System.out.println("Você já está logado");
+            return mv;
         }
 
         return joinPoint.proceed();
@@ -52,27 +40,15 @@ public class AuthenticationAspect {
 
     @Around("loggedPointcut()")
     public Object aroundLogged(ProceedingJoinPoint joinPoint) throws Throwable {
-        ModelAndView mv = new ModelAndView("/login");
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        HttpSession session = (HttpSession) joinPoint.getArgs()[0];
 
-        if (usuarioLogado == null) {
-            System.out.println("Deve haver um usuário logado para acessar esta página");
+        if (session.getAttribute("usuarioLogado") == null) {
+            ModelAndView mv = new ModelAndView("index");
+            System.out.println("Você não está logado");
             return mv;
         }
+
         return joinPoint.proceed();
     }
 
-    @Around("execution(* com.unipampa.stocktrade.controller.LoginController.loginPagina(..)) ||" + 
-    "execution(* com.unipampa.stocktrade.controller.CadastroController.cadastroPagina(..)) ||" + 
-    "execution(* com.unipampa.stocktrade.controller.IndexController.*(..))")
-    public Object aroundLoginCadastroPagina(ProceedingJoinPoint joinPoint) throws Throwable {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-
-        if (usuarioLogado != null) {
-            ModelAndView mv = new ModelAndView("indexLogado");
-            System.out.println("Você não pode estar logado");
-            return mv;
-        }
-        return joinPoint.proceed();
-    }
 }

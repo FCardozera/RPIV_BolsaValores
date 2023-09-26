@@ -19,10 +19,6 @@ public class LoginLoggingAspect {
     @Autowired
     private RegistroRepository registroRepository;
 
-    public LoginLoggingAspect(RegistroRepository registroRepository) {
-        this.registroRepository = registroRepository;
-    }
-
     @Pointcut("execution(* com.unipampa.stocktrade.controller.LoginController.login(..))")
     public void login() {
     }
@@ -44,7 +40,7 @@ public class LoginLoggingAspect {
 
         UsuarioRequestDTO usuarioRequestDTO = (UsuarioRequestDTO) args[0];
 
-        Registro registro = new Registro("Tentativa mal sucedida de login com e-mail " + usuarioRequestDTO.email() + " falhou: " + exception.getMessage());
+        Registro registro = new Registro("Tentativa mal sucedida de login com e-mail " + usuarioRequestDTO.email() + ": " + exception.getMessage());
 
         registroRepository.save(registro);
     }
