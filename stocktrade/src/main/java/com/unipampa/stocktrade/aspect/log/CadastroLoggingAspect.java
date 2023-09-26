@@ -23,7 +23,7 @@ public class CadastroLoggingAspect {
         this.registroRepository = registroRepository;
     }
 
-    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerCadastro.cadastrarUsuario(..))")
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.CadastroController.cadastrarUsuario(..))")
     public void cadastrarUsuario() {
     }
 

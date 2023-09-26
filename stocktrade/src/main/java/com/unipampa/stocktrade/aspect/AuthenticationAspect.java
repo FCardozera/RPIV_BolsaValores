@@ -26,13 +26,13 @@ public class AuthenticationAspect {
     @Autowired
     private LoginService serviceLogin;
 
-    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerLogin.login(..))")
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.LoginController.login(..))")
     public void loginPointcut() {
     }
 
-    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerIndexLogado.*(..)) ||" +
-    "execution(* com.unipampa.stocktrade.controller.ControllerCarteira.*(..)) ||" +
-    "execution(* com.unipampa.stocktrade.controller.ControllerPerfil.*(..))")
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.IndexLogadoController.*(..)) ||" +
+    "execution(* com.unipampa.stocktrade.controller.CarteiraController.*(..)) ||" +
+    "execution(* com.unipampa.stocktrade.controller.PerfilController.*(..))")
     public void loggedPointcut() {
     }
 
@@ -62,9 +62,9 @@ public class AuthenticationAspect {
         return joinPoint.proceed();
     }
 
-    @Around("execution(* com.unipampa.stocktrade.controller.ControllerLogin.loginPagina(..)) ||" + 
-    "execution(* com.unipampa.stocktrade.controller.ControllerCadastro.cadastroPagina(..)) ||" + 
-    "execution(* com.unipampa.stocktrade.controller.ControllerIndex.*(..))")
+    @Around("execution(* com.unipampa.stocktrade.controller.LoginController.loginPagina(..)) ||" + 
+    "execution(* com.unipampa.stocktrade.controller.CadastroController.cadastroPagina(..)) ||" + 
+    "execution(* com.unipampa.stocktrade.controller.IndexController.*(..))")
     public Object aroundLoginCadastroPagina(ProceedingJoinPoint joinPoint) throws Throwable {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
 

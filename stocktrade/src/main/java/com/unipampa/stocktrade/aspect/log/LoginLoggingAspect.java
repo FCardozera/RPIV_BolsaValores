@@ -23,7 +23,7 @@ public class LoginLoggingAspect {
         this.registroRepository = registroRepository;
     }
 
-    @Pointcut("execution(* com.unipampa.stocktrade.controller.ControllerLogin.login(..))")
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.LoginController.login(..))")
     public void login() {
     }
 
