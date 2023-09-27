@@ -25,6 +25,7 @@ footer {
   --black: #000;
   --gray: #909093;
   --red: #FF0000;
+  --ligther-red: #FF4D4D;
 }
 
 /* LOGO */
@@ -79,6 +80,38 @@ footer {
 
 .botao1:hover {
   background-color: var(--ligther-blue);
+}
+
+.botao2 {
+  background-color: var(--red);
+  border-radius: 20px;
+  border-style: none;
+  color: var(--white);
+  text-transform: uppercase;
+  padding: 15px 30px;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+
+.botao2:hover {
+  background-color: var(--ligther-red);
+}
+
+.botao3 {
+  background-color: var(--red);
+  border-radius: 20px;
+  border-style: none;
+  color: var(--white);
+  text-transform: uppercase;
+  padding: 5px 8px;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  width: 80px;
+  height: 30px;
+}
+
+.botao3:hover {
+  background-color: var(--ligther-red);
 }
 
 /* END CSS BOTAO */
@@ -458,12 +491,13 @@ h4 {
 .btn-custom {
   color: white;
   border: 1px solid var(--white);
+  border-radius: 20px;
 }
-
 
 .input-custom {
   background-color: white; 
   color: white; 
+  border-radius: 20px;
 }
 
 /* Estilo para o hover do botão Pesquisar */

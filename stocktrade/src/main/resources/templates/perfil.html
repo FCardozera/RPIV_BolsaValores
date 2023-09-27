@@ -81,16 +81,26 @@
                       placeholder="Confirme sua nova senha"
                       oninput="limitSenha(this)"
                     />
-                  </div>
-                  <div class="text-center">
-                    <button
-                      type="submit"
-                      class="btn btn-outline-primary botao1 mb-3 mt-3"
-                      onclick="enviarLogin(event)"
-                    >
-                      Confirmar
-                    </button>
-                  </div>
+                    <div class="text-center">
+                      <button
+                        type="submit"
+                        class="btn btn-outline-primary botao1 mb-3 mt-3"
+                        onclick="enviarLogin(event)"
+                      >
+                        Confirmar
+                      </button>
+                    </div>
+                    <h5 class="text-color-blue text-uppercase mt-4">Excluir conta</h5>
+                    <input
+                      type="password"
+                      class="form-control custom-input mt-2"
+                      id="password"
+                      placeholder="Digite sua senha para excluir a conta"
+                      oninput="limitSenha(this)"
+                    />
+                    <div class="text-center">
+                      <button type="button" class="btn btn-outline-danger botao2 mb-2 mt-2">Excluir</button>
+                    </div>
                 </form>
               </div>
             </div>
