@@ -26,4 +26,8 @@ public class LoginService {
 
         return usuario;
     }
+
+    public void logout(HttpSession session) {
+        session.invalidate();
+    }
 }
