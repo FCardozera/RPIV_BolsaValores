@@ -469,6 +469,9 @@ h4 {
   padding-top: 45px;
 }
 
+.custom-padding-bottom{
+  padding-bottom: 6.5%;
+}
 /* CSS TABLE CARTEIRA */
 .table-custom {
   padding: 40px; /* Espaçamento interno das células (ajuste conforme necessário) */
