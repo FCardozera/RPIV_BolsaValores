@@ -1,6 +1,9 @@
 package com.unipampa.stocktrade.model.entity.usuario;
 
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Set;
 import java.util.UUID;
 
@@ -9,7 +12,6 @@ import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
 import com.unipampa.stocktrade.model.entity.oferta.Oferta;
 import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
-import com.unipampa.stocktrade.util.Util;
 
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -85,11 +87,11 @@ public class Usuario implements Serializable {
         this.saldo = 0.0;
         this.tipo = TipoUsuario.CLIENTE;
 
-        this.saltSenha = Util.salt();
-        this.hashSenha = Util.sha256(senha, this.saltSenha);  
+        this.saltSenha = salt();
+        this.hashSenha = sha256(senha, this.saltSenha);  
         
-        this.saltSenhaAutenticacao = Util.salt();
-        this.hashSenhaAutenticacao = Util.sha256(senhaAutenticacao, this.saltSenhaAutenticacao);
+        this.saltSenhaAutenticacao = salt();
+        this.hashSenhaAutenticacao = sha256(senhaAutenticacao, this.saltSenhaAutenticacao);
     }
 
     public Usuario(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao, TipoUsuario tipo) {
@@ -102,8 +104,38 @@ public class Usuario implements Serializable {
     }
 
     public boolean isSenhaCorreta(String senha) {
-        String hashSenha = Util.sha256(senha, this.saltSenha);
+        String hashSenha = sha256(senha, this.saltSenha);
 
         return this.hashSenha.equals(hashSenha);
+    }
+
+    private String sha256(String senha, byte[] salt) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+            String saltString = new String(salt);
+            String senhaSalt = senha.concat(saltString);
+
+            byte[] hashBytes = md.digest(senhaSalt.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte hashByte : hashBytes) {
+                String hex = Integer.toHexString(0xff & hashByte);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Erro ao gerar hash da senha");
+        }
+    }
+
+    private byte[] salt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[32];
+        random.nextBytes(salt);
+        return salt;
     }
 }
