@@ -50,4 +50,9 @@ public class Acao implements Serializable {
     @ManyToOne
     @JoinColumn(name = "oferta_id")
     private Oferta oferta;
+
+    public Acao(String sigla, Double valor) {
+        this.sigla = sigla;
+        this.valor = valor;
+    }
 }
