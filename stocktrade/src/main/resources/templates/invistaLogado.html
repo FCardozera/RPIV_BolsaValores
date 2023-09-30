@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head
+    th:replace="~{fragments/headFragment :: head('StockTrade - Invista')}"
+  ></head>
+  <body id="sobre-page">
+    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+
+    <main>
+      <div
+        th:replace="~{fragments/headerLogadoFragment :: header('indexLogado')}"
+      ></div>
+
+      <div class="col-12">
+        <h1 class="text-left custom-margin-left">Invista</h1>
+      </div>
+      <div class="container mb-4 justify-content-center">
+        
+        <div class="container row justify-content-center">
+          <table class="table table-custom-invista">
+            <thead>
+              <tr>
+                <th scope="col">EMPRESA</th>
+                <th scope="col">SIGLA</th>
+                <th scope="col">PREÇO ATUAL</th>
+                <th scope="col">VARIAÇÃO DIA</th>
+                <th scope="col">OPÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><img src="images/petrobras-icon.png" class="img-fluid rounded-start"
+                    alt="edu-financeira" /> PETR4</th>
+                <td>COMPRA</td>
+                <td>R$33,65</td>
+                <td>R$36,70</td>
+    
+                <td><svg width="19" height="19" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#fff" />
+                </svg></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
+  </body>
+</html>

@@ -10,6 +10,7 @@ body {
 }
 
 footer {
+  margin-top: auto;
   background-color: var(--dark-blue);
   bottom: 0;
   width: 100%;
@@ -480,6 +481,16 @@ h4 {
   height: 624px;
   width: 1124px;
   font-size: 17px;
+}
+
+.table-custom-invista {
+  text-align: center; /* Alinhamento de texto centralizado */
+  color: white;
+  font-size: 17px;
+}
+
+.custom-margin-left{
+  margin-left: 15%;
 }
 
 .margin-table{
