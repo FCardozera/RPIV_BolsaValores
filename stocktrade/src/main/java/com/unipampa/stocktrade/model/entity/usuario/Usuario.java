@@ -104,6 +104,15 @@ public class Usuario implements Serializable {
         this(null, data.nome(), data.cpf(), data.email(), data.senha(), data.senhaAutenticacao());
     }
 
+    public void trocarEmail(String novoEmail) {
+        this.email = novoEmail;
+    }
+
+    public void trocarSenha(String novaSenha) {
+        this.saltSenha = salt();
+        this.hashSenha = sha256(novaSenha, this.saltSenha);
+    }
+
     public boolean isSenhaCorreta(String senha) {
         String hashSenha = sha256(senha, this.saltSenha);
 
