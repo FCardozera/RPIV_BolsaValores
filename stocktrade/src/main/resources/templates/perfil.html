@@ -94,12 +94,12 @@
                     <input
                       type="password"
                       class="form-control custom-input mt-2"
-                      id="password"
+                      id="passwordExcluir"
                       placeholder="Digite sua senha para excluir a conta"
                       oninput="limitSenha(this)"
                     />
                     <div class="text-center">
-                      <button type="button" class="btn btn-outline-danger botao2 mb-2 mt-2">Excluir</button>
+                      <button type="button" class="btn btn-outline-danger botao2 mb-2 mt-2" onclick="enviarLogin(this)">Excluir</button>
                     </div>
                 </form>
               </div>
@@ -114,9 +114,6 @@
     <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
 
     <script>
-      function validateNome(input) {
-        input.value = input.value.replace(/[^a-zA-Z\s]/g, ""); // permite apenas letras e espaços
-      }
 
       function limitSenha(input) {
         input.value = input.value.replace(/\D/g, ""); // permite apenas dígitos
@@ -125,21 +122,12 @@
         }
       }
 
-      function limitSenhaAutenticacao(input) {
-        input.value = input.value.replace(/\D/g, ""); // permite apenas dígitos
-        if (input.value.length > 4) {
-          input.value = input.value.slice(0, 4); // limita a 4 dígitos
-        }
-      }
-
       function enviarLogin(event) {
-        event.preventDefault();
-        console.log("validateForm function called");
+        console.log("enviarLogin function called");
 
-        let email = document.getElementById("username").value;
-        let password = document.getElementById("password").value;
+        let password = document.getElementById("passwordExcluir").value;
 
-        if (email == "" || password == "") {
+        if (password == "") {
           alert("Preencha todos os campos!");
           return false;
         }
@@ -149,23 +137,29 @@
           return false;
         }
 
-        if (!email.includes("@") || !email.includes(".com")) {
-          alert("E-mail inválido!");
-          return false;
-        }
-
-        fetch("/login", {
-          method: "post",
+        fetch("/perfil", {
+          method: "delete",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: email,
-            senha: password,
-          }),
+            senha: password
+          })
+        })
+        .then(response => {
+				if (response.ok) {
+					window.location.href='/indexLogado';
+				} else {
+          response.json().then(data => {
+            senhaError.textContent = data.message;
+          });
+				}
+			  })
+        .catch(error => {
+            alert("Ocorreu um erro ao realizar login!");
+            console.error(error);
         });
 
-        alert("Login realizado com sucesso!");
         return true;
       }
     </script>
