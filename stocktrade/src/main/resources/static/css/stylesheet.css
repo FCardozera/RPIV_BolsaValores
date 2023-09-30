@@ -10,6 +10,7 @@ body {
 }
 
 footer {
+  margin-top: auto;
   background-color: var(--dark-blue);
   bottom: 0;
   width: 100%;
@@ -480,6 +481,29 @@ h4 {
   height: 624px;
   width: 1124px;
   font-size: 17px;
+}
+
+.table-custom-invista {
+  text-align: center; /* Alinhamento de texto centralizado */
+  color: white;
+  font-size: 17px;
+}
+
+#saldo {
+  opacity: 1; /* Defina a opacidade inicial para 1 (visível) */
+  transition: opacity 0.2s ease-in-out; /* Adicione uma transição suave para a propriedade de opacidade */
+}
+
+#toggleEye {
+  cursor: pointer; /* Adicione um cursor de apontador ao ícone do olho */
+}
+
+.custom-margin-left{
+  margin-left: 15%;
+}
+
+.custom-margin-left2{
+  margin-left: 43%;
 }
 
 .margin-table{
