@@ -1,6 +1,9 @@
 package com.unipampa.stocktrade.config;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,18 +60,37 @@ public class TestConfig implements CommandLineRunner {
         usuarioRepository.deleteAll();
         empresaRepository.deleteAll();
 
-        Instant instant1 = Instant.parse("2021-03-25T19:53:07Z");
-        Instant instant2 = Instant.parse("2021-12-29T19:53:07Z");
+        Instant instant1 = Instant.now();
+        Instant instant2 = (LocalDateTime.of(2022, Month.AUGUST, 02, 12, 0)).toInstant(ZoneOffset.UTC);
+        Instant instant3 = (LocalDateTime.of(2022, Month.DECEMBER, 31, 23, 0)).toInstant(ZoneOffset.UTC);
+        Instant instant4 = (LocalDateTime.of(2023, Month.JUNE, 15, 23, 0)).toInstant(ZoneOffset.UTC);
+        Instant instant5 = (LocalDateTime.of(2023, Month.JULY, 10, 12, 0)).toInstant(ZoneOffset.UTC);
+        Instant instant6 = (LocalDateTime.of(2023, Month.AUGUST, 01, 12, 0)).toInstant(ZoneOffset.UTC);
 
         Usuario usuario1 = new Usuario(null, "Ricardo", "44444444435", "ricardo@gmail.com", "12345678", "1234", TipoUsuario.CLIENTE);
         Usuario usuario2 = new Usuario(null, "Felipe", "44424444435", "felipe@gmail.com", "12345678", "1234", TipoUsuario.ADMIN);
 
+        Movimentacao mov1 = new Movimentacao(null, 15000.0, instant1, TipoMovimentacao.DEPOSITO, usuario1);
+        usuario1.setSaldo(usuario1.getSaldo() + 15000.0);
+
+        Movimentacao mov2 = new Movimentacao(null, 25000.0, instant2, TipoMovimentacao.DEPOSITO, usuario2);
+        usuario2.setSaldo(usuario2.getSaldo() + 25000.0);
+
+        Movimentacao mov3 = new Movimentacao(null, 5500.0, instant3, TipoMovimentacao.SAQUE, usuario2);
+        usuario2.setSaldo(usuario2.getSaldo() - 5500.0);
+
+        Movimentacao mov4 = new Movimentacao(null, 200.0, instant4, TipoMovimentacao.TRANSFERENCIA, usuario2);
+        usuario2.setSaldo(usuario2.getSaldo() - 200.0);
+
+        Movimentacao mov5 = new Movimentacao(null, 850.0, instant5, TipoMovimentacao.DEPOSITO, usuario2);
+        usuario2.setSaldo(usuario2.getSaldo() + 850.0);
+
+        Movimentacao mov6 = new Movimentacao(null, 60.55, instant6, TipoMovimentacao.DIVIDENDO, usuario2);
+        usuario2.setSaldo(usuario2.getSaldo() + 60.55);
+
         usuarioRepository.saveAll(List.of(usuario1, usuario2));
 
-        Movimentacao mov1 = new Movimentacao(null, 20.0, instant1, TipoMovimentacao.DEPOSITO, usuario1);
-        Movimentacao mov2 = new Movimentacao(null, 10.0, instant2, TipoMovimentacao.SAQUE, usuario2);
-
-        movimentacaoRepository.saveAll(List.of(mov1, mov2));
+        movimentacaoRepository.saveAll(List.of(mov1, mov2, mov3, mov4, mov5, mov6));
 
         Empresa empresa1 = new Empresa(null, "Petrobras LTDA", "53048280000174", null);
         Empresa empresa2 = new Empresa(null, "Vale LTDA", "50951271000109", null);
