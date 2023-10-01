@@ -31,6 +31,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -86,7 +87,7 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario")
     private Set<Movimentacao> movimentacoes;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private Set<Acao> acoes;
 
     @OneToMany(mappedBy = "usuario")
@@ -116,6 +117,15 @@ public class Usuario implements Serializable {
 
     public Usuario(UsuarioRequestDTO data) {
         this(null, data.nome(), data.cpf(), data.email(), data.senha(), data.senhaAutenticacao());
+    }
+
+    public void trocarEmail(String novoEmail) {
+        this.email = novoEmail;
+    }
+
+    public void trocarSenha(String novaSenha) {
+        this.saltSenha = salt();
+        this.hashSenha = sha256(novaSenha, this.saltSenha);
     }
 
     public boolean isSenhaCorreta(String senha) {

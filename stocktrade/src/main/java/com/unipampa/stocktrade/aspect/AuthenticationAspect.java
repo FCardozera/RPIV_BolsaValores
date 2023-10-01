@@ -21,7 +21,8 @@ public class AuthenticationAspect {
 
     @Pointcut("execution(* com.unipampa.stocktrade.controller.IndexLogadoController.indexLogado(..)) ||" +
     "execution(* com.unipampa.stocktrade.controller.CarteiraController.carteiraPagina(..)) ||" +
-    "execution(* com.unipampa.stocktrade.controller.PerfilController.perfilPagina(..))")
+    "execution(* com.unipampa.stocktrade.controller.PerfilController.perfilPagina(..)) ||" + 
+    "execution(* com.unipampa.stocktrade.controller.InvistaLogado.invistaLogado(..))")
     public void loggedPointcut() {
     }
 
