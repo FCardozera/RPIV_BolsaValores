@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head
-    th:replace="~{fragments/headFragment :: head('StockTrade - indexLogado')}"
+    th:replace="~{fragments/headFragment :: head('StockTrade - Home')}"
   ></head>
 
   <body id="index-logado-page">
@@ -8,7 +8,7 @@
 
     <main>
       <div
-        th:replace="~{fragments/headerLogadoFragment :: header('indexLogado')}"
+        th:replace="~{fragments/headerLogadoFragment :: header('Home')}"
       ></div>
 
       <div class="container-fluid mt-2 mb-2">
@@ -255,7 +255,7 @@
       </div>
     </main>
 
-    <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
+    <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
   </body>

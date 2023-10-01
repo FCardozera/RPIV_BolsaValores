@@ -1,0 +1,35 @@
+<footer class="footer py-3 container-fluid" th:fragment="footer">
+  <div
+    class="mx-5 d-flex justify-content-between align-items-center border-bottom border-white pb-4 pt-2 pe-5"
+  >
+    <!-- Logo à esquerda -->
+    <a href="/">
+      <img
+        src="images/logo-bg-off.png"
+        alt="Logo"
+        class="logo small-logo2 me-5 ms-5"
+      />
+    </a>
+
+    <!-- Imagens à direita -->
+    <div class="d-flex">
+      <a th:replace="~{fragments/footer/iconLinkFooter :: iconLinkFooter('images/insta.png', 'Instagram', 'https://www.instagram.com/stock.trade.rp4/')}"></a>
+
+      <a th:replace="~{fragments/footer/iconLinkFooter :: iconLinkFooter('images/facebook.png', 'Facebook', 'https://www.facebook.com/?locale=pt_BR')}"></a>
+
+      <a th:replace="~{fragments/footer/iconLinkFooter :: iconLinkFooter('images/linkedin.png', 'LinkedIn', 'https://www.linkedin.com/home?originalSubdomain=br')}"></a>
+    </div>
+  </div>
+
+  <div class="mx-5 d-flex justify-content-between align-items-center pb-2 ps-5">
+    <ul class="nav col-12 col-md-auto mb-2 mb-md-0 ml-0">
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/indexLogado', 'Home')}"></li>
+
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/carteira', 'Carteira')}"></li>
+
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/invista', 'Invista')}"></li>
+      
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/contatoLogado', 'Contato')}"></li>
+    </ul>
+  </div>
+</footer>

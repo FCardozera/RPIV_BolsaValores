@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head th:replace="~{fragments/headFragment :: head('StockTrade - Contato')}"></head>
+  <body id="contato-page">
+    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+
+    <main>
+      <div th:replace="~{fragments/headerLogadoFragment :: header('Contato')}"></div>
+
+      <div class="container-fluid mt-5 justify-content-center pe-5 ps-5 mt-3 pdb5">
+        <div class="row justify-content-center mt-5 texts">
+          <!-- Coluna dos campos do formulário -->
+          <div class="col-md-6">
+            <h1>Contate-nos!</h1>
+            <form>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control custom-input" id="nome" placeholder="Digite seu nome">
+                    </div>  
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control custom-input" id="email" placeholder="Digite seu email">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="empresa" class="form-label">Empresa</label>
+                        <input type="text" class="form-control custom-input" id="empresa" placeholder="Digite o nome da empresa">
+                      </div>
+                      <div class="mb-3">
+                        <label for="assunto" class="form-label">Assunto</label>
+                        <input type="text" class="form-control custom-input" id="assunto" placeholder="Digite o assunto">
+                      </div>
+                </div>
+              
+              <div class="mb-3 ps-1">
+                <label for="mensagem" class="form-label">Mensagem</label>
+                <textarea class="form-control custom-input" id="mensagem" rows="50" placeholder="Digite sua mensagem"></textarea>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-outline-primary botao1 me-4">Enviar mensagem</button>
+              </div>
+            </form>
+          </div>
+        </div>        
+    </main>
+
+    <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+</html>
