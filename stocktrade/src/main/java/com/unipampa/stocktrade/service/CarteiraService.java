@@ -1,13 +1,16 @@
 package com.unipampa.stocktrade.service;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.usuario.UsuarioRepository;
 
@@ -53,5 +56,20 @@ public class CarteiraService {
             listaSaldosFinais.add(entry.getValue());
         }
         return listaSaldosFinais;
+    }
+
+    public List<Acao> getAcoesUsuario(HttpSession session) {
+        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuario = usuarioRepository.findByEmail(usuarioLogado.getEmail());
+        Set<Acao> acoesUsuario = usuario.getAcoes();
+        List<Acao> listaAcoes = new ArrayList<Acao>();
+
+        if (acoesUsuario.size() != 0) {
+            for (Acao acao : acoesUsuario) {
+                listaAcoes.add(acao);
+            }
+            return listaAcoes;
+        }
+        return null;
     }
 }
