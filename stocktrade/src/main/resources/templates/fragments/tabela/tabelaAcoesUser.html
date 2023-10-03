@@ -1,0 +1,26 @@
+<div class="container row justify-content-center" th:fragment="tabelaAcoesUser">
+  <link href="css/stylesheet.css" rel="stylesheet" />
+
+    <table class="table table-custom margin-table">
+      <thead>
+        <tr>
+          <th scope="col">SIGLA</th>
+          <th scope="col">PREÇO ATUAL</th>
+          <th scope="col">PREÇO MÉDIO</th>
+          <th scope="col">VARIAÇÃO</th>
+          <th scope="col">QUANTIDADE</th>
+          <th scope="col">OPÇÕES</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="acao : ${acoesUsuario}">
+          <td th:text="${acao.sigla}"></td>
+          <td th:text="'R$ ' + ${acao.valor}"></td>
+          <td>???</td>
+          <td>???</td>
+          <td>???</td>
+          <td>???</td>
+        </tr>
+      </tbody>
+    </table>
+</div>

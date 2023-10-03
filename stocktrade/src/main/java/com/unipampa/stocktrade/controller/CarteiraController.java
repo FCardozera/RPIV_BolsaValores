@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.service.CarteiraService;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +31,8 @@ public class CarteiraController {
         mv.addObject("mesesMovimentacoes1Ano", mesesMovimentacoes1Ano);
         List<Double> saldosFinaisMovimentacoes1Ano = carteiraService.saldosFinaisMovimentacoes1AnoUsuario(session);
         mv.addObject("saldosFinaisMovimentacoes1Ano", saldosFinaisMovimentacoes1Ano);
+        List<Acao> acoesUsuario = carteiraService.getAcoesUsuario(session);
+        mv.addObject("acoesUsuario", acoesUsuario);
         return mv;
     }
 
