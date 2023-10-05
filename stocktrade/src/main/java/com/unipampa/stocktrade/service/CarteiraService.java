@@ -5,13 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
+import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
 import com.unipampa.stocktrade.model.repository.usuario.UsuarioRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +20,9 @@ public class CarteiraService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private AcaoRepository acaoRepository;
 
     public HttpSession updateSession(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
@@ -58,18 +60,26 @@ public class CarteiraService {
         return listaSaldosFinais;
     }
 
-    public List<Acao> getAcoesUsuario(HttpSession session) {
+    public List<String[]> getAcoesUser (HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
         Usuario usuario = usuarioRepository.findByEmail(usuarioLogado.getEmail());
-        Set<Acao> acoesUsuario = usuario.getAcoes();
-        List<Acao> listaAcoes = new ArrayList<Acao>();
+        List<String[]> acoesString = acaoRepository.findAcoesUsuario(usuario.getId());
+        List<String[]> acoes = new ArrayList<>();
 
-        if (acoesUsuario.size() != 0) {
-            for (Acao acao : acoesUsuario) {
-                listaAcoes.add(acao);
+        for (String[] acaoQueryBanco : acoesString) {
+            String[] acaoFinal = new String[5];
+            for (int i = 0; i < acaoQueryBanco.length; i++) {
+                acaoFinal[i] = acaoQueryBanco[i];
             }
-            return listaAcoes;
+            Double valorAtual = Double.parseDouble(acaoQueryBanco[2]);
+            Double precoMedio = Double.parseDouble(acaoQueryBanco[3]);
+
+            Double variacao = (((valorAtual-precoMedio)*100)/precoMedio);
+            String variacaoFormatada = String.format("%.2f", variacao);
+            acaoFinal[4] = variacaoFormatada;
+            acoes.add(acaoFinal);
         }
-        return null;
+
+        return acoes;
     }
 }

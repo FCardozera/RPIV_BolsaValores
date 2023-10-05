@@ -7,12 +7,14 @@ import com.unipampa.stocktrade.model.entity.empresa.Empresa;
 import com.unipampa.stocktrade.model.entity.oferta.Oferta;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,6 +52,12 @@ public class Acao implements Serializable {
     @ManyToOne
     @JoinColumn(name = "oferta_id")
     private Oferta oferta;
+
+    @OneToOne(mappedBy = "acao", cascade = CascadeType.ALL)
+    private CompraAcao compraAcao;
+
+    @OneToOne(mappedBy = "acao", cascade = CascadeType.ALL)
+    private VendaAcao vendaAcao;
 
     public Acao(String sigla, Double valor) {
         this.sigla = sigla;
