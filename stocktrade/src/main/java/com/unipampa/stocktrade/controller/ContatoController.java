@@ -7,12 +7,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping("/carteira")
-public class ControllerCarteira {
+@RequestMapping("/contato")
+public class ContatoController {
     
     @GetMapping
-    public ModelAndView carteiraPagina() {
-        ModelAndView mv = new ModelAndView("/carteira");
+    public ModelAndView contatoPagina() {
+        ModelAndView mv = new ModelAndView("/contato");
         return mv;
     }
 

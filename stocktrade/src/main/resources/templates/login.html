@@ -41,6 +41,7 @@
                       placeholder="Digite sua senha"
                       oninput="limitSenha(this)"
                     />
+                    <p id="senha-error" class="text-danger mt-2"></p>
                   </div>
                   <div class="text-center">
                     <button
@@ -88,19 +89,20 @@
 
         let email = document.getElementById("username").value;
         let password = document.getElementById("password").value;
+        let senhaError = document.getElementById("senha-error"); // Elemento para mostrar a mensagem de erro
 
         if (email == "" || password == "") {
-          alert("Preencha todos os campos!");
+          senhaError.textContent = "Preencha todos os campos!"; // Exibe a mensagem de erro
           return false;
         }
 
         if (password.length < 8) {
-          alert("A senha deve ter no mínimo 8 caracteres!");
+          senhaError.textContent = "A senha deve ter no mínimo 8 caracteres!"; // Exibe a mensagem de erro
           return false;
         }
 
         if (!email.includes("@") || !email.includes(".com")) {
-          alert("E-mail inválido!");
+          senhaError.textContent = "E-mail inválido!"; // Exibe a mensagem de erro
           return false;
         }
 
@@ -112,11 +114,21 @@
           body: JSON.stringify({
             email: email,
             senha: password,
-          }),
+          })
+        })
+        .then(response => {
+				if (response.ok) {
+					window.location.href='/indexLogado';
+				} else {
+          response.json().then(data => {
+            senhaError.textContent = data.message;
+          });
+				}
+			  })
+        .catch(error => {
+            alert("Ocorreu um erro ao realizar login!");
+            console.error(error);
         });
-
-        alert("Login realizado com sucesso!");
-        return true;
       }
     </script>
   </body>

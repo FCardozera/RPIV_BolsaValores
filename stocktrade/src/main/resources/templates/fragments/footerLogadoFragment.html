@@ -23,13 +23,13 @@
 
   <div class="mx-5 d-flex justify-content-between align-items-center pb-2 ps-5">
     <ul class="nav col-12 col-md-auto mb-2 mb-md-0 ml-0">
-      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/', 'Home')}"></li>
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/indexLogado', 'Home')}"></li>
 
-      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('invista', 'Invista')}"></li>
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/carteira', 'Carteira')}"></li>
 
-      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('sobre', 'Sobre')}"></li>
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/invista', 'Invista')}"></li>
       
-      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('contato', 'Contato')}"></li>
+      <li th:replace="~{fragments/footer/textLinkFooter :: textLinkFooter('/contatoLogado', 'Contato')}"></li>
     </ul>
   </div>
 </footer>

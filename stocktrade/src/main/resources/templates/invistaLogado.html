@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head
+    th:replace="~{fragments/headFragment :: head('StockTrade - Invista')}"
+  ></head>
+  <body id="sobre-page">
+    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+
+    <main>
+      <div
+        th:replace="~{fragments/headerLogadoFragment :: header('Invista')}"
+      ></div>
+
+      <div class="col-12">
+        <h2 class="text-left custom-margin-left">Invista</h2>
+      </div>
+      <div class="col-12">
+        <div class="d-flex align-items-center">
+          <h6 class="text-left custom-margin-left mb-0 me-2">Saldo Atual</h6>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-eye ml-2"
+            viewBox="0 0 16 16"
+            id="toggleEye"
+          >
+            <path
+              d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+            />
+            <path
+              d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+            />
+          </svg>
+        </div>
+        <p class="h3 fs-8 custom-margin-left" id="saldo">RS$100,000.00</p>
+        <div class="d-flex align-items-center">
+          <p class="h3 fs-8 custom-margin-left mt-4">Ativos Disponíveis</p>
+          <form class="d-flex custom-margin-left2">
+            <input
+              class="form-control me-2 input-custom"
+              type="search"
+              placeholder="Busque no site..."
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-outline-success btn-custom"
+              type="submit"
+            >
+              Pesquisar
+            </button>
+          </form>
+        </div>
+        
+        
+      </div>
+
+      <div class="container mb-4 justify-content-center">
+        <div class="container row justify-content-center">
+          <table class="table table-custom-invista">
+            <thead>
+              <tr>
+                <th scope="col">EMPRESA</th>
+                <th scope="col">SIGLA</th>
+                <th scope="col">PREÇO ATUAL</th>
+                <th scope="col">VARIAÇÃO DIA</th>
+                <th scope="col">OPÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="acao : ${acoes}">
+                <td>???</td>
+                <td th:text="${acao.sigla}"></td>
+                <td th:text="'R$ ' + ${acao.valor}"></td>
+                <td>???</td>
+                <td>???</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Função para alternar a visibilidade do saldo quando o ícone do olho é clicado
+      document
+        .getElementById("toggleEye")
+        .addEventListener("click", function () {
+          const saldo = document.getElementById("saldo");
+          if (saldo.style.opacity === "0") {
+            saldo.style.opacity = "1";
+          } else {
+            saldo.style.opacity = "0";
+          }
+        });
+    </script>
+
+    <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
+  </body>
+</html>

@@ -1,50 +1,79 @@
 <div class="container-fluid mt-5 mb-4 pdb5" th:fragment="graficoSimples">
+  <link href="css/stylesheet.css" rel="stylesheet" />
+
   <div class="row ms-5 mt-5">
     <div id="chart"></div>
 
-    <script>
+    <script th:inline="javascript">
+      var saldosFinaisMovimentacoes1Ano = /*[[${saldosFinaisMovimentacoes1Ano}]]*/[];
+      var mesesMovimentacoes1Ano = /*[[${mesesMovimentacoes1Ano}]]*/[];
       var options = {
         series: [
           {
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+            name: "Movimentações",
+            data: saldosFinaisMovimentacoes1Ano,
           },
         ],
         chart: {
           height: 350,
           type: "line",
+          toolbar: {
+            show: true,
+            tools: {
+              pan: false
+            }
+          },
           zoom: {
-            enabled: false,
+            enabled: true
           },
         },
         dataLabels: {
           enabled: false,
         },
         stroke: {
-          curve: "straight",
+          curve: "smooth",
         },
         title: {
-          text: "GRAFICO SIMPLES - TROCAR TITULO",
+          text: "Movimentações Mensais",
           align: "left",
+          style: {
+            fontSize: '24px',
+            fontWeight: 'bold',
+            fontFamily: 'DM Sans',
+            color: '#031FB4'
+          },
         },
         grid: {
           row: {
-            colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+            colors: ["#f3f3f3", "transparent"],
             opacity: 0.5,
           },
         },
+        markers: {
+          size: 6,
+          hover: {
+            size: 8,
+            sizeOffset: 10
+          }
+        },
         xaxis: {
-          categories: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-          ],
+          categories: mesesMovimentacoes1Ano,
+          labels: {
+            style: {
+              fontSize: '12px',
+              fontFamily: 'DM Sans',
+              fontWeight: "bold"
+            },
+          },
+        },
+        yaxis: {
+          labels: {
+            style: {
+              fontSize: '12px',
+              fontFamily: 'DM Sans',
+              fontWeight: "bold"
+            },
+          },
         },
       };
 

@@ -84,6 +84,7 @@
                       placeholder="Digite a senha utilizada para autenticação das atividades no sistema"
                       oninput="limitSenhaAutenticacao(this)"
                     />
+                    <p id="senha-error" class="text-danger mt-2"></p>
                   </div>
                   <div class="text-center">
                     <button
@@ -148,6 +149,8 @@
         ).value;
         cpf = cpf.replace(/\D/g, "");
 
+        let senhaError = document.getElementById("senha-error"); // Elemento para mostrar a mensagem de erro
+
         if (
           name === "" ||
           cpf === "" ||
@@ -203,7 +206,9 @@
             if (response.ok) {
               window.location.href = "/";
             } else {
-              alert("E-mail já cadastrado!");
+              response.json().then(data => {
+                senhaError.textContent = data.message;
+              });
             }
           })
           .catch((error) => {

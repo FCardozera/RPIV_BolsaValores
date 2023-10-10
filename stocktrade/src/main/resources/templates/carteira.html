@@ -1,175 +1,144 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/headFragment :: head('StockTrade - indexLogado')}"></head>
+<head th:replace="~{fragments/headFragment :: head('StockTrade - Carteira')}"></head>
 
 <body id="index-logado-page">
-    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+  <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
 
-    <main>
-        <div th:replace="~{fragments/headerLogadoFragment :: header('indexLogado')}"></div>
-        <div class="container-fluid mt-2 mb-2">
-            <div class="row ms-5 mt-5">
-              <!-- Coluna dos textos à esquerda -->
-              <div class="col-md-6">
-                <h1 class="h1">
-                  Carteira
-                </h1>
-                <p class="fs-8 mb-3 max-width-800px cinza">
-                  Atualizado em 19/09/2023
-                </p>
-                <h1 class="h6 fw-bold">
-                  Saldo Atual <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-eye" viewBox="0 0 16 16">
-                    <!-- Ícone do olho -->
-                  </svg>
-                </h1>
-                <p class="h3 fs-8">
-                  RS$100,000.00
-                </p>
-                <p class="h9 fs-8 vermelho">
-                  -R$1200.78 (-1.89%) <span class="branco">24H</span>
-                </p>
-          
-                <div class="row width800px">
-                  <!-- Primeira coluna de informações -->
-                  <div class="col">
-                    <p class="h6 mt-60">
-                      Lucro Total
-                    </p>
-                    <p class="h9 fs-8 verde">
-                      + 2,52% (+R$324,82)
-                    </p>
-                  </div>
-          
-                  <!-- Segunda coluna de informações -->
-                  <div class="col">
-                    <p class="h6 mt-60">
-                      Melhor Performance
-                    </p>
-                    <p class="h9 fs-8 verde">
-                      <img src="images/itau-icon.png" class="img-fluid rounded-start"
-                      alt="edu-financeira" /> + 10.52% (+R$627.82)
-                    </p>
-                  </div>
-          
-                  <!-- Terceira coluna de informações -->
-                  <div class="col">
-                    <p class="h6 mt-60">
-                      Pior Performance
-                    </p>
-                    <p class="h9 fs-8 vermelho">
-                      <img src="images/vale1-icon.png" class="img-fluid rounded-start"
-                      alt="edu-financeira" /> - 1,23% (-R$87,32)
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Coluna do gráfico à direita -->
-              <div class="col mt-8 margin-top">
-                <div th:replace="~{fragments/grafico/graficoSimplesFragment :: graficoSimples}"></div>
-              </div>
+  <main>
+    <div th:replace="~{fragments/headerLogadoFragment :: header('Carteira')}"></div>
+    <div class="container-fluid mt-2 mb-2">
+      <div class="row ms-5 mt-5">
+        <!-- Coluna dos textos à esquerda -->
+        <div class="col-md-6">
+          <h1 class="h1">
+            Carteira
+          </h1>
+          <!-- Data/Hora -->
+          <p class="fs-8 mb-3 max-width-800px cinza" id="data-hora">
+          </p>
+
+          <h1 class="h6 fw-bold">
+            Saldo Atual <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-eye ml-2" viewBox="0 0 16 16" id="toggleEye">
+              <path
+                d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+              <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+            </svg>
+          </h1>
+
+          <p class="h3 fs-8" id="saldo">
+            R$<span th:text="${session.usuarioLogado.saldo}"></span>
+          </p>
+
+          <p class="h9 fs-8 vermelho" id="variacao-saldo">
+            <span th:text="${variacaoSaldo24H}"></span>
+            <span class="fs-8 mb-3 max-width-800px cinza">
+              (Últimas 24 Horas)
+            </span>
+          </p>
+
+          <div class="row width800px">
+            <!-- Primeira coluna de informações -->
+            <div class="col">
+              <p class="h6 mt-60">
+                Lucro Total
+              </p>
+              <p class="h9 fs-8 verde">
+                + 2,52% (+R$324,82)
+              </p>
+            </div>
+
+            <!-- Segunda coluna de informações -->
+            <div class="col">
+              <p class="h6 mt-60">
+                Melhor Performance
+              </p>
+              <p class="h9 fs-8 verde">
+                <img src="images/itau-icon.png" class="img-fluid rounded-start" alt="edu-financeira" /> + 10.52%
+                (+R$627.82)
+              </p>
+            </div>
+
+            <!-- Terceira coluna de informações -->
+            <div class="col">
+              <p class="h6 mt-60">
+                Pior Performance
+              </p>
+              <p class="h9 fs-8 vermelho">
+                <img src="images/vale1-icon.png" class="img-fluid rounded-start" alt="edu-financeira" /> - 1,23%
+                (-R$87,32)
+              </p>
             </div>
           </div>
-
-
-        <div class="container-fluid mt-2 mb-2">
-            <div class="row ms-5 mt-5">
-              <!-- Coluna dos textos à esquerda -->
-              <div class="col-md-6">
-                <h1 class="h1">
-                  Seus Ativos
-                </h1>
-            </div>
         </div>
 
-        <table class="table table-custom margin-table">
-            <thead>
-              <tr>
-                <th scope="col">NOME</th>
-                <th scope="col">RECOMENDAÇÃO</th>
-                <th scope="col">PREÇO ATUAL</th>
-                <th scope="col">PREÇO ALVO</th>
-                <th scope="col">POTENCIAL</th>
-                <th scope="col">QUANTIDADE</th>
-                <th scope="col">AÇÕES</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row"><img src="images/petrobras-icon.png" class="img-fluid rounded-start"
-                    alt="edu-financeira" /> PETR4</th>
-                <td>COMPRA</td>
-                <td>R$33,65</td>
-                <td>R$36,70</td>
-                <td>9,29%</td>
-                <td>526</td>
-                <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                  </svg></td>
-              </tr>
-              <tr>
-                <th scope="row"><img src="images/vale1-icon.png" class="img-fluid rounded-start"
-                    alt="edu-financeira" /> VAL3</th>
-                    <td>NEUTRO</td>
-                    <td>R$68,73</td>
-                    <td>R$73,00</td>
-                    <td>7,21%</td>
-                    <td>396</td>
-                    <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg></td>
-                  </tr>
-              <tr>
-                <th scope="row"><img src="images/itau-icon.png" class="img-fluid rounded-start"
-                    alt="edu-financeira" /> ITUB4</th>
-                    <td>COMPRA</td>
-                    <td>R$R$26,84</td>
-                    <td>R$34,00</td>
-                    <td>27,20%</td>
-                    <td>0</td>
-                    <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg></td>
-                  </tr>
-              <tr>
-                <th scope="row"><img src="images/BDB-icon.png" class="img-fluid rounded-start"
-                    alt="edu-financeira" /> BBAS3</th>
-                    <td>COMPRA</td>
-                    <td>R$47,28</td>
-                    <td>R$61,00</td>
-                    <td>30,01%</td>
-                    <td>0</td>
-                    <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg></td>
-                  </tr>
-              <tr>
-                <th scope="row"><img src="images/localiza1-icon.png" class="img-fluid rounded-start"
-                    alt="edu-financeira" /> RENT3</th>
-                    <td>COMPRA</td>
-                    <td>R$61,93</td>
-                    <td>R$73,00</td>
-                    <td>20,03%</td>
-                    <td>0</td>
-                    <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg></td>
-                  </tr>
-            </tbody>
-          </table>
+        <!-- Coluna do gráfico à direita -->
+        <div class="col mt-8 margin-top">
+          <div th:replace="~{fragments/grafico/graficoSimplesFragment :: graficoSimples}"></div>
+        </div>
+      </div>
+    </div>
 
-          
-    </main>
 
-    <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
+    <div class="container-fluid mt-2 mb-2">
+      <div class="row ms-5 mt-5">
+        <!-- Coluna dos textos à esquerda -->
+        <div class="col-md-6">
+          <h1 class="h1">
+            Seus Ativos
+          </h1>
+        </div>
+      </div>
 
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+      <div th:replace="~{fragments/tabela/tabelaAcoesUser :: tabelaAcoesUser}"></div>
+  </main>
+
+  <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
+
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  <script th:inline="javascript">
+    // Função para alternar a visibilidade do saldo quando o ícone do olho é clicado
+    document.getElementById("toggleEye").addEventListener("click", function () {
+      const saldo = document.getElementById("saldo");
+      const variacaoSaldo = document.getElementById("variacao-saldo");
+      if (saldo.style.opacity === "0") {
+        saldo.style.opacity = "1";
+        variacaoSaldo.style.opacity = "1";
+      } else {
+        saldo.style.opacity = "0";
+        variacaoSaldo.style.opacity = "0";
+      }
+    });
+
+    function atualizarTela() {
+      const elementoDataHora = document.getElementById("data-hora");
+      const dataHoraAtual = new Date();
+      const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+      const dataHoraFormatada = dataHoraAtual.toLocaleDateString('pt-BR', options);
+      // Atualizar data/hora
+      elementoDataHora.textContent = "Atualizado em " + dataHoraFormatada;
+
+      // Atualizar Variação Saldo
+      const elementoVariacaoSaldo = document.getElementById("variacao-saldo");
+      const valorSaldo = parseFloat(elementoVariacaoSaldo.querySelector('span').textContent);
+
+      if (valorSaldo > 0) {
+        elementoVariacaoSaldo.classList.add("verde");
+        elementoVariacaoSaldo.querySelector('span').textContent = "+ R$" + valorSaldo
+      } else if (valorSaldo < 0) {
+        elementoVariacaoSaldo.classList.add("vermelho");
+        elementoVariacaoSaldo.querySelector('span').textContent = "- R$" + valorSaldo
+      } else {
+        elementoVariacaoSaldo.classList.add("branco");
+        elementoVariacaoSaldo.querySelector('span').textContent = "R$" + valorSaldo
+      }
+    }
+
+    window.onload = function () {
+      atualizarTela();
+    };
+  </script>
 </body>
 
 </html>

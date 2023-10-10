@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.unipampa.stocktrade.controller.DTO.usuario.UsuarioRequestDTO;
-import com.unipampa.stocktrade.service.ServiceCadastro;
+import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.service.CadastroService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/cadastro")
-public class ControllerCadastro {
+public class CadastroController {
 
     @Autowired
-    private ServiceCadastro serviceCadastro;
+    private CadastroService serviceCadastro;
 
     @PostMapping
     public ModelAndView cadastrarUsuario(@RequestBody UsuarioRequestDTO dados) throws Exception {
@@ -26,8 +28,8 @@ public class ControllerCadastro {
     }
 
     @GetMapping
-    public ModelAndView cadastroPagina() {
-        ModelAndView mv = new ModelAndView("/cadastro");
+    public ModelAndView cadastroPagina(HttpSession session) {
+        ModelAndView mv = new ModelAndView("cadastro");
         return mv;
     }
 }

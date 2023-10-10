@@ -1,4 +1,4 @@
-package com.unipampa.stocktrade.controller.DTO.usuario;
+package com.unipampa.stocktrade.controller.dto.usuario;
 
 import java.util.Set;
 import java.util.UUID;
