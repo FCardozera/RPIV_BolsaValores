@@ -1,13 +1,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head
-    th:replace="~{fragments/headFragment :: head('StockTrade - Home')}"
+    th:replace="~{fragments/headFragment :: head('StockTrade - Error')}"
   ></head>
 
   <body id="home-page">
     <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
 
-    <main>
-      <div th:replace="~{fragments/headerFragment :: header('Home')}"></div>
+    <main>  
+      <div th:replace="~{fragments/headerFragment :: header('Error')}"></div>
 
         <div class="justify-content-center">
           <p class="text-center text-color-blue2 fonte-size-404 fw-bold">
@@ -24,9 +24,7 @@
 
       <div class="mt-4 text-center">
         <a href="/" class="btn btn-outline-primary botao1 me-4">Retornar para a home</a>
-
-      
-
+      </div>
     </main>
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
