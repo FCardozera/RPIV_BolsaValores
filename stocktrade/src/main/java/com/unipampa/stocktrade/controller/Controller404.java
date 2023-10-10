@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.model.entity.acao.Acao;
-import com.unipampa.stocktrade.service.ServiceIndex;
+import com.unipampa.stocktrade.service.Error404Service;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 public class Controller404 {
 
     @Autowired
-    private ServiceIndex service;
+    private Error404Service service;
     
     @GetMapping
     public ModelAndView error404(HttpSession session) {
