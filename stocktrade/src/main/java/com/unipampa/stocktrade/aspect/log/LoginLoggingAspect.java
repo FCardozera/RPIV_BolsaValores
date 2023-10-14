@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.registro.Registro;
 import com.unipampa.stocktrade.model.repository.registro.RegistroRepository;
 
@@ -27,9 +27,9 @@ public class LoginLoggingAspect {
     public void logOperationLogarUsuario(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
 
-        UsuarioRequestDTO usuarioRequestDTO = (UsuarioRequestDTO) args[0];
+        ClienteRequestDTO clienteRequestDTO = (ClienteRequestDTO) args[0];
 
-        Registro registro = new Registro("Login com sucesso com o e-mail " + usuarioRequestDTO.email());
+        Registro registro = new Registro("Login com sucesso com o e-mail " + clienteRequestDTO.email());
 
         registroRepository.save(registro);
     }
@@ -38,9 +38,9 @@ public class LoginLoggingAspect {
     public void logOperationLogarUsuarioException(JoinPoint joinPoint, Exception exception) {
         Object[] args = joinPoint.getArgs();
 
-        UsuarioRequestDTO usuarioRequestDTO = (UsuarioRequestDTO) args[0];
+        ClienteRequestDTO clienteRequestDTO = (ClienteRequestDTO) args[0];
 
-        Registro registro = new Registro("Tentativa mal sucedida de login com e-mail " + usuarioRequestDTO.email() + ": " + exception.getMessage());
+        Registro registro = new Registro("Tentativa mal sucedida de login com e-mail " + clienteRequestDTO.email() + ": " + exception.getMessage());
 
         registroRepository.save(registro);
     }
