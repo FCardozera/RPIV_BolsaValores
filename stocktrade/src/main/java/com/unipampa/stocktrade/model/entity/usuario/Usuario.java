@@ -50,7 +50,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Usuario implements Serializable {
+public class Usuario implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
