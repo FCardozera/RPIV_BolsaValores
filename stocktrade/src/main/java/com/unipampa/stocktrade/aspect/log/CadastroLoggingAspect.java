@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.registro.Registro;
 import com.unipampa.stocktrade.model.repository.registro.RegistroRepository;
 
@@ -27,7 +27,7 @@ public class CadastroLoggingAspect {
     public void logOperationCadastrarUsuario(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
 
-        UsuarioRequestDTO usuarioRequestDTO = (UsuarioRequestDTO) args[0];
+        ClienteRequestDTO usuarioRequestDTO = (ClienteRequestDTO) args[0];
 
         Registro registro = new Registro("Cadastro sucedido com o e-mail " + usuarioRequestDTO.email() + " e nome " + usuarioRequestDTO.nome());
 
@@ -38,7 +38,7 @@ public class CadastroLoggingAspect {
     public void logOperationCadastrarUsuarioError(JoinPoint joinPoint, Exception exception) {
         Object[] args = joinPoint.getArgs();
 
-        UsuarioRequestDTO usuarioRequestDTO = (UsuarioRequestDTO) args[0];
+        ClienteRequestDTO usuarioRequestDTO = (ClienteRequestDTO) args[0];
 
         Registro registro = new Registro("Erro ao cadastrar usuário com e-mail " + usuarioRequestDTO.email() + " e nome " + usuarioRequestDTO.nome() + ": " + exception.getMessage());
 

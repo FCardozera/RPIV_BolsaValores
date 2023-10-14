@@ -25,7 +25,7 @@ public class Registro {
     private UUID id;
 
     @Column
-    private UUID usuarioId;
+    private UUID clienteId;
 
     private String atividade;
 

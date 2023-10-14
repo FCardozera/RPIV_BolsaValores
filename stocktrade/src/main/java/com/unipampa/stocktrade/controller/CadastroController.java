@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.service.CadastroService;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,9 +21,9 @@ public class CadastroController {
     private CadastroService serviceCadastro;
 
     @PostMapping
-    public ModelAndView cadastrarUsuario(@RequestBody UsuarioRequestDTO dados) throws Exception {
+    public ModelAndView cadastrarUsuario(@RequestBody ClienteRequestDTO dados) throws Exception {
         ModelAndView mv = new ModelAndView("/cadastro");
-        serviceCadastro.salvarUsuario(dados);
+        serviceCadastro.salvarCliente(dados);
         return mv;
     }
 

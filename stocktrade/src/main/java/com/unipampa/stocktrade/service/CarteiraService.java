@@ -9,9 +9,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
-import com.unipampa.stocktrade.model.repository.usuario.UsuarioRepository;
+import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,29 +20,29 @@ import jakarta.servlet.http.HttpSession;
 public class CarteiraService {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private ClienteRepository clienteRepository;
 
     @Autowired
     private AcaoRepository acaoRepository;
 
     public HttpSession updateSession(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Usuario usuario = usuarioRepository.findByEmail(usuarioLogado.getEmail());
+        Usuario usuario = clienteRepository.findByEmail(usuarioLogado.getEmail());
         session.setAttribute("usuarioLogado", usuario);
         return session;
     }
 
     public Double variacaoSaldoUsuario24H(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Usuario usuario = usuarioRepository.findByEmail(usuarioLogado.getEmail());
-        Double variacaoSaldo = usuario.variacaoSaldo24h();
+        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+        Double variacaoSaldo = cliente.variacaoSaldo24h();
         return variacaoSaldo;
     }
 
     public List<String> mesesMovimentacoes1AnoUsuario(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Usuario usuario = usuarioRepository.findByEmail(usuarioLogado.getEmail());
-        LinkedHashMap<String, Double> movimentacoesMensais = usuario.movimentacoesMensais1Ano();
+        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+        LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
         LinkedList<String> listaMeses = new LinkedList<String>();
         for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
             listaMeses.add(entry.getKey());
@@ -51,8 +52,8 @@ public class CarteiraService {
 
     public List<Double> saldosFinaisMovimentacoes1AnoUsuario(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Usuario usuario = usuarioRepository.findByEmail(usuarioLogado.getEmail());
-        LinkedHashMap<String, Double> movimentacoesMensais = usuario.movimentacoesMensais1Ano();
+        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+        LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
         LinkedList<Double> listaSaldosFinais = new LinkedList<Double>();
         for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
             listaSaldosFinais.add(entry.getValue());
@@ -62,8 +63,8 @@ public class CarteiraService {
 
     public List<String[]> getAcoesUser (HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Usuario usuario = usuarioRepository.findByEmail(usuarioLogado.getEmail());
-        List<String[]> acoesString = acaoRepository.findAcoesUsuario(usuario.getId());
+        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+        List<String[]> acoesString = acaoRepository.findAcoesCliente(cliente.getId());
         List<String[]> acoes = new ArrayList<>();
 
         for (String[] acaoQueryBanco : acoesString) {

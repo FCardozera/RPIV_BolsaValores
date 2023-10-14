@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.service.LoginService;
 
@@ -23,7 +23,7 @@ public class LoginController {
     private LoginService serviceLogin;
 
     @PostMapping
-    public ModelAndView login(@RequestBody UsuarioRequestDTO dados, HttpSession session) throws Exception {
+    public ModelAndView login(@RequestBody ClienteRequestDTO dados, HttpSession session) throws Exception {
         ModelAndView mv = new ModelAndView();
 
         try {
