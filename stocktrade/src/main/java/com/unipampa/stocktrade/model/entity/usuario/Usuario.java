@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 
 import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
+import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
+import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
 import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
 import com.unipampa.stocktrade.model.entity.oferta.Oferta;
@@ -92,6 +94,12 @@ public class Usuario implements Serializable {
 
     @OneToMany(mappedBy = "usuario")
     private Set<Oferta> ofertas;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<CompraAcao> compraAcoes;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<VendaAcao> vendaAcoes;
 
     public Usuario(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao) {
         this.id = id;
