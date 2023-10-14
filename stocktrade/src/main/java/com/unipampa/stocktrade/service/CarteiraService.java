@@ -63,10 +63,12 @@ public class CarteiraService {
     public List<String[]> getAcoesUser (HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
         Usuario usuario = usuarioRepository.findByEmail(usuarioLogado.getEmail());
-        List<String[]> acoesString = acaoRepository.findAcoesUsuario(usuario.getId());
+        List<String[]> acoesStringList = new ArrayList<>();
+        acoesStringList.addAll(acaoRepository.findAcoesUsuario(usuario.getId()));
+
         List<String[]> acoes = new ArrayList<>();
 
-        for (String[] acaoQueryBanco : acoesString) {
+        for (String[] acaoQueryBanco : acoesStringList) {
             String[] acaoFinal = new String[5];
             for (int i = 0; i < acaoQueryBanco.length; i++) {
                 acaoFinal[i] = acaoQueryBanco[i];
