@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/headFragment :: head('StockTrade - Perfil')}"></head>
+
+<body>
+    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+
+    <main>
+        <div th:replace="~{fragments/headerLogadoFragment :: header('indexLogado')}"></div>
+
+        <div class="container-fluid mt-5 justify-content-center pe-5 ps-5 mt-3 pdb5">
+            <div class="row justify-content-center mt-5 texts">
+                <div class="col-md-2 custom-padding-top mx-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="160" fill="currentColor"
+                        class="bi bi-person-circle text-decoration-none" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>
+                </div>
+                <div class="col-md-10">
+                    <h4>Informações do Perfil</h4>
+                    <div class="col-md-6 mb-3">
+                        <label for="nome" class="form-label">Nome:</label>
+                        <div class="form-control custom-input" id="nome" th:text="${nome}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <div class="form-control custom-input" id="email" th:text="${email}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="cpf" class="form-label">CPF:</label>
+                        <div class="form-control custom-input" id="cpf" th:text="${cpf}"></div>
+                    </div>                    
+                    <div class="custom-padding-top custom-padding-bottom">
+                        <button onclick="redirecionarParaPerfil(event)" type="submit"
+                            class="btn btn-outline-primary botao1 me-4" id="editarPerfil">Editar Perfil</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function redirecionarParaPerfil(event) {
+            window.location.href = "/perfil";
+        }
+    </script>
+
+</body>
+
+</html>

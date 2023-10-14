@@ -98,25 +98,52 @@ public class TestConfig implements CommandLineRunner {
         
         Empresa empresa1 = new Empresa(null, "Petrobras LTDA", "53048280000174", "petrobras@gmail.com", "12345678", "1234");
         Empresa empresa2 = new Empresa(null, "Vale LTDA", "50951271000109", "vale@gmail.com", "12345678", "1234");
+        Empresa empresa3 = new Empresa(null, "Itaú Unibanco", "50951271000110", "itau@gmail.com", "12345678", "1234");
+        Empresa empresa4 = new Empresa(null, "Lojas Marisa", "50951271000111", "marisa@gmail.com", "12345678", "1234");
+        Empresa empresa5 = new Empresa(null, "Azul SA", "50951271000112", "azul@gmail.com", "12345678", "1234");
 
-        empresaRepository.saveAll(List.of(empresa1, empresa2));
+        empresaRepository.saveAll(List.of(empresa1, empresa2, empresa3, empresa4, empresa5));
 
         Set<Acao> acoesEmpresa1 = new HashSet<>();
 
         for (int i = 0; i < 70; i++) {
-            Acao acao = new Acao(null, "PETR4", 20.0, empresa1, null, null, null, null);
+            Acao acao = new Acao(null, "PETR4", 50.01, empresa1, null, null, null, null);
             acoesEmpresa1.add(acao);
         }
 
         Set<Acao> acoesEmpresa2 = new HashSet<>();
 
         for (int i = 0; i < 50; i++) {
-            Acao acao = new Acao(null, "VALE5", 20.0, empresa2, null, null, null, null);
+            Acao acao = new Acao(null, "VALE5", 25.41, empresa2, null, null, null, null);
             acoesEmpresa2.add(acao);
+        }
+
+        Set<Acao> acoesEmpresa3 = new HashSet<>();
+
+        for (int i = 0; i < 100; i++) {
+            Acao acao = new Acao(null, "ITUB4", 104.52, empresa3, null, null, null, null);
+            acoesEmpresa3.add(acao);
+        }
+
+        Set<Acao> acoesEmpresa4 = new HashSet<>();
+
+        for (int i = 0; i < 25; i++) {
+            Acao acao = new Acao(null, "AMAR3", 84.33, empresa4, null, null, null, null);
+            acoesEmpresa4.add(acao);
+        }
+
+        Set<Acao> acoesEmpresa5 = new HashSet<>();
+
+        for (int i = 0; i < 75; i++) {
+            Acao acao = new Acao(null, "AZUL4", 32.64, empresa5, null, null, null, null);
+            acoesEmpresa5.add(acao);
         }
 
         acaoRepository.saveAll(acoesEmpresa1);
         acaoRepository.saveAll(acoesEmpresa2);
+        acaoRepository.saveAll(acoesEmpresa3);
+        acaoRepository.saveAll(acoesEmpresa4);
+        acaoRepository.saveAll(acoesEmpresa5);
 
         // Cliente 1 comprou 20 Ações da PETR4
         int count = 0;
