@@ -20,7 +20,7 @@ public class InvistaLogado {
     @GetMapping
     public ModelAndView invistaLogado (HttpSession session) {
         ModelAndView mv = new ModelAndView("invistaLogado");
-        mv.addObject("acoes", service.getAcoesSiglaPreco());
+        mv.addObject("acoes", service.getAcoesSiglaPrecoIterator());
         return mv;
     }
 
