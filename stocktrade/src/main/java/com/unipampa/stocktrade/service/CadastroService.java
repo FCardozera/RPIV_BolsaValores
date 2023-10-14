@@ -3,26 +3,26 @@ package com.unipampa.stocktrade.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
-import com.unipampa.stocktrade.model.entity.usuario.Usuario;
-import com.unipampa.stocktrade.model.repository.usuario.UsuarioRepository;
+import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
+import com.unipampa.stocktrade.model.entity.usuario.Cliente;
+import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 @Service
 public class CadastroService {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private ClienteRepository clienteRepository;
 
-    public void salvarUsuario(UsuarioRequestDTO dados) {
+    public void salvarCliente(ClienteRequestDTO dados) {
 
-        Usuario usuario = usuarioRepository.findByEmail(dados.email());
+        Cliente cliente = clienteRepository.findByEmail(dados.email());
 
-        if (usuario != null) {
+        if (cliente != null) {
             throw new RuntimeException("Já existe um usuário cadastrado para o e-mail: " + dados.email());
         }
 
-        usuario = new Usuario(dados);
-        usuarioRepository.save(usuario);
+        cliente = new Cliente(dados);
+        clienteRepository.save(cliente);
     }
     
 }

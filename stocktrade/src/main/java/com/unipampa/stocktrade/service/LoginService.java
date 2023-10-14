@@ -3,9 +3,10 @@ package com.unipampa.stocktrade.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.unipampa.stocktrade.controller.dto.usuario.UsuarioRequestDTO;
+import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
+import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
-import com.unipampa.stocktrade.model.repository.usuario.UsuarioRepository;
+import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -13,18 +14,18 @@ import jakarta.servlet.http.HttpSession;
 public class LoginService {
     
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private ClienteRepository clienteRepository;
 
-    public Usuario login(UsuarioRequestDTO dados, HttpSession session) {
-        Usuario usuario = usuarioRepository.findByEmail(dados.email());
+    public Usuario login(ClienteRequestDTO dados, HttpSession session) {
+        Cliente cliente = clienteRepository.findByEmail(dados.email());
             
-        if (usuario == null || !usuario.isSenhaCorreta(dados.senha())) {
+        if (cliente == null || !cliente.isSenhaCorreta(dados.senha())) {
             throw new RuntimeException("Email e/ou senha incorretos");
         }
 
-        session.setAttribute("usuarioLogado", usuario);
+        session.setAttribute("usuarioLogado", cliente);
 
-        return usuario;
+        return cliente;
     }
 
     public void logout(HttpSession session) {

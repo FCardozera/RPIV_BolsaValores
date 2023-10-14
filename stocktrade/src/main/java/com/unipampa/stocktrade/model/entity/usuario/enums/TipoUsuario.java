@@ -3,7 +3,8 @@ package com.unipampa.stocktrade.model.entity.usuario.enums;
 public enum TipoUsuario {
 
     CLIENTE(0),
-    ADMIN(1);
+    ADMIN(1), 
+    EMPRESA(2);
 
     private int codigo;
 
