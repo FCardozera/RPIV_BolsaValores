@@ -12,7 +12,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
@@ -37,12 +39,12 @@ public class CompraAcao implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @PrimaryKeyJoinColumn(name="id_acao", referencedColumnName="id")
+    @OneToOne
+    @JoinColumn(name="acao_id", referencedColumnName = "id")
     private Acao acao;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @PrimaryKeyJoinColumn(name="id_usuario", referencedColumnName="id")
+    @PrimaryKeyJoinColumn(name="usuario_id", referencedColumnName="id")
     private Usuario usuario;
 
     @Column(name = "valor_compra")

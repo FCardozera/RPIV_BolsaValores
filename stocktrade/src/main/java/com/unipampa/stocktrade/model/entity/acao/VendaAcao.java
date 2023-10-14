@@ -6,12 +6,14 @@ import java.util.UUID;
 
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
@@ -36,11 +38,11 @@ public class VendaAcao implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn(name="acao_id", referencedColumnName="id")
     private Acao acao;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn(name="usuario_id", referencedColumnName="id")
     private Usuario usuario;
 

@@ -100,14 +100,14 @@ public class TestConfig implements CommandLineRunner {
         Set<Acao> acoesEmpresa1 = new HashSet<>();
 
         for (int i = 0; i < 70; i++) {
-            Acao acao = new Acao(null, "PETR4", 20.0, empresa1, null, null);
+            Acao acao = new Acao(null, "PETR4", 20.0, empresa1, null, null, null, null);
             acoesEmpresa1.add(acao);
         }
 
         Set<Acao> acoesEmpresa2 = new HashSet<>();
 
         for (int i = 0; i < 50; i++) {
-            Acao acao = new Acao(null, "VALE5", 20.0, empresa2, null, null);
+            Acao acao = new Acao(null, "VALE5", 20.0, empresa2, null, null, null, null);
             acoesEmpresa2.add(acao);
         }
 
@@ -142,6 +142,20 @@ public class TestConfig implements CommandLineRunner {
             }
         }
 
+        // Cliente 2 comprou 10 Ações da PETR4
+        count = 0;
+        for (Acao acao : acoesEmpresa1) {
+            if (count < 10) {
+                if (acao.getUsuario() == null) {
+                    acao.setUsuario(usuario2);
+                    CompraAcao compraAcao = new CompraAcao(null, acao, usuario2, 70.0, instant2);
+                    compraAcaoRepository.save(compraAcao);
+                    acaoRepository.save(acao);
+                    count++;
+                }
+            }
+        }
+
         // Cliente 1 comprou 20 Ações da VALE5
         count = 0;
         for (Acao acao : acoesEmpresa2) {
@@ -163,6 +177,20 @@ public class TestConfig implements CommandLineRunner {
                 if (acao.getUsuario() == null) {
                     acao.setUsuario(usuario2);
                     CompraAcao compraAcao = new CompraAcao(null, acao, usuario2, acao.getValor(), instant1);
+                    compraAcaoRepository.save(compraAcao);
+                    acaoRepository.save(acao);
+                    count++;
+                }
+            }
+        }
+
+        // Cliente 2 comprou 20 Ações da VALE5
+        count = 0;
+        for (Acao acao : acoesEmpresa2) {
+            if (count < 20) {
+                if (acao.getUsuario() == null) {
+                    acao.setUsuario(usuario2);
+                    CompraAcao compraAcao = new CompraAcao(null, acao, usuario2, 45.0, instant1);
                     compraAcaoRepository.save(compraAcao);
                     acaoRepository.save(acao);
                     count++;
