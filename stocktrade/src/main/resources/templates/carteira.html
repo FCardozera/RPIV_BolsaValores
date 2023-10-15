@@ -140,6 +140,65 @@
     };
   </script>
 
+  <script>
+
+    function verificarCamposSolicitacaoCompra(event) {
+      const acoes = document.getElementsByClassName('quantidadeAcoesInput')
+      const senhas = document.getElementsByClassName('senhaAutenticacaoInput')
+
+      j = acoes.length;
+
+      for (i = 0; i < acoes.length; i++) {
+        
+        if (acoes.item(i).value != "" && senhas.item(i).value != "") {
+
+          const siglaAcao = document.getElementById("siglaAcao" + i)
+
+          enviarSolicitacaoCompra(event, acoes.item(i).value, senhas.item(i).value, siglaAcao.innerText)
+          break;
+        }
+        j--;
+      }
+
+      if (j == 0) {
+        alert("Preencha todos os campos obrigatórios")
+      }
+    }
+
+    function enviarSolicitacaoCompra(event, quantidadeAcoes, senhaAutenticacao, siglaAcao) {
+
+      console.log(quantidadeAcoes + " " + senhaAutenticacao + " " + siglaAcao)
+
+      const data = {
+        siglaAcao: siglaAcao,
+        quantidadeAcoes: quantidadeAcoes,
+        senhaAutenticacao: senhaAutenticacao
+      }
+
+      fetch("/carteira/comprar", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (response.ok) {
+              window.location.href = "/carteira";
+            } else {
+              response.json().then(data => {
+                senhaError.textContent = data.message;
+              });
+            }
+          })
+          .catch((error) => {
+            alert("Ocorreu um erro ao cadastrar!");
+            console.error(error);
+          });
+    }
+    
+  </script>
+
   
 </body>
 

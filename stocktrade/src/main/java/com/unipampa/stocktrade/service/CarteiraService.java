@@ -1,5 +1,6 @@
 package com.unipampa.stocktrade.service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -9,9 +10,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
+import com.unipampa.stocktrade.model.entity.acao.Acao;
+import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
+import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +29,9 @@ public class CarteiraService {
 
     @Autowired
     private AcaoRepository acaoRepository;
+
+    @Autowired
+    private CompraAcaoRepository compraAcaoRepository;
 
     public HttpSession updateSession(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
@@ -82,5 +90,36 @@ public class CarteiraService {
         }
 
         return acoes;
+    }
+
+    public void comprarAcoes(HttpSession session, CompraAcoesDTO dados) {
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+
+        if (usuario == null) {
+            throw new RuntimeException("Não existe um usuário logado");
+        }
+
+        List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao());
+
+        if (acoesSemCliente.isEmpty()) {
+            throw new RuntimeException("Não existem ações disponíveis para compra");
+        }
+
+        Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
+
+        for (int i = 0; i < dados.quantidadeAcoes(); i++) {
+            Acao acao = acoesSemCliente.get(i);
+
+            cliente = (Cliente) usuario;
+            acao.setCliente(cliente);
+            cliente.reduzirSaldo(acao.getValor());
+
+            acaoRepository.save(acao);
+
+            CompraAcao compraAcao = new CompraAcao(null, acao, cliente, acao.getValor(), Instant.now());
+            compraAcaoRepository.save(compraAcao);
+        }
+
+        clienteRepository.save(cliente);
     }
 }

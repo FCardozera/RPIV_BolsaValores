@@ -43,7 +43,6 @@ public class PerfilController {
 
     @PutMapping("/trocar-senha")
     public ModelAndView trocarSenha(HttpSession session, @RequestBody ClienteRequestDTO dados) {
-         
         service.trocarSenha(session, dados);
         return null;   
     }

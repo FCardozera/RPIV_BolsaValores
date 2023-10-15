@@ -106,14 +106,14 @@ public class TestConfig implements CommandLineRunner {
 
         Set<Acao> acoesEmpresa1 = new HashSet<>();
 
-        for (int i = 0; i < 70; i++) {
+        for (int i = 0; i < 100; i++) {
             Acao acao = new Acao(null, "PETR4", 50.01, empresa1, null, null, null, null);
             acoesEmpresa1.add(acao);
         }
 
         Set<Acao> acoesEmpresa2 = new HashSet<>();
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 70; i++) {
             Acao acao = new Acao(null, "VALE5", 25.41, empresa2, null, null, null, null);
             acoesEmpresa2.add(acao);
         }

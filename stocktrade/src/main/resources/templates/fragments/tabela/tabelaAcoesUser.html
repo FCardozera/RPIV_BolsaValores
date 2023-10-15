@@ -15,16 +15,17 @@
       <tbody>
         <div th:each="acao, acaoStat : ${acoesUsuario}">
 
-          <tr data-bs-toggle="collapse" th:attr="data-bs-target='#r' + ${acaoStat.index}">
+          <tr>
             <div class="accordion-header" id="panelsStayOpen-headingOne">
-              <td th:text="${acao[0]}"></td>
+              <td th:text="${acao[0]}" th:id="siglaAcao + ${acaoStat.index}" ></td>
               <td th:text="'R$ ' + ${acao[2]}"></td>
               <td th:text="'R$ ' + ${acao[3]}"></td>
               <td th:text="${acao[4]} + '%'"></td>
               <td th:text="${acao[1]}"></td>
-              <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+              <td data-bs-toggle="collapse" th:attr="data-bs-target='#r' + ${acaoStat.index}">
+                <a><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-              </svg></i></td>
+              </svg></td>
             </div>
           </tr>
 
@@ -47,7 +48,7 @@
                   <p class="text-uppercase">Quantidade</p>
                   <input
                       type="text"
-                      class="form-control custom-input-acoes"
+                      class="form-control custom-input-acoes quantidadeAcoesInput"
                       placeholder="Insira a quantidade de ações"
                     />
                 </div>
@@ -78,7 +79,7 @@
                   <div class="div-input-senha-autenticacao">
                     <input
                       type="password"
-                      class="form-control custom-input-acoes"
+                      class="form-control custom-input-acoes senhaAutenticacaoInput"
                       placeholder="Senha de autenticação"
                     />
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
@@ -89,7 +90,7 @@
                 </div>
                 
                 <div class="button-comprar text-uppercase text-center fw-bold">
-                  <button class="text-uppercase fw-bold">Comprar</button> 
+                  <button class="text-uppercase fw-bold" onclick="verificarCamposSolicitacaoCompra(this)">Comprar</button> 
                 </div>
                 
               </div>

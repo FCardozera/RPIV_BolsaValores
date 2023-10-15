@@ -275,4 +275,8 @@ public class Cliente extends Usuario {
         }
         return mapaMovimentacoes;
     }
+
+    public void reduzirSaldo(Double valor) {
+        saldo -= valor;
+    }
 }
