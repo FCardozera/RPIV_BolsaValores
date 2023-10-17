@@ -109,7 +109,9 @@ public class CarteiraService {
         Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
         Iterator<Acao> acaoIterator = acoesSemCliente.iterator();
 
-        while (acaoIterator.hasNext()) {
+        int quantidadeAcoes = dados.quantidadeAcoes();
+
+        while (acaoIterator.hasNext() && quantidadeAcoes > 0) {
             Acao acao = acaoIterator.next();
 
             cliente = (Cliente) usuario;
@@ -120,6 +122,7 @@ public class CarteiraService {
 
             CompraAcao compraAcao = new CompraAcao(null, acao, cliente, acao.getValor(), Instant.now());
             compraAcaoRepository.save(compraAcao);
+            quantidadeAcoes--;
         }
 
         clienteRepository.save(cliente);
