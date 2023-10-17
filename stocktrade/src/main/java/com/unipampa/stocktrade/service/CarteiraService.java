@@ -2,6 +2,7 @@ package com.unipampa.stocktrade.service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -106,9 +107,10 @@ public class CarteiraService {
         }
 
         Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
+        Iterator<Acao> acaoIterator = acoesSemCliente.iterator();
 
-        for (int i = 0; i < dados.quantidadeAcoes(); i++) {
-            Acao acao = acoesSemCliente.get(i);
+        while (acaoIterator.hasNext()) {
+            Acao acao = acaoIterator.next();
 
             cliente = (Cliente) usuario;
             acao.setCliente(cliente);

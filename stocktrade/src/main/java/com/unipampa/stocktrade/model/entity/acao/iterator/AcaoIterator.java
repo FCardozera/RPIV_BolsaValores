@@ -7,9 +7,9 @@ import java.util.List;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 
 public class AcaoIterator implements IAcaoIterator {
-    private Iterator<String[]> acoesStringIterator;
-        private List<Acao> acoes = new ArrayList<>();
 
+    private Iterator<String[]> acoesStringIterator;
+    private List<Acao> acoes = new ArrayList<>();
 
     public AcaoIterator(Iterator<String[]> acoesStringIterator) {
         this.acoesStringIterator = acoesStringIterator;
