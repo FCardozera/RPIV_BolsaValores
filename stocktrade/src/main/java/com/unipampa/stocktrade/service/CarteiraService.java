@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
@@ -100,29 +102,25 @@ public class CarteiraService {
             throw new RuntimeException("Não existe um usuário logado");
         }
 
-        List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao());
+        Pageable page = PageRequest.of(0, dados.quantidadeAcoes());
+        List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao(), page);
 
         if (acoesSemCliente.isEmpty()) {
             throw new RuntimeException("Não existem ações disponíveis para compra");
         }
 
         Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
+        
         Iterator<Acao> acaoIterator = acoesSemCliente.iterator();
-
-        int quantidadeAcoes = dados.quantidadeAcoes();
-
-        while (acaoIterator.hasNext() && quantidadeAcoes > 0) {
+        while (acaoIterator.hasNext()) {
             Acao acao = acaoIterator.next();
 
-            cliente = (Cliente) usuario;
-            acao.setCliente(cliente);
-            cliente.reduzirSaldo(acao.getValor());
+            cliente.comprarAcao(acao);
 
             acaoRepository.save(acao);
 
             CompraAcao compraAcao = new CompraAcao(null, acao, cliente, acao.getValor(), Instant.now());
             compraAcaoRepository.save(compraAcao);
-            quantidadeAcoes--;
         }
 
         clienteRepository.save(cliente);

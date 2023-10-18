@@ -3,6 +3,7 @@ package com.unipampa.stocktrade.model.repository.acao;
 import java.util.UUID;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +19,5 @@ public interface AcaoRepository extends JpaRepository<Acao, UUID> {
     public List<String[]> findAcoesCliente(@Param("cliente_id") UUID cliente_id);
 
     @Query("SELECT a FROM acao a WHERE a.cliente IS NULL AND a.sigla = :siglaAcao")
-    public List<Acao> findAcoesClienteNull(@Param("siglaAcao") String siglaAcao);
+    public List<Acao> findAcoesClienteNull(@Param("siglaAcao") String siglaAcao, Pageable pageable);
 }

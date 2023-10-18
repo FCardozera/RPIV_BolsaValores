@@ -7,9 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
-import com.unipampa.stocktrade.model.entity.usuario.padroes.CPFFormatDecorator;
-import com.unipampa.stocktrade.model.entity.usuario.padroes.interfaces.UsuarioDecorator;
-
+import com.unipampa.stocktrade.model.entity.usuario.decorator.UsuarioDecorator;
+import com.unipampa.stocktrade.model.entity.usuario.decorator.interfaces.IUsuarioDecorator;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -26,7 +25,7 @@ public class InfoPerfilController {
         try {
             Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
             Cliente cliente = (Cliente) usuario;
-            UsuarioDecorator usuarioDecorado = new CPFFormatDecorator(cliente);
+            IUsuarioDecorator usuarioDecorado = new UsuarioDecorator(cliente);
 
             mv.addObject("nome", usuarioDecorado.getNome());
             mv.addObject("email", usuarioDecorado.getEmail());

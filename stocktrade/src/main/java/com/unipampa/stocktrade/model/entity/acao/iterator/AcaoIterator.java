@@ -25,7 +25,7 @@ public class AcaoIterator implements IAcaoIterator {
         if (hasNext()) {
             String[] dadoAcao = acoesStringIterator.next();
             Acao acao = new Acao(dadoAcao[0], Double.parseDouble(dadoAcao[1]));
-            acoes.add(acao); // Adicione a ação à lista
+            acoes.add(acao); 
             return acao;
         }
         return null;

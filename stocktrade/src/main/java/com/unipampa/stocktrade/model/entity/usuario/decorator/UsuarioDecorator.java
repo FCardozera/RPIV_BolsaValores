@@ -1,12 +1,12 @@
-package com.unipampa.stocktrade.model.entity.usuario.padroes;
+package com.unipampa.stocktrade.model.entity.usuario.decorator;
 
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
-import com.unipampa.stocktrade.model.entity.usuario.padroes.interfaces.UsuarioDecorator;
+import com.unipampa.stocktrade.model.entity.usuario.decorator.interfaces.IUsuarioDecorator;
 
-public class CPFFormatDecorator implements UsuarioDecorator {
+public class UsuarioDecorator implements IUsuarioDecorator {
     private Cliente cliente;
 
-    public CPFFormatDecorator(Cliente cliente) {
+    public UsuarioDecorator(Cliente cliente) {
         this.cliente = cliente;
     }
 

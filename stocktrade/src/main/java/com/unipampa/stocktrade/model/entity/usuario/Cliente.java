@@ -276,6 +276,12 @@ public class Cliente extends Usuario {
         return mapaMovimentacoes;
     }
 
+    public void comprarAcao(Acao acao) {
+        
+        acao.setCliente(this);
+        reduzirSaldo(acao.getValor());
+    }
+
     public void reduzirSaldo(Double valor) {
         saldo -= valor;
     }
