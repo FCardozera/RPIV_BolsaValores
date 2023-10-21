@@ -44,32 +44,44 @@ public class CarteiraService {
     }
 
     public Double variacaoSaldoUsuario24H(HttpSession session) {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        Double variacaoSaldo = cliente.variacaoSaldo24h();
-        return variacaoSaldo;
+        try {
+            Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+            Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+            Double variacaoSaldo = cliente.variacaoSaldo24h();
+            return variacaoSaldo;
+        } catch (Exception e) {
+            return 0.0;
+        }
     }
 
     public List<String> mesesMovimentacoes1AnoUsuario(HttpSession session) {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
-        LinkedList<String> listaMeses = new LinkedList<String>();
-        for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
-            listaMeses.add(entry.getKey());
+        try {
+            Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+            Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+            LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
+            LinkedList<String> listaMeses = new LinkedList<String>();
+            for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
+                listaMeses.add(entry.getKey());
+            }
+            return listaMeses;
+        } catch (Exception e) {
+            return new ArrayList<String>();
         }
-        return listaMeses;
     }
 
     public List<Double> saldosFinaisMovimentacoes1AnoUsuario(HttpSession session) {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
-        LinkedList<Double> listaSaldosFinais = new LinkedList<Double>();
-        for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
-            listaSaldosFinais.add(entry.getValue());
+        try {
+            Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+            Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+            LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
+            LinkedList<Double> listaSaldosFinais = new LinkedList<Double>();
+            for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
+                listaSaldosFinais.add(entry.getValue());
+            }
+            return listaSaldosFinais;
+        } catch (Exception e) {
+            return new ArrayList<Double>();
         }
-        return listaSaldosFinais;
     }
 
     public List<String[]> getAcoesUser (HttpSession session) {

@@ -91,6 +91,8 @@ public class TestConfig implements CommandLineRunner {
         Movimentacao mov6 = new Movimentacao(null, 60.55, instant6, TipoMovimentacao.DIVIDENDO, cliente2);
         cliente2.setSaldo(cliente2.getSaldo() + 60.55);
 
+        cliente4.setSaldo(1000.0);
+
         clienteRepository.saveAll(List.of(cliente1, cliente2, cliente3, cliente4));
 
         movimentacaoRepository.saveAll(List.of(mov1, mov2, mov3, mov4, mov5, mov6));
