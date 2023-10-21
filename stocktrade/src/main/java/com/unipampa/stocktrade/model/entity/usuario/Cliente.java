@@ -204,85 +204,95 @@ public class Cliente extends Usuario {
     }
 
     public LinkedHashMap<String, Double> movimentacoesMensais1Ano() {
-        LinkedHashMap<String, Double> mapaMovimentacoes = new LinkedHashMap<String, Double>();
-        Instant primeiraMovimentacao = getMovimentacaoMaisAntiga().getData();
-        Instant agora = Instant.now();
-        LocalDate dataPrimeiraMovimentacao = primeiraMovimentacao.atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate dataAtual = agora.atZone(ZoneId.systemDefault()).toLocalDate();
-        Period periodo = Period.between(dataPrimeiraMovimentacao, dataAtual);
-        long diferencaEmAnos = periodo.getYears();
-        long diferencaEmMeses = ChronoUnit.MONTHS.between(dataPrimeiraMovimentacao, dataAtual);
-        Locale BRAZIL = new Locale.Builder().setLanguage("pt").setRegion("BR").build();
+        try {
+            LinkedHashMap<String, Double> mapaMovimentacoes = new LinkedHashMap<String, Double>();
+            Instant primeiraMovimentacao = getMovimentacaoMaisAntiga().getData();
+            Instant agora = Instant.now();
+            LocalDate dataPrimeiraMovimentacao = primeiraMovimentacao.atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate dataAtual = agora.atZone(ZoneId.systemDefault()).toLocalDate();
+            Period periodo = Period.between(dataPrimeiraMovimentacao, dataAtual);
+            long diferencaEmAnos = periodo.getYears();
+            long diferencaEmMeses = ChronoUnit.MONTHS.between(dataPrimeiraMovimentacao, dataAtual);
+            Locale BRAZIL = new Locale.Builder().setLanguage("pt").setRegion("BR").build();
 
-        if (diferencaEmAnos >= 1) {
-            LocalDate pontoInicialLocalDate = dataAtual.minusMonths(11);
-            Instant pontoInicialInstant = pontoInicialLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant(); // Mês atual menos 11 meses
-            int mesInicial = pontoInicialInstant.atZone(ZoneId.systemDefault()).get(ChronoField.MONTH_OF_YEAR);
-            int anoInicial = pontoInicialInstant.atZone(ZoneId.systemDefault()).get(ChronoField.YEAR);
+            if (diferencaEmAnos >= 1) {
+                LocalDate pontoInicialLocalDate = dataAtual.minusMonths(11);
+                Instant pontoInicialInstant = pontoInicialLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant(); // Mês atual menos 11 meses
+                int mesInicial = pontoInicialInstant.atZone(ZoneId.systemDefault()).get(ChronoField.MONTH_OF_YEAR);
+                int anoInicial = pontoInicialInstant.atZone(ZoneId.systemDefault()).get(ChronoField.YEAR);
 
-            for (int i = mesInicial; i <= (mesInicial + 11); i++) {
-                int ano = anoInicial;
-                int mes = i;
-                if (i > 12) {
-                    ano = anoInicial + 1;
-                    mes = i - 12;
+                for (int i = mesInicial; i <= (mesInicial + 11); i++) {
+                    int ano = anoInicial;
+                    int mes = i;
+                    if (i > 12) {
+                        ano = anoInicial + 1;
+                        mes = i - 12;
+                    }
+
+                    Instant mesInstant = Instant.ofEpochSecond(0)
+                            .atZone(ZoneOffset.UTC)
+                            .withYear(ano)
+                            .withMonth(mes)
+                            .withDayOfMonth(1)
+                            .withHour(12)
+                            .toInstant();
+
+                    String nomeMes = mesInstant.atZone(ZoneId.systemDefault()).getMonth().getDisplayName(TextStyle.SHORT,
+                            BRAZIL);
+                    nomeMes = nomeMes.substring(0, 1).toUpperCase()
+                            + nomeMes.substring(1, nomeMes.length() - 1).toLowerCase();
+                    Double saldoFinalMes = saldoFinalMesAno(mes, ano);
+
+                    mapaMovimentacoes.put(nomeMes, saldoFinalMes);
                 }
+            } else {
+                int mesInicial = primeiraMovimentacao.atZone(ZoneId.systemDefault()).get(ChronoField.MONTH_OF_YEAR);
+                int anoInicial = primeiraMovimentacao.atZone(ZoneId.systemDefault()).get(ChronoField.YEAR);
 
-                Instant mesInstant = Instant.ofEpochSecond(0)
-                        .atZone(ZoneOffset.UTC)
-                        .withYear(ano)
-                        .withMonth(mes)
-                        .withDayOfMonth(1)
-                        .withHour(12)
-                        .toInstant();
+                for (int i = mesInicial; i <= (mesInicial + diferencaEmMeses); i++) {
+                    int ano = anoInicial;
+                    int mes = i;
+                    if (i > 12) {
+                        ano = anoInicial + 1;
+                        mes = i - 12;
+                    }
 
-                String nomeMes = mesInstant.atZone(ZoneId.systemDefault()).getMonth().getDisplayName(TextStyle.SHORT,
-                        BRAZIL);
-                nomeMes = nomeMes.substring(0, 1).toUpperCase()
-                        + nomeMes.substring(1, nomeMes.length() - 1).toLowerCase();
-                Double saldoFinalMes = saldoFinalMesAno(mes, ano);
+                    Instant mesInstant = Instant.ofEpochSecond(0)
+                            .atZone(ZoneOffset.UTC)
+                            .withYear(ano)
+                            .withMonth(mes)
+                            .withDayOfMonth(1)
+                            .withHour(12)
+                            .toInstant();
 
-                mapaMovimentacoes.put(nomeMes, saldoFinalMes);
-            }
-        } else {
-            int mesInicial = primeiraMovimentacao.atZone(ZoneId.systemDefault()).get(ChronoField.MONTH_OF_YEAR);
-            int anoInicial = primeiraMovimentacao.atZone(ZoneId.systemDefault()).get(ChronoField.YEAR);
+                    String nomeMes = mesInstant.atZone(ZoneId.systemDefault()).getMonth().getDisplayName(TextStyle.SHORT,
+                            BRAZIL);
+                    nomeMes = nomeMes.substring(0, 1).toUpperCase()
+                            + nomeMes.substring(1, nomeMes.length() - 1).toLowerCase();
+                    Double saldoFinalMes = saldoFinalMesAno(mes, ano);
 
-            for (int i = mesInicial; i <= (mesInicial + diferencaEmMeses); i++) {
-                int ano = anoInicial;
-                int mes = i;
-                if (i > 12) {
-                    ano = anoInicial + 1;
-                    mes = i - 12;
+                    mapaMovimentacoes.put(nomeMes, saldoFinalMes);
                 }
-
-                Instant mesInstant = Instant.ofEpochSecond(0)
-                        .atZone(ZoneOffset.UTC)
-                        .withYear(ano)
-                        .withMonth(mes)
-                        .withDayOfMonth(1)
-                        .withHour(12)
-                        .toInstant();
-
-                String nomeMes = mesInstant.atZone(ZoneId.systemDefault()).getMonth().getDisplayName(TextStyle.SHORT,
-                        BRAZIL);
-                nomeMes = nomeMes.substring(0, 1).toUpperCase()
-                        + nomeMes.substring(1, nomeMes.length() - 1).toLowerCase();
-                Double saldoFinalMes = saldoFinalMesAno(mes, ano);
-
-                mapaMovimentacoes.put(nomeMes, saldoFinalMes);
             }
+            return mapaMovimentacoes;
+        } catch (Exception e) {
+            return null;
         }
-        return mapaMovimentacoes;
     }
 
-    public void comprarAcao(Acao acao) {
-        
+    public CompraAcao comprarAcao(Acao acao) {
         acao.setCliente(this);
         reduzirSaldo(acao.getValor());
+        CompraAcao compraAcao = new CompraAcao(acao, this);
+        compraAcoes.add(compraAcao);
+        return compraAcao;
     }
 
-    public void reduzirSaldo(Double valor) {
+    private void reduzirSaldo(Double valor) {
+        if (valor > saldo) {
+            throw new RuntimeException("Saldo insuficiente");
+        }
+
         saldo -= valor;
     }
 }

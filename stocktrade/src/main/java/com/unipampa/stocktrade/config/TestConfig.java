@@ -26,6 +26,7 @@ import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
 import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
 import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
 import com.unipampa.stocktrade.model.repository.movimentacao.MovimentacaoRepository;
+import com.unipampa.stocktrade.model.repository.oferta.OfertaRepository;
 import com.unipampa.stocktrade.model.repository.usuario.EmpresaRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
@@ -51,9 +52,13 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private EmpresaRepository empresaRepository;
 
+    @Autowired
+    private OfertaRepository ofertaRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
+        ofertaRepository.deleteAll();
         compraAcaoRepository.deleteAll();
         vendaAcaoRepository.deleteAll();
         acaoRepository.deleteAll();
@@ -91,6 +96,8 @@ public class TestConfig implements CommandLineRunner {
         Movimentacao mov6 = new Movimentacao(null, 60.55, instant6, TipoMovimentacao.DIVIDENDO, cliente2);
         cliente2.setSaldo(cliente2.getSaldo() + 60.55);
 
+        cliente4.setSaldo(1000.0);
+
         clienteRepository.saveAll(List.of(cliente1, cliente2, cliente3, cliente4));
 
         movimentacaoRepository.saveAll(List.of(mov1, mov2, mov3, mov4, mov5, mov6));
@@ -113,7 +120,7 @@ public class TestConfig implements CommandLineRunner {
 
         Set<Acao> acoesEmpresa2 = new HashSet<>();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 200; i++) {
             Acao acao = new Acao(null, "VALE5", 25.41, empresa2, null, null, null, null);
             acoesEmpresa2.add(acao);
         }

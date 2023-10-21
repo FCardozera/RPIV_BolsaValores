@@ -1,4 +1,4 @@
-package com.unipampa.stocktrade.model.entity.acao.iterator;
+package com.unipampa.stocktrade.model.entity.acao.iterator.listarAcao;
 
 import java.util.ArrayList;
 import java.util.Iterator;

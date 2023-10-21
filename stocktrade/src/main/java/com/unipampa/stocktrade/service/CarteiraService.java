@@ -10,16 +10,18 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
+import com.unipampa.stocktrade.model.entity.acao.iterator.compraAcao.CompraAcaoIterator;
+import com.unipampa.stocktrade.model.entity.oferta.Oferta;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
 import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
+import com.unipampa.stocktrade.model.repository.oferta.OfertaRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +38,9 @@ public class CarteiraService {
     @Autowired
     private CompraAcaoRepository compraAcaoRepository;
 
+    @Autowired
+    private OfertaRepository ofertaRepository;
+
     public HttpSession updateSession(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
         Usuario usuario = clienteRepository.findByEmail(usuarioLogado.getEmail());
@@ -44,32 +49,44 @@ public class CarteiraService {
     }
 
     public Double variacaoSaldoUsuario24H(HttpSession session) {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        Double variacaoSaldo = cliente.variacaoSaldo24h();
-        return variacaoSaldo;
+        try {
+            Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+            Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+            Double variacaoSaldo = cliente.variacaoSaldo24h();
+            return variacaoSaldo;
+        } catch (Exception e) {
+            return 0.0;
+        }
     }
 
     public List<String> mesesMovimentacoes1AnoUsuario(HttpSession session) {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
-        LinkedList<String> listaMeses = new LinkedList<String>();
-        for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
-            listaMeses.add(entry.getKey());
+        try {
+            Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+            Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+            LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
+            LinkedList<String> listaMeses = new LinkedList<String>();
+            for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
+                listaMeses.add(entry.getKey());
+            }
+            return listaMeses;
+        } catch (Exception e) {
+            return new ArrayList<String>();
         }
-        return listaMeses;
     }
 
     public List<Double> saldosFinaisMovimentacoes1AnoUsuario(HttpSession session) {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
-        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
-        LinkedList<Double> listaSaldosFinais = new LinkedList<Double>();
-        for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
-            listaSaldosFinais.add(entry.getValue());
+        try {
+            Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+            Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+            LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
+            LinkedList<Double> listaSaldosFinais = new LinkedList<Double>();
+            for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
+                listaSaldosFinais.add(entry.getValue());
+            }
+            return listaSaldosFinais;
+        } catch (Exception e) {
+            return new ArrayList<Double>();
         }
-        return listaSaldosFinais;
     }
 
     public List<String[]> getAcoesUser (HttpSession session) {
@@ -102,25 +119,34 @@ public class CarteiraService {
             throw new RuntimeException("Não existe um usuário logado");
         }
 
-        Pageable page = PageRequest.of(0, dados.quantidadeAcoes());
-        List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao(), page);
+        Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
 
-        if (acoesSemCliente.isEmpty()) {
-            throw new RuntimeException("Não existem ações disponíveis para compra");
+        if (!cliente.isSenhaAutenticacaoCorreta(dados.senhaAutenticacao())) {
+            throw new RuntimeException("Senha incorreta");
         }
 
-        Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
+        if (acaoRepository.findAcoesSigla(dados.siglaAcao()) < 0) {
+            throw new RuntimeException("Sigla de ação inválida");
+        }
+
+        List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()));
+        if (acoesSemCliente.isEmpty()) {
+            for (int i = 0; i < dados.quantidadeAcoes(); i++) {
+                Oferta oferta = new Oferta(null, null, cliente, 100.0, Instant.now());
+                ofertaRepository.save(oferta);
+            }
+            return;
+        }
         
-        Iterator<Acao> acaoIterator = acoesSemCliente.iterator();
-        while (acaoIterator.hasNext()) {
-            Acao acao = acaoIterator.next();
-
-            cliente.comprarAcao(acao);
-
-            acaoRepository.save(acao);
-
-            CompraAcao compraAcao = new CompraAcao(null, acao, cliente, acao.getValor(), Instant.now());
-            compraAcaoRepository.save(compraAcao);
+        Iterator<Acao> acaoIterator = new CompraAcaoIterator(acoesSemCliente.iterator());
+        try {
+            while (acaoIterator.hasNext()) {
+                Acao acao = acaoIterator.next();
+                CompraAcao compraAcao = cliente.comprarAcao(acao);
+                compraAcaoRepository.save(compraAcao);
+            }
+        } catch (Exception e) {
+            throw e;
         }
 
         clienteRepository.save(cliente);

@@ -12,6 +12,9 @@ import com.unipampa.stocktrade.model.entity.acao.Acao;
 
 public interface AcaoRepository extends JpaRepository<Acao, UUID> {
 
+    @Query("SELECT COUNT(*) FROM acao WHERE sigla = :siglaAcao GROUP BY sigla")
+    public Integer findAcoesSigla(@Param("siglaAcao") String siglaAcao);
+
     @Query("SELECT sigla, MIN(valor) FROM acao GROUP BY sigla")
     public List<String[]> findAcoesSiglaPreco();
 
