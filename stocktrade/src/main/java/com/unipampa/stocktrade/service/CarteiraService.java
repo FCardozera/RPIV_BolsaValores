@@ -101,17 +101,20 @@ public class CarteiraService {
             throw new RuntimeException("Não existe um usuário logado");
         }
 
+        Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
+
+        if (!cliente.isSenhaAutenticacaoCorreta(dados.senhaAutenticacao())) {
+            throw new RuntimeException("Senha incorreta");
+        }
+
         List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()));
 
         // Alterar lógica para acrescentar uma oferta de compra
         if (acoesSemCliente.isEmpty()) {
             throw new RuntimeException("Não existem ações disponíveis para compra");
         }
-
-        Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
         
         Iterator<Acao> acaoIterator = new CompraAcaoIterator(acoesSemCliente.iterator());
-
         try {
             while (acaoIterator.hasNext()) {
                 Acao acao = acaoIterator.next();
