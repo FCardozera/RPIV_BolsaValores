@@ -280,13 +280,19 @@ public class Cliente extends Usuario {
         }
     }
 
-    public void comprarAcao(Acao acao) {
-        
+    public CompraAcao comprarAcao(Acao acao) {
         acao.setCliente(this);
         reduzirSaldo(acao.getValor());
+        CompraAcao compraAcao = new CompraAcao(acao, this);
+        compraAcoes.add(compraAcao);
+        return compraAcao;
     }
 
-    public void reduzirSaldo(Double valor) {
+    private void reduzirSaldo(Double valor) {
+        if (valor > saldo) {
+            throw new RuntimeException("Saldo insuficiente");
+        }
+
         saldo -= valor;
     }
 }

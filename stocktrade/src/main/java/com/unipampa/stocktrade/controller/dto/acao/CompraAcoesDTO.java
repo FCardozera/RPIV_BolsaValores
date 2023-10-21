@@ -1,5 +1,5 @@
 package com.unipampa.stocktrade.controller.dto.acao;
 
-public record CompraAcoesDTO(String siglaAcao, Integer quantidadeAcoes, Double valorAcao) {
+public record CompraAcoesDTO(String siglaAcao, Integer quantidadeAcoes, String senhaAutenticacao) {
     
 }

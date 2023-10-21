@@ -96,6 +96,12 @@ public abstract class Usuario implements Serializable {
         return this.hashSenha.equals(hashSenha);
     }
 
+    public boolean isSenhaAutenticacaoCorreta(String senhaAutenticacao) {
+        String hashSenhaAutenticacao = sha256(senhaAutenticacao, this.saltSenhaAutenticacao);
+
+        return this.hashSenhaAutenticacao.equals(hashSenhaAutenticacao);
+    }
+
     private String sha256(String senha, byte[] salt) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

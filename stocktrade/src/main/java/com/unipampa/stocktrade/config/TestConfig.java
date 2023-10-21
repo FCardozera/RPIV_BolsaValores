@@ -26,6 +26,7 @@ import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
 import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
 import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
 import com.unipampa.stocktrade.model.repository.movimentacao.MovimentacaoRepository;
+import com.unipampa.stocktrade.model.repository.oferta.OfertaRepository;
 import com.unipampa.stocktrade.model.repository.usuario.EmpresaRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
@@ -51,9 +52,13 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private EmpresaRepository empresaRepository;
 
+    @Autowired
+    private OfertaRepository ofertaRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
+        ofertaRepository.deleteAll();
         compraAcaoRepository.deleteAll();
         vendaAcaoRepository.deleteAll();
         acaoRepository.deleteAll();
@@ -115,7 +120,7 @@ public class TestConfig implements CommandLineRunner {
 
         Set<Acao> acoesEmpresa2 = new HashSet<>();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 200; i++) {
             Acao acao = new Acao(null, "VALE5", 25.41, empresa2, null, null, null, null);
             acoesEmpresa2.add(acao);
         }
