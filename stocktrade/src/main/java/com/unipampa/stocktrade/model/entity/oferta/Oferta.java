@@ -50,4 +50,5 @@ public class Oferta implements Serializable {
 
     @Column(name = "data_oferta")
     private Instant dataOferta;
+
 }
