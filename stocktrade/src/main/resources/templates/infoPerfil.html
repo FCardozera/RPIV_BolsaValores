@@ -9,35 +9,35 @@
     <main>
         <div th:replace="~{fragments/headerLogadoFragment :: header('indexLogado')}"></div>
 
-        <div class="container-fluid mt-5 justify-content-center pe-5 ps-5 mt-3 pdb5">
-            <div class="row justify-content-center mt-5 texts">
-                <div class="col-md-2 custom-padding-top mx-auto">
+        <div class="container-fluid justify-content-center pe-5 ps-5">
+            <div class="row justify-content-center">
+                <div class="col-md-10 justify-content-center align-items-center text-center mx-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" width="120" height="160" fill="currentColor"
                         class="bi bi-person-circle text-decoration-none" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                         <path fill-rule="evenodd"
                             d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                     </svg>
-                </div>
-                <div class="col-md-10">
                     <h4>Informações do Perfil</h4>
-                    <div class="col-md-6 mb-3">
-                        <label for="nome" class="form-label">Nome:</label>
-                        <div class="form-control custom-input" id="nome" th:text="${nome}"></div>
+                    <div class="col-md-6 mb-3 mx-auto mt-5">
+                        <label for="nome" class="form-label fs-4">Nome</label>
+                        <div class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0" id="nome" th:text="${nome}"></div>
+                    </div>                             
+                    <div class="col-md-6 mb-3 mx-auto mt-4">
+                        <label for="email" class="form-label fs-4">Email</label>
+                        <div class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0" id="email" th:text="${email}"></div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="email" class="form-label">Email:</label>
-                        <div class="form-control custom-input" id="email" th:text="${email}"></div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="cpf" class="form-label">CPF:</label>
-                        <div class="form-control custom-input" id="cpf" th:text="${cpf}"></div>
+                    <div class="col-md-6 mb-3 mx-auto mt-4">
+                        <label for="cpf" class="form-label fs-4">CPF</label>
+                        <div class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0" id="cpf" th:text="${cpf}"></div>
                     </div>                    
-                    <div class="custom-padding-top custom-padding-bottom">
+                    <div class="custom-padding-top custom-padding-bottom mx-auto">
                         <button onclick="redirecionarParaPerfil(event)" type="submit"
-                            class="btn btn-outline-primary botao1 me-4" id="editarPerfil">Editar Perfil</button>
+                            class="btn btn-outline-primary botao1" id="editarPerfil">Editar Perfil</button>
                     </div>
                 </div>
+                
+                
             </div>
         </div>
     </main>
