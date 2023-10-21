@@ -20,4 +20,7 @@ public interface AcaoRepository extends JpaRepository<Acao, UUID> {
 
     @Query("SELECT a FROM acao a WHERE a.cliente IS NULL AND a.sigla = :siglaAcao")
     public List<Acao> findAcoesClienteNull(@Param("siglaAcao") String siglaAcao, Pageable pageable);
+
+    @Query("SELECT sigla, MIN(valor), COUNT(sigla) FROM acao GROUP BY sigla")
+    public List<String[]> findAcoesSiglaPrecoQuantidade();
 }

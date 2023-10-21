@@ -1,5 +1,7 @@
 package com.unipampa.stocktrade.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,9 @@ public class InvistaLogado {
     @GetMapping
     public ModelAndView invistaLogado (HttpSession session) {
         ModelAndView mv = new ModelAndView("invistaLogado");
-        mv.addObject("acoes", service.getAcoesSiglaPrecoIterator());
+        
+        List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidade();
+        mv.addObject("acoesBD", acoesBancoDeDados);
         return mv;
     }
 

@@ -34,7 +34,7 @@
             />
           </svg>
         </div>
-        <p class="h3 fs-8 custom-margin-left" id="saldo">RS$100,000.00</p>
+        <p class="h3 fs-8 custom-margin-left" id="saldo">R$<span th:text="${session.usuarioLogado.saldo}"></span></p>
         <div class="d-flex align-items-center">
           <p class="h3 fs-8 custom-margin-left mt-4">Ativos Disponíveis</p>
           <form class="d-flex custom-margin-left2">
@@ -58,7 +58,7 @@
 
       <div class="container mb-4 justify-content-center">
         <div class="container row justify-content-center">
-          <table class="table table-custom-invista">
+          <!-- <table class="table table-custom-invista">
             <thead>
               <tr>
                 <th scope="col">EMPRESA</th>
@@ -77,7 +77,8 @@
                 <td>???</td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
+          <div th:replace="~{fragments/tabela/tabelaInvistaLogado :: tabelaInvistaLogado}"></div>
         </div>
       </div>
     </main>
