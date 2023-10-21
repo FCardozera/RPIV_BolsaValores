@@ -111,10 +111,15 @@ public class CarteiraService {
         Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
         
         Iterator<Acao> acaoIterator = new CompraAcaoIterator(acoesSemCliente.iterator());
-        while (acaoIterator.hasNext()) {
-            Acao acao = acaoIterator.next();
-            CompraAcao compraAcao = cliente.comprarAcao(acao);
-            compraAcaoRepository.save(compraAcao);
+
+        try {
+            while (acaoIterator.hasNext()) {
+                Acao acao = acaoIterator.next();
+                CompraAcao compraAcao = cliente.comprarAcao(acao);
+                compraAcaoRepository.save(compraAcao);
+            }
+        } catch (Exception e) {
+            throw e;
         }
 
         clienteRepository.save(cliente);

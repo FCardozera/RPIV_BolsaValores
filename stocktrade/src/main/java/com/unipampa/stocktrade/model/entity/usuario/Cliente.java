@@ -284,7 +284,11 @@ public class Cliente extends Usuario {
         return compraAcao;
     }
 
-    public void reduzirSaldo(Double valor) {
+    private void reduzirSaldo(Double valor) {
+        if (valor > saldo) {
+            throw new RuntimeException("Saldo insuficiente");
+        }
+
         saldo -= valor;
     }
 }
