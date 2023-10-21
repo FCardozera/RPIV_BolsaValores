@@ -626,7 +626,7 @@ h4 {
 }
 
 .label-vender { 
-  color: #E30101;
+  color: rgba(227, 1, 1, 0.3);
   grid-area: label-vender; 
   display: flex;
   flex-direction: column;
@@ -642,7 +642,7 @@ h4 {
 .label-vender .label-vender-line {
   height: 2px;
   width: 75%;
-  background-color: #E30101;
+  background-color: rgba(227, 1, 1, 0.3);
 }
 
 .custom-input-acoes {
