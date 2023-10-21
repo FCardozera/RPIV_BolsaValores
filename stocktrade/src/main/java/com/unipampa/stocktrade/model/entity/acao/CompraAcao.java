@@ -52,4 +52,11 @@ public class CompraAcao implements Serializable {
 
     @Column(name = "data_compra")
     private Instant dataCompra;
+
+    public CompraAcao(Acao acao, Cliente cliente) {
+        this.acao = acao;
+        this.cliente = cliente;
+        this.valorCompra = acao.getValor();
+        this.dataCompra = Instant.now();
+    }
 }

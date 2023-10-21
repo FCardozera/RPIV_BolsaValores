@@ -1,6 +1,5 @@
 package com.unipampa.stocktrade.service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -10,12 +9,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
+import com.unipampa.stocktrade.model.entity.acao.iterator.compraAcao.CompraAcaoIterator;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
@@ -102,24 +101,19 @@ public class CarteiraService {
             throw new RuntimeException("Não existe um usuário logado");
         }
 
-        Pageable page = PageRequest.of(0, dados.quantidadeAcoes());
-        List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao(), page);
+        List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()));
 
+        // Alterar lógica para acrescentar uma oferta de compra
         if (acoesSemCliente.isEmpty()) {
             throw new RuntimeException("Não existem ações disponíveis para compra");
         }
 
         Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
         
-        Iterator<Acao> acaoIterator = acoesSemCliente.iterator();
+        Iterator<Acao> acaoIterator = new CompraAcaoIterator(acoesSemCliente.iterator());
         while (acaoIterator.hasNext()) {
             Acao acao = acaoIterator.next();
-
-            cliente.comprarAcao(acao);
-
-            acaoRepository.save(acao);
-
-            CompraAcao compraAcao = new CompraAcao(null, acao, cliente, acao.getValor(), Instant.now());
+            CompraAcao compraAcao = cliente.comprarAcao(acao);
             compraAcaoRepository.save(compraAcao);
         }
 
