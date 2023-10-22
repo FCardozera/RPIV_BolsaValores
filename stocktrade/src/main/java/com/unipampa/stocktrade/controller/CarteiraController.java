@@ -23,7 +23,6 @@ public class CarteiraController {
     @Autowired
     private CarteiraService carteiraService;
     
-    
     @GetMapping
     public ModelAndView carteiraPagina(HttpSession session) {
         ModelAndView mv = new ModelAndView("/carteira");
