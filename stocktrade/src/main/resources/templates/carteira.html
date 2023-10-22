@@ -150,16 +150,20 @@
     }
 
     function verificarCamposSolicitacaoCompra(event) {
-      const acoes = document.getElementsByClassName('quantidadeAcoesInput')
-      const senhas = document.getElementsByClassName('senhaAutenticacaoInput')
+      const acoes = document.getElementsByClassName('quantidadeAcoesInputCompra')
+      const senhas = document.getElementsByClassName('senhaAutenticacaoInputCompra')
 
       j = acoes.length;
 
       for (i = 0; i < acoes.length; i++) {
 
+        console.log("validando " + i)
+
         if (acoes.item(i).value != "" && senhas.item(i).value != "") {
 
           const siglaAcao = document.getElementById("siglaAcao" + i)
+          console.log("siglaAcao" + i)
+          console.log("sigla acao:" + siglaAcao)
 
           enviarSolicitacaoCompra(event, acoes.item(i).value, senhas.item(i).value, siglaAcao.innerText)
           break;
@@ -214,8 +218,6 @@
       const containerCompra = document.getElementsByClassName("container-comprar");
       const containerVender = document.getElementsByClassName("container-vender");
 
-      console.log("sumindo" + containerCompra.length)
-
       for (i = 0; i < containerCompra.length; i++) {
         containerCompra.item(i).style.display = "none";
         containerVender.item(i).style.display = "grid";
@@ -225,8 +227,6 @@
     function sumirContainerVenderEAparecerContainerCompra(event) {
       const containerCompra = document.getElementsByClassName("container-comprar");
       const containerVender = document.getElementsByClassName("container-vender");
-
-      console.log("sumindo" + containerCompra.length)
 
       for (i = 0; i < containerCompra.length; i++) {
         containerCompra.item(i).style.display = "grid";
