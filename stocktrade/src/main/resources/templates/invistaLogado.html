@@ -4,7 +4,7 @@
     th:replace="~{fragments/headFragment :: head('StockTrade - Invista')}"
   ></head>
   <body id="sobre-page">
-    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+    <svg xmlns="../images/logo-bg-off.png" style="display: none"></svg>
 
     <main>
       <div
@@ -37,12 +37,13 @@
         <p class="h3 fs-8 custom-margin-left" id="saldo">R$<span th:text="${session.usuarioLogado.saldo}"></span></p>
         <div class="d-flex align-items-center">
           <p class="h3 fs-8 custom-margin-left mt-4">Ativos Disponíveis</p>
-          <form class="d-flex custom-margin-left2">
+          <form method="get" action="invistaLogado" class="d-flex custom-margin-left2">
             <input
+              id="form-busca-acao"
               class="form-control me-2 input-custom"
-              type="search"
               placeholder="Busque no site..."
               aria-label="Search"
+              name="busca"
             />
             <button
               class="btn btn-outline-success btn-custom"
@@ -77,7 +78,7 @@
         });
     </script>
 
-    <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
+    <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
 
     <script>
 

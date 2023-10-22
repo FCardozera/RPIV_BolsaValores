@@ -18,6 +18,7 @@ import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
 import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
 import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
+import com.unipampa.stocktrade.model.entity.usuario.Admin;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Empresa;
 import com.unipampa.stocktrade.model.entity.usuario.FactoryMethod.UsuarioFactory;
@@ -27,7 +28,9 @@ import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
 import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
 import com.unipampa.stocktrade.model.repository.movimentacao.MovimentacaoRepository;
 import com.unipampa.stocktrade.model.repository.oferta.OfertaRepository;
+import com.unipampa.stocktrade.model.repository.registro.RegistroRepository;
 import com.unipampa.stocktrade.model.repository.usuario.EmpresaRepository;
+import com.unipampa.stocktrade.model.repository.usuario.AdminRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 @Configuration
@@ -55,6 +58,12 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OfertaRepository ofertaRepository;
 
+    @Autowired
+    private AdminRepository adminRepository;
+
+    @Autowired
+    private RegistroRepository registroRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -65,6 +74,8 @@ public class TestConfig implements CommandLineRunner {
         movimentacaoRepository.deleteAll();
         clienteRepository.deleteAll();
         empresaRepository.deleteAll();
+        registroRepository.deleteAll();
+        adminRepository.deleteAll();
 
         Instant instant1 = Instant.now();
         Instant instant2 = (LocalDateTime.of(2022, Month.AUGUST, 02, 12, 0)).toInstant(ZoneOffset.UTC);
@@ -77,6 +88,9 @@ public class TestConfig implements CommandLineRunner {
         Cliente cliente2 = (Cliente) UsuarioFactory.novoUsuario(null, "Felipe", "44424444435", "felipe@gmail.com", "12345678", "1234", TipoUsuario.CLIENTE);
         Cliente cliente3 = (Cliente) UsuarioFactory.novoUsuario(null, "João", "44424444444", "joao@gmail.com", "12345678", "1234", TipoUsuario.CLIENTE);
         Cliente cliente4 = (Cliente) UsuarioFactory.novoUsuario(null, "Tales", "44424444467", "tales@gmail.com", "12345678", "1234", TipoUsuario.CLIENTE);
+
+        Admin admin1 = (Admin) UsuarioFactory.novoUsuario(null, "Gilleanes", "44444444469", "gilleanes@gmail.com", "12345678", "1234", TipoUsuario.ADMIN);
+        Admin admin2 = (Admin) UsuarioFactory.novoUsuario(null, "Silvio", "44444444470", "silvio@gmail.com", "12345678", "1234", TipoUsuario.ADMIN);
 
         Movimentacao mov1 = new Movimentacao(null, 15000.0, instant1, TipoMovimentacao.DEPOSITO, cliente1);
         cliente1.setSaldo(cliente1.getSaldo() + 15000.0);
@@ -99,15 +113,14 @@ public class TestConfig implements CommandLineRunner {
         cliente4.setSaldo(1000.0);
 
         clienteRepository.saveAll(List.of(cliente1, cliente2, cliente3, cliente4));
-
+        adminRepository.saveAll(List.of(admin1, admin2));
         movimentacaoRepository.saveAll(List.of(mov1, mov2, mov3, mov4, mov5, mov6));
 
-        
-        Empresa empresa1 = new Empresa(null, "Petrobras LTDA", "53048280000174", "petrobras@gmail.com", "12345678", "1234");
-        Empresa empresa2 = new Empresa(null, "Vale LTDA", "50951271000109", "vale@gmail.com", "12345678", "1234");
-        Empresa empresa3 = new Empresa(null, "Itaú Unibanco", "50951271000110", "itau@gmail.com", "12345678", "1234");
-        Empresa empresa4 = new Empresa(null, "Lojas Marisa", "50951271000111", "marisa@gmail.com", "12345678", "1234");
-        Empresa empresa5 = new Empresa(null, "Azul SA", "50951271000112", "azul@gmail.com", "12345678", "1234");
+        Empresa empresa1 = (Empresa) UsuarioFactory.novoUsuario(null, "Petrobras LTDA", "53048280000174", "petrobras@gmail.com", "12345678", "1234", TipoUsuario.EMPRESA);
+        Empresa empresa2 = (Empresa) UsuarioFactory.novoUsuario(null, "Vale LTDA", "50951271000109", "vale@gmail.com", "12345678", "1234", TipoUsuario.EMPRESA);
+        Empresa empresa3 = (Empresa) UsuarioFactory.novoUsuario(null, "Itaú Unibanco", "50951271000110", "itau@gmail.com", "12345678", "1234", TipoUsuario.EMPRESA);
+        Empresa empresa4 = (Empresa) UsuarioFactory.novoUsuario(null, "Lojas Marisa", "50951271000111", "marisa@gmail.com", "12345678", "1234", TipoUsuario.EMPRESA);
+        Empresa empresa5 = (Empresa) UsuarioFactory.novoUsuario(null, "Azul SA", "50951271000112", "azul@gmail.com", "12345678", "1234", TipoUsuario.EMPRESA);
 
         empresaRepository.saveAll(List.of(empresa1, empresa2, empresa3, empresa4, empresa5));
 
