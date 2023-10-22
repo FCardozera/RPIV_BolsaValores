@@ -18,6 +18,7 @@ import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
 import com.unipampa.stocktrade.model.entity.acao.iterator.compraAcao.CompraAcaoIterator;
 import com.unipampa.stocktrade.model.entity.oferta.Oferta;
+import com.unipampa.stocktrade.model.entity.oferta.enums.TipoOferta;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
@@ -133,7 +134,7 @@ public class CarteiraService {
         List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()));
         if (acoesSemCliente.isEmpty()) {
             for (int i = 0; i < dados.quantidadeAcoes(); i++) {
-                Oferta oferta = new Oferta(null, null, cliente, 100.0, Instant.now());
+                Oferta oferta = new Oferta(null, null, cliente, 100.0, Instant.now(), TipoOferta.COMPRA);
                 ofertaRepository.save(oferta);
             }
             return ResponseEntity.ok("Aguardando ofertas");

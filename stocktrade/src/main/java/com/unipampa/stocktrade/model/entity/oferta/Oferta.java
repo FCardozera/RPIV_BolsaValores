@@ -2,10 +2,10 @@ package com.unipampa.stocktrade.model.entity.oferta;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Set;
 import java.util.UUID;
 
 import com.unipampa.stocktrade.model.entity.acao.Acao;
+import com.unipampa.stocktrade.model.entity.oferta.enums.TipoOferta;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 
 import jakarta.persistence.Column;
@@ -15,7 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,8 +38,9 @@ public class Oferta implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToMany(mappedBy = "oferta")
-    private Set<Acao> acoes;
+    @OneToOne
+    @JoinColumn(name="acao_id", referencedColumnName = "id")
+    private Acao acao;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -50,5 +51,8 @@ public class Oferta implements Serializable {
 
     @Column(name = "data_oferta")
     private Instant dataOferta;
+
+    @Column(name = "tipo_oferta")
+    private TipoOferta tipoOferta;
 
 }

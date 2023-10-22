@@ -49,8 +49,7 @@ public class Acao implements Serializable {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "oferta_id")
+    @OneToOne(mappedBy = "acao", cascade = CascadeType.ALL)
     private Oferta oferta;
 
     @OneToOne(mappedBy = "acao", cascade = CascadeType.ALL)
