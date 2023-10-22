@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
@@ -23,13 +24,17 @@ public class InvistaLogadoController {
     private ServiceInvistaLogado service;
 
     @GetMapping
-    public ModelAndView invistaLogado (HttpSession session) {
+    public ModelAndView invistaLogado (HttpSession session, @RequestParam(required = false) String busca) {
         ModelAndView mv = new ModelAndView("invistaLogado");
 
         service.updateSession(session);
-        
-        List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidade();
-        mv.addObject("acoesBD", acoesBancoDeDados);
+        if (busca == null) {
+            List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidade();
+            mv.addObject("acoesBD", acoesBancoDeDados);
+            return mv;
+        }
+        List<String[]> listaAcoes = service.buscarAcoesBySigla(busca);
+        mv.addObject("acoesBD", listaAcoes);
         return mv;
     }
 

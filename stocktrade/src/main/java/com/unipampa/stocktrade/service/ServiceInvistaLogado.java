@@ -99,5 +99,13 @@ public class ServiceInvistaLogado {
         clienteRepository.save(cliente);
         return ResponseEntity.ok("Ações compradas");
     }
+
+    public List<String[]> buscarAcoesBySigla(String busca) {
+        if (busca == null || busca.trim().isEmpty()) {
+            return acaoRepository.findAcoesSiglaPrecoQuantidadeDisponivel();
+        }
+        List<String[]> listaAcoes = acaoRepository.findAcoesBySiglaOrEmpresaNome(busca);
+        return listaAcoes;
+    }
 }
  
