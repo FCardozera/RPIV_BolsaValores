@@ -513,14 +513,12 @@ h4 {
   margin-left: 400px;
 }
 
-/* CSS ACORDEAO TABLE */
-.container-acordeao {
-  margin-top: 40px;
+/* CSS ACORDEAO TABLE COMPRAR */
+.container-comprar {
   margin-left: auto;
   width: 550px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 2fr 1fr 1fr 2fr 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   letter-spacing: 1.5px;
@@ -534,28 +532,26 @@ h4 {
 }
 
 .button-comprar { 
-  margin-top: -50px;
   grid-area: button-comprar; 
   width: auto;
 }
 
 .button-comprar button {
   width: 100%;
-  height: 37px;
   background-color: #40F201;
   color: #010D50;
   border-radius: 37px;
   border: 0;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 .senha-autenticacao { 
-  margin-top: -40px;
   grid-area: senha-autenticacao; 
 }
 
 .senha-autenticacao img { 
   width: 21px;
-  height: auto;
   margin-bottom: 7px;
   margin-right: 7px;
 }
@@ -565,27 +561,25 @@ h4 {
 }
 
 .label-saldo-atual { 
-  margin-top: -35px;
   grid-area: label-saldo-atual; 
+  margin-bottom: 20px;
 }
 
 .saldo-atual { 
-  margin-top: -35px;
   grid-area: saldo-atual; 
 }
 
 .label-valor-total-operacao { 
-  margin-top: -30px;
-  grid-area: label-valor-total-operacao; 
+  grid-area: label-valor-total-operacao;
+  margin-bottom: 20px;
 }
 
 .valor-total-da-operacao {
-  margin-top: -30px;
   grid-area: valor-total-da-operacao; 
 }
 
 .input-quantidade { 
-  height: auto;
+  margin-bottom: 20px;
   grid-area: input-quantidade; 
 }
 
@@ -605,44 +599,30 @@ h4 {
   margin-bottom: 0px;
 }
 
-.label-comprar {
+.label {
+  border: 0px solid #000;
+  background-color: var(--darker-blue);
+  padding-bottom: 7px;
+  color: white;
+  width: 80%;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.label-comprar-ativo {
   color: #40F201;
-  grid-area: label-comprar; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 20px;
+  border-bottom: 2px solid #40F201;
 }
 
-.label-comprar p {
-  margin-bottom: 10px;
+.label-vender-inativo {
+  color: rgba(254, 1, 1, 0.3);
+  border-bottom: 2px solid rgba(254, 1, 1, 0.3);
+  transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
-.label-comprar .label-comprar-line {
-  height: 2px;
-  width: 75%;
-  background-color: #40F201;
-}
-
-.label-vender { 
-  color: rgba(227, 1, 1, 0.3);
-  grid-area: label-vender; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.label-vender p {
-  margin-bottom: 10px;
-}
-
-.label-vender .label-vender-line {
-  height: 2px;
-  width: 75%;
-  background-color: rgba(227, 1, 1, 0.3);
+.label-vender-inativo:hover {
+  color: var(--red);
+  border-bottom: 2px solid var(--red);
 }
 
 .custom-input-acoes {
@@ -652,7 +632,138 @@ h4 {
   border: none;
   border-radius: 40px;
   width: 100%;
-  height: 40px;
+  padding: 3px 3px 3px 10px;
+}
+
+.custom-input-acoes::placeholder {
+  color: var(--white);
+}
+
+.custom-input-acoes:focus {
+  background-color: rgb(95, 95, 95);
+  border-color: var(--gray);
+  box-shadow: none;
+  color: var(--white) !important;
+}
+
+.div-input-senha-autenticacao {
+  display: flex;
+}
+
+.div-input-senha-autenticacao svg {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+/* CSS ACORDEAO TABLE VENDER */
+.container-vender {
+  margin-left: auto;
+  width: 550px;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  letter-spacing: 1.5px;
+  grid-template-areas:
+    "label-comprar label-vender"
+    "input-quantidade preco-atual"
+    "label-valor-total-operacao valor-total-da-operacao"
+    "label-saldo-atual saldo-atual"
+    "senha-autenticacao senha-autenticacao"
+    "button-vender button-vender";
+}
+
+.button-vender { 
+  grid-area: button-vender; 
+  width: auto;
+}
+
+.button-vender button {
+  width: 100%;
+  background-color: #E30101;
+  color: #010D50;
+  border-radius: 37px;
+  border: 0;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.senha-autenticacao { 
+  grid-area: senha-autenticacao; 
+}
+
+.senha-autenticacao img { 
+  width: 21px;
+  margin-bottom: 7px;
+  margin-right: 7px;
+}
+
+.senha-autenticacao input { 
+  width: 325px;
+}
+
+.label-saldo-atual { 
+  grid-area: label-saldo-atual; 
+  margin-bottom: 20px;
+}
+
+.saldo-atual { 
+  grid-area: saldo-atual; 
+}
+
+.label-valor-total-operacao { 
+  grid-area: label-valor-total-operacao;
+  margin-bottom: 20px;
+}
+
+.valor-total-da-operacao {
+  grid-area: valor-total-da-operacao; 
+}
+
+.input-quantidade { 
+  margin-bottom: 20px;
+  grid-area: input-quantidade; 
+}
+
+.input-quantidade p { 
+  margin-bottom: 0px;
+}
+
+.preco-atual { 
+  grid-area: preco-atual; 
+}
+
+.preco-atual p:first-child { 
+  margin-bottom: 10px;
+}
+
+.preco-atual p:last-child { 
+  margin-bottom: 0px;
+}
+
+.label-comprar-inativo {
+  color: rgba(1, 254, 1, 0.3);
+  border-bottom: 2px solid rgba(1, 254, 1, 0.3);
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.label-comprar-inativo:hover {
+  color: #40F201;
+  border-bottom: 2px solid #40F201;
+}
+
+.label-vender-ativo {
+  color: var(--red);
+  border-bottom: 2px solid var(--red);
+}
+
+.custom-input-acoes {
+  border-radius: 100%;
+  background-color: var(--dark-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 40px;
+  width: 100%;
   padding: 3px 3px 3px 10px;
 }
 

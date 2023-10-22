@@ -193,7 +193,9 @@
           if (response.ok) {
             window.location.href = "/carteira";
           } else {
+            console.log(response.data);
             response.json().then(data => {
+              const senhaError = document.getElementById("senha-error");
               senhaError.textContent = data.message;
             });
           }
@@ -204,6 +206,33 @@
         });
     }
 
+  </script>
+
+  <script>
+
+    function sumirContainerCompraEAparecerContainerVender(event) {
+      const containerCompra = document.getElementsByClassName("container-comprar");
+      const containerVender = document.getElementsByClassName("container-vender");
+
+      console.log("sumindo" + containerCompra.length)
+
+      for (i = 0; i < containerCompra.length; i++) {
+        containerCompra.item(i).style.display = "none";
+        containerVender.item(i).style.display = "grid";
+      }
+    }
+
+    function sumirContainerVenderEAparecerContainerCompra(event) {
+      const containerCompra = document.getElementsByClassName("container-comprar");
+      const containerVender = document.getElementsByClassName("container-vender");
+
+      console.log("sumindo" + containerCompra.length)
+
+      for (i = 0; i < containerCompra.length; i++) {
+        containerCompra.item(i).style.display = "grid";
+        containerVender.item(i).style.display = "none";
+      }
+    }
   </script>
 
 

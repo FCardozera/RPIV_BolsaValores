@@ -40,10 +40,8 @@ public class CarteiraController {
     }
 
     @PostMapping("/comprar")
-    public ModelAndView comprarAcoes(HttpSession session, @RequestBody CompraAcoesDTO dados) {
-        ModelAndView mv = new ModelAndView("/carteira");
-        carteiraService.comprarAcoes(session, dados);
-        return mv;
+    public Object comprarAcoes(HttpSession session, @RequestBody CompraAcoesDTO dados) {
+        return carteiraService.comprarAcoes(session, dados);
     }
 
 }

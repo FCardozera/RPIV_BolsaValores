@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
@@ -112,7 +113,7 @@ public class CarteiraService {
         return acoes;
     }
 
-    public void comprarAcoes(HttpSession session, CompraAcoesDTO dados) {
+    public ResponseEntity<String> comprarAcoes(HttpSession session, CompraAcoesDTO dados) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 
         if (usuario == null) {
@@ -135,7 +136,7 @@ public class CarteiraService {
                 Oferta oferta = new Oferta(null, null, cliente, 100.0, Instant.now());
                 ofertaRepository.save(oferta);
             }
-            return;
+            return ResponseEntity.ok("Aguardando ofertas");
         }
         
         Iterator<Acao> acaoIterator = new CompraAcaoIterator(acoesSemCliente.iterator());
@@ -150,5 +151,6 @@ public class CarteiraService {
         }
 
         clienteRepository.save(cliente);
+        return ResponseEntity.ok("Ações compradas");
     }
 }

@@ -58,26 +58,6 @@
 
       <div class="container mb-4 justify-content-center">
         <div class="container row justify-content-center">
-          <!-- <table class="table table-custom-invista">
-            <thead>
-              <tr>
-                <th scope="col">EMPRESA</th>
-                <th scope="col">SIGLA</th>
-                <th scope="col">PREÇO ATUAL</th>
-                <th scope="col">VARIAÇÃO DIA</th>
-                <th scope="col">OPÇÕES</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="acao : ${acoes}">
-                <td>???</td>
-                <td th:text="${acao.sigla}"></td>
-                <td th:text="'R$ ' + ${acao.valor}"></td>
-                <td>???</td>
-                <td>???</td>
-              </tr>
-            </tbody>
-          </table> -->
           <div th:replace="~{fragments/tabela/tabelaInvistaLogado :: tabelaInvistaLogado}"></div>
         </div>
       </div>
@@ -98,5 +78,32 @@
     </script>
 
     <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
+
+    <script>
+
+      function sumirContainerCompraEAparecerContainerVender(event) {
+        const containerCompra = document.getElementsByClassName("container-comprar");
+        const containerVender = document.getElementsByClassName("container-vender");
+  
+        console.log("sumindo" + containerCompra.length)
+  
+        for (i = 0; i < containerCompra.length; i++) {
+          containerCompra.item(i).style.display = "none";
+          containerVender.item(i).style.display = "grid";
+        }
+      }
+  
+      function sumirContainerVenderEAparecerContainerCompra(event) {
+        const containerCompra = document.getElementsByClassName("container-comprar");
+        const containerVender = document.getElementsByClassName("container-vender");
+  
+        console.log("sumindo" + containerCompra.length)
+  
+        for (i = 0; i < containerCompra.length; i++) {
+          containerCompra.item(i).style.display = "grid";
+          containerVender.item(i).style.display = "none";
+        }
+      }
+    </script>
   </body>
 </html>
