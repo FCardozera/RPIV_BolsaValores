@@ -25,7 +25,7 @@ public class ServiceInvistaLogado {
     }
 
     public List<String[]> getAcoesSiglaPrecoQuantidade() {
-        return acaoRepository.findAcoesSiglaPrecoQuantidade();
+        return acaoRepository.findAcoesSiglaPrecoQuantidadeDisponivel();
     }
 }
  
