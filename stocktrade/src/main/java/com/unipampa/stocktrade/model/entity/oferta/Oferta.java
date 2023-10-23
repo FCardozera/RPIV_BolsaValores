@@ -55,4 +55,8 @@ public class Oferta implements Serializable {
     @Column(name = "tipo_oferta")
     private TipoOferta tipoOferta;
 
+    public String customToString() {
+        return "Oferta [id=" + id + ", valorOferta=" + valorOferta + ", dataOferta=" + dataOferta + ", tipoOferta=" + tipoOferta + "]";
+    }
+
 }
