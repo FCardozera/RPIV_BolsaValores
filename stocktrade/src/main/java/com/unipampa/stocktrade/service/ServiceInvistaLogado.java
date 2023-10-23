@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
-import com.unipampa.stocktrade.model.entity.acao.iterator.compraAcao.CompraAcaoIterator;
 import com.unipampa.stocktrade.model.entity.acao.iterator.listarAcao.AcaoIterator;
 import com.unipampa.stocktrade.model.entity.oferta.Oferta;
 import com.unipampa.stocktrade.model.entity.oferta.enums.TipoOferta;
+import com.unipampa.stocktrade.model.entity.oferta.iterator.compraOferta.CompraOfertaIterator;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
@@ -76,8 +76,8 @@ public class ServiceInvistaLogado {
             throw new RuntimeException("Sigla de ação inválida");
         }
 
-        List<Acao> acoesSemCliente = acaoRepository.findAcoesClienteNull(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()));
-        if (acoesSemCliente.isEmpty()) {
+        List<Oferta> ofertasSemCliente = ofertaRepository.findOfertasVendaBySigla(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()));
+        if (ofertasSemCliente.isEmpty()) {
             for (int i = 0; i < dados.quantidadeAcoes(); i++) {
                 Oferta oferta = new Oferta(null, null, cliente, 100.0, Instant.now(), TipoOferta.COMPRA);
                 ofertaRepository.save(oferta);
@@ -85,12 +85,19 @@ public class ServiceInvistaLogado {
             return ResponseEntity.ok("Aguardando ofertas");
         }
         
-        Iterator<Acao> acaoIterator = new CompraAcaoIterator(acoesSemCliente.iterator());
+        Iterator<Oferta> ofertaIterator = new CompraOfertaIterator(ofertasSemCliente.iterator());
         try {
-            while (acaoIterator.hasNext()) {
-                Acao acao = acaoIterator.next();
-                CompraAcao compraAcao = cliente.comprarAcao(acao);
+            while (ofertaIterator.hasNext()) {
+                Oferta oferta = ofertaIterator.next();
+                Acao acao = oferta.getAcao();
+
+                CompraAcao compraAcao = cliente.comprarAcao(oferta);
                 compraAcaoRepository.save(compraAcao);
+
+                acaoRepository.save(acao);
+                
+                ofertaRepository.save(oferta);
+                ofertaRepository.deleteById(oferta.getId());
             }
         } catch (Exception e) {
             throw e;

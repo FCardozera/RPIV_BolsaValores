@@ -280,11 +280,18 @@ public class Cliente extends Usuario {
         }
     }
 
-    public CompraAcao comprarAcao(Acao acao) {
+    public CompraAcao comprarAcao(Oferta oferta) {
+        reduzirSaldo(oferta.getValorOferta());
+
+        Acao acao = oferta.getAcao();
         acao.setCliente(this);
-        reduzirSaldo(acao.getValor());
+        acao.setOferta(null);
+
+        oferta.setAcao(null);
+
         CompraAcao compraAcao = new CompraAcao(acao, this);
         compraAcoes.add(compraAcao);
+
         return compraAcao;
     }
 
