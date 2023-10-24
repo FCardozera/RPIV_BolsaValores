@@ -1,0 +1,20 @@
+<div th:fragment="cardInvista(titulo, descricao, beneficios)" class="mb-3 custom-card3">
+    <div class="card-body">
+      <h5 class="card-title fw-bold text-center" th:text="${titulo}"></h5>
+      <p class="card-text" th:text="${descricao}"></p>
+      <p class="card-text">
+        <small class="text-body-secondary fw-bold text-uppercase">Benefícios</small>
+      </p>
+
+      <div th:each="beneficio : ${beneficios}">
+        <p class="card-text">
+            <span class="text-color-blue2"> • </span> <span th:text="${beneficio}"></span>
+        </p>
+      </div>
+      
+      <a
+        class="btn btn-outline-primary botao1 me-4 ms-5 justify-content-cente text-center"
+        >Invista Agora!</a
+      >
+    </div>
+  </div>
