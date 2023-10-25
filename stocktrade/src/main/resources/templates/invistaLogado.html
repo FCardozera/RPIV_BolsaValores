@@ -107,6 +107,22 @@
 
   <script>
 
+    function limparCampos(input) {
+      const acoesCompra = document.getElementsByClassName('quantidadeAcoesInputCompra')
+      const senhasCompra = document.getElementsByClassName('senhaAutenticacaoInputCompra')
+
+      const acoesVenda = document.getElementsByClassName('quantidadeAcoesInputVenda')
+      const senhasVenda = document.getElementsByClassName('senhaAutenticacaoInputVenda')
+
+      for (i = 0; i < acoesCompra.length; i++) {
+        acoesCompra.item(i).value = ""
+        senhasCompra.item(i).value = ""
+
+        acoesVenda.item(i).value = ""
+        senhasVenda.item(i).value = ""
+      }
+    }
+
     function limitSenhaAutenticacao(input) {
       input.value = input.value.replace(/\D/g, ""); // permite apenas dígitos
       if (input.value.length > 4) {
