@@ -16,10 +16,18 @@
         />
     </div>
     
-
     <div class="preco-atual text-uppercase fw-bold">
       <p>Preço atual</p>
       <p th:text="'R$ ' + ${acao[1]}"></p>
+    </div>
+
+    <div class="input-preco-acao-venda text-start fw-bold">
+      <p class="text-uppercase">Preço desejado por ação</p>
+      <input
+          type="text"
+          class="form-control custom-input-acoes quantidadePrecoAcoesInputVenda"
+          placeholder="Insira o preço desejado por ação"
+        />
     </div>
 
     <div class="label-valor-total-operacao text-uppercase text-start fw-bold">
