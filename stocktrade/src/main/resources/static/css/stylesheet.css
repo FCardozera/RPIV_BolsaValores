@@ -561,6 +561,7 @@ h4 {
   grid-template-areas:
     "label-comprar label-vender"
     "input-quantidade preco-atual"
+    "input-preco-acao-compra input-preco-acao-compra"
     "label-valor-total-operacao valor-total-da-operacao"
     "label-saldo-atual saldo-atual"
     "senha-autenticacao senha-autenticacao"
@@ -580,6 +581,11 @@ h4 {
   border: 0;
   padding: 5px;
   margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.button-comprar button:hover {
+  background-color: #2DC24E;
 }
 
 .senha-autenticacao { 
@@ -612,6 +618,16 @@ h4 {
 
 .valor-total-da-operacao {
   grid-area: valor-total-da-operacao; 
+}
+
+.input-preco-acao-compra {
+  margin-bottom: 20px;
+  grid-area: input-preco-acao-compra;
+  width: 350px;
+}
+
+.input-preco-acao-compra p { 
+  margin-bottom: 0px;
 }
 
 .input-quantidade { 
@@ -703,6 +719,7 @@ h4 {
   grid-template-areas:
     "label-comprar label-vender"
     "input-quantidade preco-atual"
+    "input-preco-acao-venda input-preco-acao-venda"
     "label-valor-total-operacao valor-total-da-operacao"
     "label-saldo-atual saldo-atual"
     "senha-autenticacao senha-autenticacao"
@@ -722,6 +739,11 @@ h4 {
   border: 0;
   padding: 5px;
   margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.button-vender button:hover {
+  background-color: #FF0000;
 }
 
 .senha-autenticacao { 
@@ -754,6 +776,16 @@ h4 {
 
 .valor-total-da-operacao {
   grid-area: valor-total-da-operacao; 
+}
+
+.input-preco-acao-venda {
+  margin-bottom: 20px;
+  grid-area: input-preco-acao-venda;
+  width: 350px;
+}
+
+.input-preco-acao-venda p { 
+  margin-bottom: 0px;
 }
 
 .input-quantidade { 
