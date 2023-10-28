@@ -16,9 +16,9 @@
         />
     </div>
 
-    <div class="preco-atual text-uppercase fw-bold">
-      <p>Preço atual</p>
-      <p th:text="'R$ ' + ${acao[1]}"></p>
+    <div class="quantidade-disponivel text-uppercase fw-bold">
+      <p>Quantidade disponível</p>
+      <p th:text="${acao[2]}"></p>
     </div>
 
     <div class="input-preco-acao-compra text-start fw-bold">
@@ -28,6 +28,11 @@
           class="form-control custom-input-acoes quantidadePrecoAcoesInputCompra"
           placeholder="Insira o preço desejado por ação"
         />
+    </div>
+
+    <div class="preco-atual text-uppercase fw-bold">
+      <p>Preço atual</p>
+      <p th:text="'R$ ' + ${acao[1]}"></p>
     </div>
 
     <div class="label-valor-total-operacao text-uppercase text-start fw-bold">
