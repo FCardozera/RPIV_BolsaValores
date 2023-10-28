@@ -17,7 +17,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +25,6 @@ import lombok.ToString;
 @Entity(name = "oferta")
 @Table(name = "tb_oferta")
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -41,6 +39,8 @@ public class Oferta implements Serializable {
     @OneToOne
     @JoinColumn(name="acao_id", referencedColumnName = "id")
     private Acao acao;
+
+    private String sigla;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -57,6 +57,24 @@ public class Oferta implements Serializable {
 
     public String customToString() {
         return "Oferta [id=" + id + ", valorOferta=" + valorOferta + ", dataOferta=" + dataOferta + ", tipoOferta=" + tipoOferta + "]";
+    }
+
+    public Oferta(UUID id, Acao acao, Cliente cliente, Double valorOferta, Instant dataOferta, TipoOferta tipoOferta) {
+        this.id = id;
+        this.acao = acao;
+        this.cliente = cliente;
+        this.valorOferta = valorOferta;
+        this.dataOferta = dataOferta;
+        this.tipoOferta = tipoOferta;
+    }
+
+    public Oferta(UUID id, Cliente cliente, Double valorOferta, Instant dataOferta, TipoOferta tipoOferta, String sigla) {
+        this.id = id;
+        this.sigla = sigla;
+        this.cliente = cliente;
+        this.valorOferta = valorOferta;
+        this.dataOferta = dataOferta;
+        this.tipoOferta = tipoOferta;
     }
 
 }

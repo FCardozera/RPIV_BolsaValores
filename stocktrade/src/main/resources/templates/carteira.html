@@ -174,20 +174,17 @@
     function verificarCamposSolicitacaoCompra(event) {
       const acoes = document.getElementsByClassName('quantidadeAcoesInputCompra')
       const senhas = document.getElementsByClassName('senhaAutenticacaoInputCompra')
+      const precoPorAcao = document.getElementsByClassName('quantidadePrecoAcoesInputCompra')
 
       j = acoes.length;
 
       for (i = 0; i < acoes.length; i++) {
 
-        console.log("validando " + i)
-
-        if (acoes.item(i).value != "" && senhas.item(i).value != "") {
+        if (acoes.item(i).value != "" && senhas.item(i).value != "" && precoPorAcao.item(i).value != "") {
 
           const siglaAcao = document.getElementById("siglaAcao" + i)
-          console.log("siglaAcao" + i)
-          console.log("sigla acao:" + siglaAcao)
 
-          enviarSolicitacaoCompra(event, acoes.item(i).value, senhas.item(i).value, siglaAcao.innerText)
+          enviarSolicitacaoCompra(event, acoes.item(i).value, senhas.item(i).value, siglaAcao.innerText, precoPorAcao.item(i).value)
           break;
         }
         j--;
@@ -198,14 +195,15 @@
       }
     }
 
-    function enviarSolicitacaoCompra(event, quantidadeAcoes, senhaAutenticacao, siglaAcao) {
+    function enviarSolicitacaoCompra(event, quantidadeAcoes, senhaAutenticacao, siglaAcao, precoAcao) {
 
       console.log(quantidadeAcoes + " " + senhaAutenticacao + " " + siglaAcao)
 
       const data = {
         siglaAcao: siglaAcao,
         quantidadeAcoes: quantidadeAcoes,
-        senhaAutenticacao: senhaAutenticacao
+        senhaAutenticacao: senhaAutenticacao,
+        precoAcao: precoAcao
       }
 
       fetch("/carteira/comprar", {

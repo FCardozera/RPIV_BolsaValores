@@ -12,6 +12,9 @@ import com.unipampa.stocktrade.model.entity.oferta.Oferta;
 
 public interface OfertaRepository extends JpaRepository<Oferta, UUID> {
 
+    @Query("SELECT o FROM oferta o JOIN o.acao a WHERE o.tipoOferta = 0 AND a.sigla = :siglaAcao AND o.valorOferta <= :precoAcao ORDER BY o.valorOferta ASC")
+    public List<Oferta> findOfertasVendaBySiglaAndPreco(@Param("siglaAcao") String siglaAcao, Pageable pageable, Double precoAcao);
+
     @Query("SELECT o FROM oferta o JOIN o.acao a WHERE o.tipoOferta = 0 AND a.sigla = :siglaAcao")
     public List<Oferta> findOfertasVendaBySigla(@Param("siglaAcao") String siglaAcao, Pageable pageable);
 
