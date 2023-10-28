@@ -3,7 +3,7 @@ package com.unipampa.stocktrade.model.entity.acao;
 import java.io.Serializable;
 import java.util.UUID;
 
-import com.unipampa.stocktrade.model.entity.oferta.Oferta;
+import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Empresa;
 
@@ -39,8 +39,6 @@ public class Acao implements Serializable {
 
     private String sigla;
 
-    private Double valor;
-
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
@@ -50,7 +48,7 @@ public class Acao implements Serializable {
     private Cliente cliente;
 
     @OneToOne(mappedBy = "acao", cascade = CascadeType.ALL)
-    private Oferta oferta;
+    private VendaOferta vendaOferta;
 
     @OneToOne(mappedBy = "acao", cascade = CascadeType.ALL)
     private CompraAcao compraAcao;
@@ -58,8 +56,7 @@ public class Acao implements Serializable {
     @OneToOne(mappedBy = "acao", cascade = CascadeType.ALL)
     private VendaAcao vendaAcao;
 
-    public Acao(String sigla, Double valor) {
+    public Acao(String sigla) {
         this.sigla = sigla;
-        this.valor = valor;
     }
 }

@@ -13,14 +13,17 @@ import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
 import com.unipampa.stocktrade.model.entity.acao.iterator.listarAcao.AcaoIterator;
-import com.unipampa.stocktrade.model.entity.oferta.Oferta;
+import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
+import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.oferta.enums.TipoOferta;
-import com.unipampa.stocktrade.model.entity.oferta.iterator.compraOferta.CompraOfertaIterator;
+import com.unipampa.stocktrade.model.entity.oferta.factoryMethod.OfertaFactory;
+import com.unipampa.stocktrade.model.entity.oferta.iterator.vendaOferta.VendaOfertaIterator;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
 import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
-import com.unipampa.stocktrade.model.repository.oferta.OfertaRepository;
+import com.unipampa.stocktrade.model.repository.oferta.CompraOfertaRepository;
+import com.unipampa.stocktrade.model.repository.oferta.VendaOfertaRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,13 +38,16 @@ public class ServiceInvistaLogado {
     private ClienteRepository clienteRepository;
 
     @Autowired
-    private OfertaRepository ofertaRepository;
+    private VendaOfertaRepository vendaOfertaRepository;
+
+    @Autowired
+    private CompraOfertaRepository compraOfertaRepository;
 
     @Autowired
     private CompraAcaoRepository compraAcaoRepository;
 
     public List<Acao> getAcoesSiglaPrecoIterator() {
-        Iterator<String[]> acoesString = acaoRepository.findAcoesSiglaPreco().iterator();
+        Iterator<String[]> acoesString = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco().iterator();
 
         AcaoIterator acaoIterator = new AcaoIterator(acoesString);
 
@@ -49,7 +55,7 @@ public class ServiceInvistaLogado {
     }
 
     public List<String[]> getAcoesSiglaPrecoQuantidadeVenda() {
-        return ofertaRepository.findOfertasVendaBySiglaAndPreco();
+        return vendaOfertaRepository.findOfertasVendaBySiglaAndPreco();
     }
 
     public HttpSession updateSession(HttpSession session) {
@@ -76,33 +82,33 @@ public class ServiceInvistaLogado {
             throw new RuntimeException("Sigla de ação inválida");
         }
 
-        List<Oferta> ofertasVenda = ofertaRepository.findOfertasVendaBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
+        List<VendaOferta> ofertasVenda = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
         if (ofertasVenda.isEmpty()) {
             for (int i = 0; i < dados.quantidadeAcoes(); i++) {
-                Oferta oferta = new Oferta(null, cliente, dados.precoAcao(), Instant.now(), TipoOferta.COMPRA, dados.siglaAcao());
-                ofertaRepository.save(oferta);
+                CompraOferta oferta = (CompraOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), null, null, TipoOferta.COMPRA);
+                compraOfertaRepository.save(oferta);
             }
             return ResponseEntity.ok("Aguardando ofertas");
         }
 
         for (int i = 0; i < dados.quantidadeAcoes() - ofertasVenda.size(); i++) {
-            Oferta oferta = new Oferta(null, cliente, dados.precoAcao(), Instant.now(), TipoOferta.COMPRA, dados.siglaAcao());
-            ofertaRepository.save(oferta);
+            CompraOferta oferta = (CompraOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), null, null, TipoOferta.COMPRA);
+            compraOfertaRepository.save(oferta);
         }
 
-        Iterator<Oferta> ofertaIterator = new CompraOfertaIterator(ofertasVenda.iterator());
+        Iterator<VendaOferta> ofertaIterator = new VendaOfertaIterator(ofertasVenda.iterator());
         try {
             while (ofertaIterator.hasNext()) {
-                Oferta oferta = ofertaIterator.next();
-                Acao acao = oferta.getAcao();
+                VendaOferta vendaOferta = ofertaIterator.next();
+                Acao acao = vendaOferta.getAcao();
 
-                CompraAcao compraAcao = cliente.comprarAcao(oferta);
+                CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);
                 compraAcaoRepository.save(compraAcao);
 
                 acaoRepository.save(acao);
                 
-                ofertaRepository.save(oferta);
-                ofertaRepository.deleteById(oferta.getId());
+                vendaOfertaRepository.save(vendaOferta);
+                vendaOfertaRepository.deleteById(vendaOferta.getId());
             }
         } catch (Exception e) {
             throw e;
@@ -114,9 +120,9 @@ public class ServiceInvistaLogado {
 
     public List<String[]> buscarAcoesBySigla(String busca) {
         if (busca == null || busca.trim().isEmpty()) {
-            return acaoRepository.findAcoesSiglaPrecoQuantidadeDisponivel();
+            return vendaOfertaRepository.findOfertasVendaBySiglaAndPreco();
         }
-        List<String[]> listaAcoes = acaoRepository.findAcoesBySiglaOrEmpresaNome(busca);
+        List<String[]> listaAcoes = vendaOfertaRepository.findOfertaBySiglaOrEmpresaNome(busca);
         return listaAcoes;
     }
 }

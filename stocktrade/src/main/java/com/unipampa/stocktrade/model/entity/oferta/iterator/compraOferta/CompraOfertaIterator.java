@@ -2,13 +2,13 @@ package com.unipampa.stocktrade.model.entity.oferta.iterator.compraOferta;
 
 import java.util.Iterator;
 
-import com.unipampa.stocktrade.model.entity.oferta.Oferta;
+import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 
-public class CompraOfertaIterator implements Iterator<Oferta> {
+public class CompraOfertaIterator implements Iterator<CompraOferta> {
 
-    private Iterator<Oferta> ofertaIterator;
+    private Iterator<CompraOferta> ofertaIterator;
 
-    public CompraOfertaIterator(Iterator<Oferta> ofertaIterator) {
+    public CompraOfertaIterator(Iterator<CompraOferta> ofertaIterator) {
         this.ofertaIterator = ofertaIterator;
     }
 
@@ -18,8 +18,8 @@ public class CompraOfertaIterator implements Iterator<Oferta> {
     }
 
     @Override
-    public Oferta next() {
-        Oferta oferta = ofertaIterator.next();
+    public CompraOferta next() {
+        CompraOferta oferta = ofertaIterator.next();
         return oferta;
     }
     

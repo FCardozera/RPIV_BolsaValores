@@ -22,7 +22,8 @@ import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
 import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
 import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
-import com.unipampa.stocktrade.model.entity.oferta.Oferta;
+import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
+import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
 
 import jakarta.persistence.OneToMany;
@@ -58,7 +59,10 @@ public class Cliente extends Usuario {
     private Set<Acao> acoes;
 
     @OneToMany(mappedBy = "cliente")
-    private Set<Oferta> ofertas;
+    private Set<CompraOferta> compraOfertas;
+
+    @OneToMany(mappedBy = "cliente")
+    private Set<VendaOferta> vendaOfertas;
 
     @OneToMany(mappedBy = "cliente")
     private Set<CompraAcao> compraAcoes;
@@ -280,16 +284,16 @@ public class Cliente extends Usuario {
         }
     }
 
-    public CompraAcao comprarAcao(Oferta oferta) {
+    public CompraAcao comprarAcao(VendaOferta oferta) {
         reduzirSaldo(oferta.getValorOferta());
 
         Acao acao = oferta.getAcao();
         acao.setCliente(this);
-        acao.setOferta(null);
 
-        oferta.setAcao(null);
+        CompraAcao compraAcao = new CompraAcao(oferta, this);
 
-        CompraAcao compraAcao = new CompraAcao(acao, this);
+        acao.setVendaOferta(null);
+        oferta.setAcao(null); // Para poder deletar a oferta
         compraAcoes.add(compraAcao);
 
         return compraAcao;

@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.unipampa.stocktrade.model.entity.acao.Acao;
+import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
 
 import jakarta.persistence.Column;
@@ -32,6 +33,9 @@ public class Empresa extends Usuario {
 
     @OneToMany(mappedBy = "empresa")
     private Set<Acao> acoes;
+
+    @OneToMany(mappedBy = "empresa")
+    private Set<VendaOferta> vendaOfertas;
 
     public Empresa(UUID id, String nome, String cnpj, String email, String senha, String senhaAutenticacao) {
         super(id, nome, email, senha, senhaAutenticacao, TipoUsuario.EMPRESA);
