@@ -48,8 +48,8 @@ public class ServiceInvistaLogado {
         return acaoIterator.getAllAcoes();
     }
 
-    public List<String[]> getAcoesSiglaPrecoQuantidade() {
-        return acaoRepository.findAcoesSiglaPrecoQuantidadeDisponivel();
+    public List<String[]> getAcoesSiglaPrecoQuantidadeVenda() {
+        return ofertaRepository.findOfertasVendaBySiglaAndPreco();
     }
 
     public HttpSession updateSession(HttpSession session) {

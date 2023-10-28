@@ -18,4 +18,7 @@ public interface OfertaRepository extends JpaRepository<Oferta, UUID> {
     @Query("SELECT o FROM oferta o JOIN o.acao a WHERE o.tipoOferta = 0 AND a.sigla = :siglaAcao")
     public List<Oferta> findOfertasVendaBySigla(@Param("siglaAcao") String siglaAcao, Pageable pageable);
 
+    @Query("SELECT a.sigla, MIN(o.valorOferta), COUNT(a.sigla) FROM oferta o JOIN o.acao a WHERE o.tipoOferta = 0 GROUP BY a.sigla")
+    public List<String[]> findOfertasVendaBySiglaAndPreco();
+
 }

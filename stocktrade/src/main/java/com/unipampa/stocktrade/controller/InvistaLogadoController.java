@@ -29,7 +29,7 @@ public class InvistaLogadoController {
 
         service.updateSession(session);
         if (busca == null) {
-            List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidade();
+            List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidadeVenda();
             mv.addObject("acoesBD", acoesBancoDeDados);
             return mv;
         }
