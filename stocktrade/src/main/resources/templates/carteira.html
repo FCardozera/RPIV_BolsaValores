@@ -175,6 +175,7 @@
       const acoes = document.getElementsByClassName('quantidadeAcoesInputCompra')
       const senhas = document.getElementsByClassName('senhaAutenticacaoInputCompra')
       const precoPorAcao = document.getElementsByClassName('quantidadePrecoAcoesInputCompra')
+      const senhaError = document.getElementsByClassName('senha-error-compra')
 
       j = acoes.length;
 
@@ -183,8 +184,9 @@
         if (acoes.item(i).value != "" && senhas.item(i).value != "" && precoPorAcao.item(i).value != "") {
 
           const siglaAcao = document.getElementById("siglaAcao" + i)
+          console.log(senhaError.item(i))
 
-          enviarSolicitacaoCompra(event, acoes.item(i).value, senhas.item(i).value, siglaAcao.innerText, precoPorAcao.item(i).value)
+          enviarSolicitacaoCompra(event, acoes.item(i).value, senhas.item(i).value, siglaAcao.innerText, precoPorAcao.item(i).value, senhaError.item(i))
           break;
         }
         j--;
@@ -195,7 +197,7 @@
       }
     }
 
-    function enviarSolicitacaoCompra(event, quantidadeAcoes, senhaAutenticacao, siglaAcao, precoAcao) {
+    function enviarSolicitacaoCompra(event, quantidadeAcoes, senhaAutenticacao, siglaAcao, precoAcao, senhaError) {
 
       console.log(quantidadeAcoes + " " + senhaAutenticacao + " " + siglaAcao)
 
@@ -219,7 +221,6 @@
           } else {
             console.log(response.data);
             response.json().then(data => {
-              const senhaError = document.getElementById("senha-error");
               senhaError.textContent = data.message;
             });
           }
