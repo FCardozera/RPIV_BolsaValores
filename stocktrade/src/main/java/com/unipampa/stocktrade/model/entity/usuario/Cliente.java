@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
@@ -306,4 +307,9 @@ public class Cliente extends Usuario {
 
         saldo -= valor;
     }
+
+    public VendaAcao venderAcao(CompraOferta compraOferta) {
+        return null;
+    }
+
 }

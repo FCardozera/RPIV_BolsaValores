@@ -234,6 +234,69 @@
   </script>
 
   <script>
+    function verificarCamposSolicitacaoVenda(event) {
+      const acoes = document.getElementsByClassName('quantidadeAcoesInputVenda')
+      const senhas = document.getElementsByClassName('senhaAutenticacaoInputVenda')
+      const precoPorAcao = document.getElementsByClassName('quantidadePrecoAcoesInputVenda')
+      const senhaError = document.getElementsByClassName('senha-error-venda')
+
+      j = acoes.length;
+
+      for (i = 0; i < acoes.length; i++) {
+
+        if (acoes.item(i).value != "" && senhas.item(i).value != "" && precoPorAcao.item(i).value != "") {
+
+          const siglaAcao = document.getElementById("siglaAcao" + i)
+          console.log(senhaError.item(i))
+
+          enviarSolicitacaoVenda(event, acoes.item(i).value, senhas.item(i).value, siglaAcao.innerText, precoPorAcao.item(i).value, senhaError.item(i))
+          break;
+        }
+        j--;
+      }
+
+      if (j == 0) {
+        alert("Preencha todos os campos obrigatórios")
+      }
+    }
+
+    function enviarSolicitacaoVenda(event, quantidadeAcoes, senhaAutenticacao, siglaAcao, precoAcao, senhaError) {
+
+      console.log(quantidadeAcoes + " " + senhaAutenticacao + " " + siglaAcao)
+
+      const data = {
+        siglaAcao: siglaAcao,
+        quantidadeAcoes: quantidadeAcoes,
+        senhaAutenticacao: senhaAutenticacao,
+        precoAcao: precoAcao
+      }
+
+      fetch("/carteira/vender", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.href = "/carteira";
+          } else {
+            console.log(response.data);
+            response.json().then(data => {
+              senhaError.textContent = data.message;
+            });
+          }
+        })
+        .catch((error) => {
+          alert("Ocorreu um erro ao vender!");
+          console.error(error);
+        });
+    }
+  </script>
+
+
+  <script>
 
     function sumirContainerCompraEAparecerContainerVender(event) {
       const containerCompra = document.getElementsByClassName("container-comprar");

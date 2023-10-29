@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
+import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.service.CarteiraService;
 
 import jakarta.servlet.http.HttpSession;
@@ -41,6 +42,11 @@ public class CarteiraController {
     @PostMapping("/comprar")
     public Object comprarAcoes(HttpSession session, @RequestBody CompraAcoesDTO dados) {
         return carteiraService.comprarAcoes(session, dados);
+    }
+
+    @PostMapping("/vender")
+    public Object venderAcoes(HttpSession session, @RequestBody VendaAcoesDTO dados){
+        return carteiraService.venderAcoes(session, dados);
     }
 
 }
