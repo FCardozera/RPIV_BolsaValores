@@ -75,6 +75,9 @@ public class TestConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        System.out.println("Iniciando a configuração de teste...");
+
+        System.out.println("Deletando todos os registros do banco de dados...");
         vendaOfertaRepository.deleteAll();
         compraOfertaRepository.deleteAll();
         compraAcaoRepository.deleteAll();
@@ -85,7 +88,9 @@ public class TestConfig implements CommandLineRunner {
         empresaRepository.deleteAll();
         registroRepository.deleteAll();
         adminRepository.deleteAll();
+        System.out.println("Registros deletados com sucesso!");
 
+        System.out.println("Inserindo registros no banco de dados...");
         Instant instant1 = Instant.now();
         Instant instant2 = (LocalDateTime.of(2022, Month.AUGUST, 02, 12, 0)).toInstant(ZoneOffset.UTC);
         Instant instant3 = (LocalDateTime.of(2022, Month.DECEMBER, 31, 23, 0)).toInstant(ZoneOffset.UTC);
@@ -346,6 +351,10 @@ public class TestConfig implements CommandLineRunner {
                 }
             }
         }
+
+        System.out.println("Registros inseridos com sucesso!");
+
+        System.out.println("Configuração de teste finalizada com sucesso!");
 
     }
 

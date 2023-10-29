@@ -107,11 +107,14 @@ public class CarteiraService {
 
         for (String[] acaoQueryBanco : acoesString) {
             String[] acaoFinal = new String[5];
-            for (int i = 0; i < acaoQueryBanco.length; i++) {
-                acaoFinal[i] = acaoQueryBanco[i];
-            }
-            Double valorAtual = Double.parseDouble(acaoQueryBanco[2]);
-            Double precoMedio = Double.parseDouble(acaoQueryBanco[3]);
+
+            acaoFinal[0] = acaoQueryBanco[0];
+            Double valorAtual = vendaOfertaRepository.findMenorPrecoOfertaVendaBySigla(acaoQueryBanco[0]);
+            acaoFinal[1] = String.format("%.2f", valorAtual);
+            acaoFinal[2] = acaoQueryBanco[1];
+            acaoFinal[3] = acaoQueryBanco[2];
+
+            Double precoMedio = Double.parseDouble(acaoQueryBanco[2]);
 
             Double variacao = (((valorAtual-precoMedio)*100)/precoMedio);
             String variacaoFormatada = String.format("%.2f", variacao);
