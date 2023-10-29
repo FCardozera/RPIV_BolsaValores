@@ -25,5 +25,5 @@ public interface VendaOfertaRepository extends JpaRepository<VendaOferta, UUID> 
     public List<String[]> findOfertaBySiglaOrEmpresaNome(@Param("busca") String busca);
 
     @Query("Select MIN(o.valorOferta) FROM vendaOferta o JOIN o.acao a WHERE a.sigla = :siglaAcao")
-    public Double findMenorPrecoOfertaVendaBySigla(@Param("siglaAcao") String siglaAcao);
+    public String findMenorPrecoOfertaVendaBySigla(@Param("siglaAcao") String siglaAcao);
 }
