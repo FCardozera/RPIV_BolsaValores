@@ -1,6 +1,7 @@
 package com.unipampa.stocktrade.service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -55,7 +56,26 @@ public class ServiceInvistaLogado {
     }
 
     public List<String[]> getAcoesSiglaPrecoQuantidadeVenda() {
-        return vendaOfertaRepository.findOfertasVendaBySiglaAndPreco();
+
+        List<String[]> acoes = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco();
+        List<String[]> acoesFinal = new ArrayList<>();
+
+        for (String[] acao : acoes) {
+            String[] acaoFinal = new String[6];
+
+            for (int i = 0; i < acao.length; i++) {
+                acaoFinal[i] = acao[i];
+            }
+
+            acaoFinal[3] = "0";
+            acaoFinal[4] = "0";
+
+            acaoFinal[5] = acao[2];
+
+            acoesFinal.add(acaoFinal);
+        }
+
+        return acoesFinal;
     }
 
     public HttpSession updateSession(HttpSession session) {
@@ -122,8 +142,26 @@ public class ServiceInvistaLogado {
         if (busca == null || busca.trim().isEmpty()) {
             return vendaOfertaRepository.findOfertasVendaBySiglaAndPreco();
         }
+
         List<String[]> listaAcoes = vendaOfertaRepository.findOfertaBySiglaOrEmpresaNome(busca);
-        return listaAcoes;
+        List<String[]> listaAcoesFinal = new ArrayList<>();
+
+        for (String[] acao : listaAcoes) {
+
+            String[] acaoFinal = new String[6];
+
+            for (int i = 0; i < acao.length; i++) {
+                acaoFinal[i] = acao[i];
+            }
+
+            acaoFinal[3] = "0";
+            acaoFinal[4] = "0";
+            acaoFinal[5] = acao[2];
+
+            listaAcoesFinal.add(acaoFinal);
+        }
+
+        return listaAcoesFinal;
     }
 }
  
