@@ -124,14 +124,17 @@ public class ServiceInvistaLogado {
                 VendaOferta vendaOferta = ofertaIterator.next();
                 Acao acao = vendaOferta.getAcao();
 
-                CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);
-                compraAcaoRepository.save(compraAcao);
+                Cliente clienteAntigo = cliente.comprarAcao(vendaOferta);
+                clienteRepository.save(cliente);
+                clienteRepository.save(clienteAntigo);
 
                 acaoRepository.save(acao);
                 
                 vendaOfertaRepository.save(vendaOferta);
                 vendaOfertaRepository.deleteById(vendaOferta.getId());
             }
+
+            updateSession(session);
         } catch (Exception e) {
             throw e;
         }

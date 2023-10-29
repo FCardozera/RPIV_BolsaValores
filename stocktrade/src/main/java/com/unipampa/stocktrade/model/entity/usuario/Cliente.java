@@ -285,19 +285,27 @@ public class Cliente extends Usuario {
         }
     }
 
-    public CompraAcao comprarAcao(VendaOferta oferta) {
+    public Cliente comprarAcao(VendaOferta oferta) {
         reduzirSaldo(oferta.getValorOferta());
 
         Acao acao = oferta.getAcao();
+
+        Cliente clienteAntigo = acao.getCliente();
+
         acao.setCliente(this);
 
         CompraAcao compraAcao = new CompraAcao(oferta, this);
 
         acao.setVendaOferta(null);
         oferta.setAcao(null); // Para poder deletar a oferta
+
+        if (acao.getCompraAcao() == null) {
+            acao.setCompraAcao(compraAcao);
+        }
+
         compraAcoes.add(compraAcao);
 
-        return compraAcao;
+        return clienteAntigo;
     }
 
     private void reduzirSaldo(Double valor) {

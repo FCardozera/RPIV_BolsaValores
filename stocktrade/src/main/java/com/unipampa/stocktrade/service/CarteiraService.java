@@ -107,6 +107,7 @@ public class CarteiraService {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
         Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
         List<String[]> acoesString = acaoRepository.findAcoesCliente(cliente.getId());
+        List<String[]> acoesString2 = acaoRepository.findAcoesCliente2(cliente.getId());
         List<String[]> acoes = new ArrayList<>();
 
         for (String[] acaoQueryBanco : acoesString) {
@@ -168,8 +169,8 @@ public class CarteiraService {
                 VendaOferta vendaOferta = ofertaIterator.next();
                 Acao acao = vendaOferta.getAcao();
 
-                CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);
-                compraAcaoRepository.save(compraAcao);
+                cliente.comprarAcao(vendaOferta);
+                clienteRepository.save(cliente);
 
                 acaoRepository.save(acao);
                 
@@ -214,8 +215,8 @@ public class CarteiraService {
 
 
         for (int i = 0; i < dados.quantidadeAcoes() - ofertasCompra.size(); i++) {
-        VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesCliente.get(i).getEmpresa() , acoesCliente.get(i), TipoOferta.VENDA);
-        vendaOfertaRepository.save(oferta);
+            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesCliente.get(i).getEmpresa() , acoesCliente.get(i), TipoOferta.VENDA);
+            vendaOfertaRepository.save(oferta);
         }
         
         // Iterator<CompraOferta> ofertaIterator = ofertasCompra.iterator();

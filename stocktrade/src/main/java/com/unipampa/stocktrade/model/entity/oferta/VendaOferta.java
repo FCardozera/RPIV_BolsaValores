@@ -32,7 +32,6 @@ public class VendaOferta extends Oferta {
     @JoinColumn(name="acao_id", referencedColumnName = "id")
     private Acao acao;
 
-
     public VendaOferta(UUID id, Cliente cliente, Double valorOferta, Instant dataOferta, Empresa empresa, Acao acao) {
         super(id, cliente, valorOferta, dataOferta);
         this.acao = acao;
