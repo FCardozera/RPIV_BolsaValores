@@ -19,8 +19,6 @@ public class CompraAcaoIterator implements Iterator<Acao> {
 
     @Override
     public Acao next() {
-        Acao acao = acaoIterator.next();
-        return acao;
+        return acaoIterator.next();
     }
-    
 }

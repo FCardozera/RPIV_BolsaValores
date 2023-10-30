@@ -59,7 +59,7 @@ public abstract class Usuario implements Serializable {
     @Column(name = "salt_senha_autenticacao")
     private byte[] saltSenhaAutenticacao;
 
-    public Usuario(UUID id, String nome, String email, String senha, String senhaAutenticacao) {
+    protected Usuario(UUID id, String nome, String email, String senha, String senhaAutenticacao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -72,12 +72,12 @@ public abstract class Usuario implements Serializable {
         this.hashSenhaAutenticacao = sha256(senhaAutenticacao, this.saltSenhaAutenticacao);
     }
 
-    public Usuario(UUID id, String nome, String email, String senha, String senhaAutenticacao, TipoUsuario tipo) {
+    protected Usuario(UUID id, String nome, String email, String senha, String senhaAutenticacao, TipoUsuario tipo) {
         this(id, nome, email, senha, senhaAutenticacao);
         this.tipo = tipo;
     }
 
-    public Usuario(ClienteRequestDTO data) {
+    protected Usuario(ClienteRequestDTO data) {
         this(null, data.nome(), data.email(), data.senha(), data.senhaAutenticacao());
     }
 
@@ -91,15 +91,15 @@ public abstract class Usuario implements Serializable {
     }
 
     public boolean isSenhaCorreta(String senha) {
-        String hashSenha = sha256(senha, this.saltSenha);
+        String senhaHash = sha256(senha, this.saltSenha);
 
-        return this.hashSenha.equals(hashSenha);
+        return this.hashSenha.equals(senhaHash);
     }
 
     public boolean isSenhaAutenticacaoCorreta(String senhaAutenticacao) {
-        String hashSenhaAutenticacao = sha256(senhaAutenticacao, this.saltSenhaAutenticacao);
+        String senhaHashAutenticacao = sha256(senhaAutenticacao, this.saltSenhaAutenticacao);
 
-        return this.hashSenhaAutenticacao.equals(hashSenhaAutenticacao);
+        return this.hashSenhaAutenticacao.equals(senhaHashAutenticacao);
     }
 
     private String sha256(String senha, byte[] salt) {

@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
+import com.unipampa.stocktrade.model.entity.registro.Registro;
 import com.unipampa.stocktrade.model.entity.usuario.Admin;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Empresa;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
+import com.unipampa.stocktrade.model.repository.registro.RegistroRepository;
 import com.unipampa.stocktrade.model.repository.usuario.AdminRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 import com.unipampa.stocktrade.model.repository.usuario.EmpresaRepository;
@@ -19,13 +21,20 @@ public class PerfilService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
     @Autowired
     private EmpresaRepository empresaRepository;
+
     @Autowired
     private AdminRepository adminRepository;
 
+    @Autowired
+    private RegistroRepository registroRepository;
+
+    private static final String USUARIO_LOGADO = "usuarioLogado";
+
     public void deleteConta(HttpSession session, ClienteRequestDTO dados) {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
 
         if (usuario == null) {
             throw new RuntimeException("Não existe um usuário logado");
@@ -51,18 +60,22 @@ public class PerfilService {
             Admin admin = (Admin) usuario;
             adminRepository.delete(admin);
         }
-
+        
+        Registro registro = new Registro("O usuário " + usuario.getEmail() + " foi deletado com sucesso.");
+        registroRepository.save(registro);
+        
         session.invalidate();
-
-        System.out.println("Usuário deletado com sucesso");
     }
 
     public void trocarEmail(HttpSession session, ClienteRequestDTO dados) {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
+        
 
         if (usuario == null) {
             throw new RuntimeException("Não existe um usuário logado");
         }
+
+        String emailAntigo = usuario.getEmail();
 
         if (dados.email() != null && !dados.email().isEmpty() && !dados.email().equals(usuario.getEmail())) {
             usuario.trocarEmail(dados.email());
@@ -83,12 +96,12 @@ public class PerfilService {
             adminRepository.save(admin);
         }
 
-        System.out.println("Email trocado com sucesso");
-
+        Registro registro = new Registro("O email de usuário " + emailAntigo + " foi trocado para " + usuario.getEmail() + " com sucesso.");
+        registroRepository.save(registro);
     }
 
     public void trocarSenha(HttpSession session, ClienteRequestDTO dados) {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
 
         if (dados.senha() != null && dados.newPassword() != null && !dados.senha().isEmpty()
                 && !dados.newPassword().isEmpty()) {
@@ -108,8 +121,9 @@ public class PerfilService {
             Admin admin = (Admin) usuario;
             adminRepository.save(admin);
         }
-        
-        System.out.println("Senha trocada com sucesso");
+
+        Registro registro = new Registro("A senha do usuário " + usuario.getEmail() + " foi trocada com sucesso.");
+        registroRepository.save(registro);
     }
 
     

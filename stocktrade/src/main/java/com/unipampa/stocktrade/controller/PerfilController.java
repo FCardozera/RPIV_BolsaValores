@@ -23,8 +23,7 @@ public class PerfilController {
 
     @GetMapping
     public ModelAndView perfilPagina(HttpSession session) {
-        ModelAndView mv = new ModelAndView("/perfil");
-        return mv;
+        return new ModelAndView("/perfil");
     }
 
     @DeleteMapping

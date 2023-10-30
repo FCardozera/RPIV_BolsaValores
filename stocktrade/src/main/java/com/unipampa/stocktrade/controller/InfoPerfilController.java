@@ -20,8 +20,7 @@ public class InfoPerfilController {
     @GetMapping
     public ModelAndView index(HttpSession session) {
         ModelAndView mv = new ModelAndView("infoPerfil");
-
-
+        
         try {
             Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
             Cliente cliente = (Cliente) usuario;

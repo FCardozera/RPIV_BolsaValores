@@ -12,8 +12,6 @@ public class SobreController {
     
     @GetMapping
     public ModelAndView sobrePagina() {
-        ModelAndView mv = new ModelAndView("/sobre");
-        return mv;
+        return new ModelAndView("/sobre");
     }
-
 }

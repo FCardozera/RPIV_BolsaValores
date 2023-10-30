@@ -21,15 +21,19 @@ public class CadastroController {
     private CadastroService serviceCadastro;
 
     @PostMapping
-    public ModelAndView cadastrarUsuario(@RequestBody ClienteRequestDTO dados) throws Exception {
+    public ModelAndView cadastrarUsuario(@RequestBody ClienteRequestDTO dados) {
         ModelAndView mv = new ModelAndView("/cadastro");
-        serviceCadastro.salvarCliente(dados);
+        try {
+            serviceCadastro.salvarCliente(dados);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         return mv;
     }
 
     @GetMapping
     public ModelAndView cadastroPagina(HttpSession session) {
-        ModelAndView mv = new ModelAndView("cadastro");
-        return mv;
+        return new ModelAndView("cadastro");
     }
 }

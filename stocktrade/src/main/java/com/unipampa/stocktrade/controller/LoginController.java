@@ -23,7 +23,7 @@ public class LoginController {
     private LoginService serviceLogin;
 
     @PostMapping
-    public ModelAndView login(@RequestBody ClienteRequestDTO dados, HttpSession session) throws Exception {
+    public ModelAndView login(@RequestBody ClienteRequestDTO dados, HttpSession session) {
         ModelAndView mv = new ModelAndView();
 
         try {
@@ -31,9 +31,8 @@ public class LoginController {
             mv.addObject("usuario", userLogin);
             mv.setViewName("indexLogado");
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
-        
         return mv;
     }
 
@@ -47,8 +46,6 @@ public class LoginController {
 
     @GetMapping
     public ModelAndView loginPagina(HttpSession session) {
-        ModelAndView mv = new ModelAndView("login");
-        return mv;
+        return new ModelAndView("login");
     }
-
 }

@@ -168,84 +168,72 @@ public class TestConfig implements CommandLineRunner {
         // Cliente 1 comprou 20 Ações da PETR4
         int count = 0;
         for (Acao acao : acoesEmpresa1) {
-            if (count < 20) {
-                if (acao.getCliente() == null) {
+            if (count < 20 && acao.getCliente() == null) {
                     acao.setCliente(cliente1);
                     CompraAcao compraAcao = new CompraAcao(null, acao, cliente1, acao.getValor(), instant1);
                     compraAcaoRepository.save(compraAcao);
                     acaoRepository.save(acao);
                     count++;
-                }
             }
         }
 
         // Cliente 2 comprou 40 Ações da PETR4
         count = 0;
         for (Acao acao : acoesEmpresa1) {
-            if (count < 40) {
-                if (acao.getCliente() == null) {
+            if (count < 40 && acao.getCliente() == null) {
                     acao.setCliente(cliente2);
                     CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, acao.getValor(), instant2);
                     compraAcaoRepository.save(compraAcao);
                     acaoRepository.save(acao);
                     count++;
-                }
             }
         }
 
         // Cliente 2 comprou 10 Ações da PETR4
         count = 0;
         for (Acao acao : acoesEmpresa1) {
-            if (count < 10) {
-                if (acao.getCliente() == null) {
+            if (count < 10 && acao.getCliente() == null) {
                     acao.setCliente(cliente2);
                     CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, 70.0, instant2);
                     compraAcaoRepository.save(compraAcao);
                     acaoRepository.save(acao);
                     count++;
-                }
             }
         }
 
         // Cliente 1 comprou 20 Ações da VALE5
         count = 0;
         for (Acao acao : acoesEmpresa2) {
-            if (count < 20) {
-                if (acao.getCliente() == null) {
+            if (count < 20 && acao.getCliente() == null) {
                     acao.setCliente(cliente1);
                     CompraAcao compraAcao = new CompraAcao(null, acao, cliente1, acao.getValor(), instant2);
                     compraAcaoRepository.save(compraAcao);
                     acaoRepository.save(acao);
                     count++;
-                }
             }
         }
 
         // Cliente 2 comprou 10 Ações da VALE5
         count = 0;
         for (Acao acao : acoesEmpresa2) {
-            if (count < 10) {
-                if (acao.getCliente() == null) {
+            if (count < 10 && acao.getCliente() == null) {
                     acao.setCliente(cliente2);
                     CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, acao.getValor(), instant1);
                     compraAcaoRepository.save(compraAcao);
                     acaoRepository.save(acao);
                     count++;
-                }
             }
         }
 
         // Cliente 2 comprou 20 Ações da VALE5
         count = 0;
         for (Acao acao : acoesEmpresa2) {
-            if (count < 20) {
-                if (acao.getCliente() == null) {
+            if (count < 20 && acao.getCliente() == null) {
                     acao.setCliente(cliente2);
                     CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, 45.0, instant1);
                     compraAcaoRepository.save(compraAcao);
                     acaoRepository.save(acao);
                     count++;
-                }
             }
         }
 
@@ -253,20 +241,13 @@ public class TestConfig implements CommandLineRunner {
         // Cliente 1 vendeu 10 Ações da VALE5
         count = 0;
         for (Acao acao : acoesEmpresa2) {
-            if (count < 10) {
-                if (acao.getCliente() == null) {
+            if (count < 10 && acao.getCliente() == null) {
                     acao.setCliente(cliente2);
                     VendaAcao vendaAcao = new VendaAcao(null, acao, cliente2, acao.getValor(), instant1);
                     vendaAcaoRepository.save(vendaAcao);
                     acaoRepository.save(acao);
                     count++;
-                }
             }
         }
-
-        
-
-        // System.out.println(clienteRepository.findByEmail("ricardo@gmail.com").getAcoes().toString());
     }
-
 }
