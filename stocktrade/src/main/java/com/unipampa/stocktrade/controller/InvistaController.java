@@ -12,8 +12,7 @@ public class InvistaController {
     
     @GetMapping
     public ModelAndView invistaPagina() {
-        ModelAndView mv = new ModelAndView("/invista");
-        return mv;
+        return new ModelAndView("/invista");
     }
 
 }

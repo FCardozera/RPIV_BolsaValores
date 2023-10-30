@@ -17,8 +17,4 @@ public class IndexService {
     public List<Acao> buscaAcoes() {
         return acaoRepository.findAll();
     }
-    
-
-
-
 }

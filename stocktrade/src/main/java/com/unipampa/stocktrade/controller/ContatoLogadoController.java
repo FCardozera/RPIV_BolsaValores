@@ -12,8 +12,7 @@ public class ContatoLogadoController {
     
     @GetMapping
     public ModelAndView contatoPagina() {
-        ModelAndView mv = new ModelAndView("/contatoLogado");
-        return mv;
+        return new ModelAndView("/contatoLogado");
     }
 
 }

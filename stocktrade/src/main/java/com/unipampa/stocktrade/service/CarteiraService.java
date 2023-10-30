@@ -2,6 +2,7 @@ package com.unipampa.stocktrade.service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -43,19 +44,20 @@ public class CarteiraService {
     @Autowired
     private OfertaRepository ofertaRepository;
 
+    private static final String USUARIO_LOGADO = "usuarioLogado";
+
     public HttpSession updateSession(HttpSession session) {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
         Usuario usuario = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        session.setAttribute("usuarioLogado", usuario);
+        session.setAttribute(USUARIO_LOGADO, usuario);
         return session;
     }
 
     public Double variacaoSaldoUsuario24H(HttpSession session) {
         try {
-            Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+            Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
             Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-            Double variacaoSaldo = cliente.variacaoSaldo24h();
-            return variacaoSaldo;
+            return cliente.variacaoSaldo24h();
         } catch (Exception e) {
             return 0.0;
         }
@@ -63,45 +65,42 @@ public class CarteiraService {
 
     public List<String> mesesMovimentacoes1AnoUsuario(HttpSession session) {
         try {
-            Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+            Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
             Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-            LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
-            LinkedList<String> listaMeses = new LinkedList<String>();
+            LinkedHashMap<String, Double> movimentacoesMensais = (LinkedHashMap<String, Double>) cliente.movimentacoesMensais1Ano();
+            LinkedList<String> listaMeses = new LinkedList<>();
             for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
                 listaMeses.add(entry.getKey());
             }
             return listaMeses;
         } catch (Exception e) {
-            return new ArrayList<String>();
+            return new ArrayList<>();
         }
     }
 
     public List<Double> saldosFinaisMovimentacoes1AnoUsuario(HttpSession session) {
         try {
-            Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+            Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
             Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-            LinkedHashMap<String, Double> movimentacoesMensais = cliente.movimentacoesMensais1Ano();
-            LinkedList<Double> listaSaldosFinais = new LinkedList<Double>();
+            LinkedHashMap<String, Double> movimentacoesMensais = (LinkedHashMap<String, Double>) cliente.movimentacoesMensais1Ano();
+            LinkedList<Double> listaSaldosFinais = new LinkedList<>();
             for (Map.Entry<String, Double> entry : movimentacoesMensais.entrySet()) {
                 listaSaldosFinais.add(entry.getValue());
             }
             return listaSaldosFinais;
         } catch (Exception e) {
-            return new ArrayList<Double>();
+            return new ArrayList<>();
         }
     }
 
     public List<String[]> getAcoesUser (HttpSession session) {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
         Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
         List<String[]> acoesString = acaoRepository.findAcoesCliente(cliente.getId());
         List<String[]> acoes = new ArrayList<>();
 
         for (String[] acaoQueryBanco : acoesString) {
-            String[] acaoFinal = new String[5];
-            for (int i = 0; i < acaoQueryBanco.length; i++) {
-                acaoFinal[i] = acaoQueryBanco[i];
-            }
+            String[] acaoFinal = Arrays.copyOf(acaoQueryBanco, 5);
             Double valorAtual = Double.parseDouble(acaoQueryBanco[2]);
             Double precoMedio = Double.parseDouble(acaoQueryBanco[3]);
 
@@ -115,7 +114,7 @@ public class CarteiraService {
     }
 
     public ResponseEntity<String> comprarAcoes(HttpSession session, CompraAcoesDTO dados) {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
 
         if (usuario == null) {
             throw new RuntimeException("Não existe um usuário logado");
@@ -148,7 +147,7 @@ public class CarteiraService {
                 compraAcaoRepository.save(compraAcao);
             }
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
 
         clienteRepository.save(cliente);

@@ -12,8 +12,7 @@ public class ContatoController {
     
     @GetMapping
     public ModelAndView contatoPagina() {
-        ModelAndView mv = new ModelAndView("/contato");
-        return mv;
+        return new ModelAndView("/contato");
     }
 
 }

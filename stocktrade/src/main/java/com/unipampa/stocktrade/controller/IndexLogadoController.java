@@ -11,9 +11,7 @@ public class IndexLogadoController {
     
     @GetMapping("/indexLogado")
     public ModelAndView indexLogado (HttpSession session) {
-        ModelAndView mv = new ModelAndView("indexLogado");
-
-        return mv;
+        return new ModelAndView("indexLogado");
     }
 
 }

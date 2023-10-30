@@ -12,6 +12,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -78,7 +79,7 @@ public class Cliente extends Usuario {
 
     private Movimentacao getMovimentacaoMaisAntiga() {
         if (movimentacoes == null || movimentacoes.isEmpty()) {
-            return null;
+            throw new NullPointerException("Usuário não possui movimentações");
         }
 
         Movimentacao movimentacaoMaisAntiga = movimentacoes.iterator().next();
@@ -94,7 +95,7 @@ public class Cliente extends Usuario {
 
     public Double variacaoSaldo24h() {
         Instant agora = Instant.now();
-        Instant limiteTempo = agora.minusSeconds(24 * 60 * 60); // 24 horas em segundos
+        Instant limiteTempo = agora.minusSeconds(24 * 60 * 60L); // 24 horas em segundos
 
         List<Movimentacao> movimentacoes24h = movimentacoes.stream()
                 .filter(movimentacao -> movimentacao.getData().isAfter(limiteTempo))
@@ -119,10 +120,8 @@ public class Cliente extends Usuario {
                 .filter(movimentacao -> movimentacao.getTipo() == TipoMovimentacao.DIVIDENDO)
                 .mapToDouble(Movimentacao::getValor)
                 .sum();
-
-        Double variacaoSaldo24 = (somaDepositos24h + somaDividendos24h) - (somaSaques24h + somaTransferencias24h);
-
-        return variacaoSaldo24;
+        // retornando a variacao do saldo nas ultimas 24h
+        return (somaDepositos24h + somaDividendos24h) - (somaSaques24h + somaTransferencias24h);
     }
 
     public Double variacaoSaldoMesAno(int mes, int ano) {
@@ -161,10 +160,9 @@ public class Cliente extends Usuario {
                 .mapToDouble(Movimentacao::getValor)
                 .sum();
 
-        Double variacaoSaldoMesAno = (somaDepositosMesAno + somaDividendosMesAno)
+        // retornando a variacao do saldo naquele mes daquele ano
+        return (somaDepositosMesAno + somaDividendosMesAno)
                 - (somaSaquesMesAno + somaTransferenciasMesAno);
-
-        return variacaoSaldoMesAno;
     }
 
     public Double saldoFinalMesAno(int mes, int ano) {
@@ -203,21 +201,28 @@ public class Cliente extends Usuario {
         return saldoFinal;
     }
 
-    public LinkedHashMap<String, Double> movimentacoesMensais1Ano() {
+    public Map<String, Double> movimentacoesMensais1Ano() {
         try {
-            LinkedHashMap<String, Double> mapaMovimentacoes = new LinkedHashMap<String, Double>();
+            LinkedHashMap<String, Double> mapaMovimentacoes = new LinkedHashMap<>();
             Instant primeiraMovimentacao = getMovimentacaoMaisAntiga().getData();
+            if (primeiraMovimentacao == null) {
+                throw new NullPointerException("Primeira movimentação do Usuário não existe");
+            }
             Instant agora = Instant.now();
             LocalDate dataPrimeiraMovimentacao = primeiraMovimentacao.atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate dataAtual = agora.atZone(ZoneId.systemDefault()).toLocalDate();
             Period periodo = Period.between(dataPrimeiraMovimentacao, dataAtual);
             long diferencaEmAnos = periodo.getYears();
             long diferencaEmMeses = ChronoUnit.MONTHS.between(dataPrimeiraMovimentacao, dataAtual);
-            Locale BRAZIL = new Locale.Builder().setLanguage("pt").setRegion("BR").build();
+            Locale brazilLocale = new Locale.Builder().setLanguage("pt").setRegion("BR").build();
 
             if (diferencaEmAnos >= 1) {
                 LocalDate pontoInicialLocalDate = dataAtual.minusMonths(11);
-                Instant pontoInicialInstant = pontoInicialLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant(); // Mês atual menos 11 meses
+                Instant pontoInicialInstant = pontoInicialLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant(); // Mês
+                                                                                                                      // atual
+                                                                                                                      // menos
+                                                                                                                      // 11
+                                                                                                                      // meses
                 int mesInicial = pontoInicialInstant.atZone(ZoneId.systemDefault()).get(ChronoField.MONTH_OF_YEAR);
                 int anoInicial = pontoInicialInstant.atZone(ZoneId.systemDefault()).get(ChronoField.YEAR);
 
@@ -237,8 +242,9 @@ public class Cliente extends Usuario {
                             .withHour(12)
                             .toInstant();
 
-                    String nomeMes = mesInstant.atZone(ZoneId.systemDefault()).getMonth().getDisplayName(TextStyle.SHORT,
-                            BRAZIL);
+                    String nomeMes = mesInstant.atZone(ZoneId.systemDefault()).getMonth().getDisplayName(
+                            TextStyle.SHORT,
+                            brazilLocale);
                     nomeMes = nomeMes.substring(0, 1).toUpperCase()
                             + nomeMes.substring(1, nomeMes.length() - 1).toLowerCase();
                     Double saldoFinalMes = saldoFinalMesAno(mes, ano);
@@ -265,8 +271,9 @@ public class Cliente extends Usuario {
                             .withHour(12)
                             .toInstant();
 
-                    String nomeMes = mesInstant.atZone(ZoneId.systemDefault()).getMonth().getDisplayName(TextStyle.SHORT,
-                            BRAZIL);
+                    String nomeMes = mesInstant.atZone(ZoneId.systemDefault()).getMonth().getDisplayName(
+                            TextStyle.SHORT,
+                            brazilLocale);
                     nomeMes = nomeMes.substring(0, 1).toUpperCase()
                             + nomeMes.substring(1, nomeMes.length() - 1).toLowerCase();
                     Double saldoFinalMes = saldoFinalMesAno(mes, ano);
@@ -276,7 +283,7 @@ public class Cliente extends Usuario {
             }
             return mapaMovimentacoes;
         } catch (Exception e) {
-            return null;
+            return new LinkedHashMap<>();
         }
     }
 

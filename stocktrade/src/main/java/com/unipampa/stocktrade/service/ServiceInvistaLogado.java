@@ -40,6 +40,8 @@ public class ServiceInvistaLogado {
     @Autowired
     private CompraAcaoRepository compraAcaoRepository;
 
+    private static final String USUARIO_LOGADO = "usuarioLogado";
+
     public List<Acao> getAcoesSiglaPrecoIterator() {
         Iterator<String[]> acoesString = acaoRepository.findAcoesSiglaPreco().iterator();
 
@@ -53,14 +55,14 @@ public class ServiceInvistaLogado {
     }
 
     public HttpSession updateSession(HttpSession session) {
-        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
         Usuario usuario = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        session.setAttribute("usuarioLogado", usuario);
+        session.setAttribute(USUARIO_LOGADO, usuario);
         return session;
     }
 
     public ResponseEntity<String> comprarAcoes(HttpSession session, CompraAcoesDTO dados) {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
 
         if (usuario == null) {
             throw new RuntimeException("Não existe um usuário logado");
@@ -93,7 +95,7 @@ public class ServiceInvistaLogado {
                 compraAcaoRepository.save(compraAcao);
             }
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
 
         clienteRepository.save(cliente);
@@ -104,8 +106,7 @@ public class ServiceInvistaLogado {
         if (busca == null || busca.trim().isEmpty()) {
             return acaoRepository.findAcoesSiglaPrecoQuantidadeDisponivel();
         }
-        List<String[]> listaAcoes = acaoRepository.findAcoesBySiglaOrEmpresaNome(busca);
-        return listaAcoes;
+        return acaoRepository.findAcoesBySiglaOrEmpresaNome(busca);
     }
 }
  
