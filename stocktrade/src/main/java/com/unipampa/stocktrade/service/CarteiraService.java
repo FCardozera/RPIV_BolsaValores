@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
+// import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.oferta.enums.TipoOferta;
@@ -213,23 +214,24 @@ public class CarteiraService {
             vendaOfertaRepository.save(oferta);
         }
         
-        // Iterator<CompraOferta> ofertaIterator = ofertasCompra.iterator();
-        // try {
-        //     while (ofertaIterator.hasNext()) {
-        //         CompraOferta compraOferta = ofertaIterator.next();
-        //         Acao acao = compraOferta.getAcao();
+        Iterator<CompraOferta> ofertaIterator = ofertasCompra.iterator();
+        try {
+            int i = 0;
+            while (ofertaIterator.hasNext()) {
+                CompraOferta compraOferta = ofertaIterator.next();
 
-        //         VendaAcao vendaAcao = cliente.venderAcao(compraOferta);
-        //         vendaAcaoRepository.save(vendaAcao);
+                cliente.venderAcao(compraOferta, acoesCliente.get(i));
+                clienteRepository.save(cliente);
 
-        //         acaoRepository.save(acao);
+                acaoRepository.save(acoesCliente.get(i));
                 
-        //         compraOfertaRepository.save(compraOferta);
-        //         compraOfertaRepository.deleteById(compraOferta.getId());
-        //     }
-        // } catch (Exception e) {
-        //     throw e;
-        // }
+                compraOfertaRepository.save(compraOferta);
+                compraOfertaRepository.deleteById(compraOferta.getId());
+                i++;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
     
         clienteRepository.save(cliente);
         return ResponseEntity.ok("Ações vendidas");
@@ -237,7 +239,7 @@ public class CarteiraService {
     
     private void verificarAcoesParaVenda(Cliente cliente, int quantidadeParaVender, String siglaAcao) {
         Integer qntAcoesClienteSigla = acaoRepository.findQntAcoesBySiglaClienteId(siglaAcao, cliente.getId());
-        if (qntAcoesClienteSigla < quantidadeParaVender) {
+        if (qntAcoesClienteSigla < quantidadeParaVender || qntAcoesClienteSigla == null) {
             throw new RuntimeException("Você não possui ações suficientes para a venda");
         }
     }

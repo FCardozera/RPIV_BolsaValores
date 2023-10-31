@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
@@ -316,8 +315,30 @@ public class Cliente extends Usuario {
         saldo -= valor;
     }
 
-    public VendaAcao venderAcao(CompraOferta compraOferta) {
-        return null;
+    public Cliente venderAcao(CompraOferta compraOferta, Acao acao) {
+        aumentarSaldo(compraOferta.getValorOferta());
+
+        Cliente clienteAntigo = this;
+        Cliente clienteNovo = compraOferta.getCliente();
+
+        acao.setCliente(clienteNovo);
+        clienteNovo.reduzirSaldo(compraOferta.getValorOferta());
+
+        VendaAcao vendaAcao = new VendaAcao(null, acao, this, compraOferta.getValorOferta(), Instant.now());
+
+        compraOferta.setSigla(null);
+
+        if (acao.getVendaAcao() == null) {
+            acao.setVendaAcao(vendaAcao);
+        }
+
+        vendaAcoes.add(vendaAcao);
+
+        return clienteAntigo;
+    }
+
+    private void aumentarSaldo(Double valor) {
+        saldo += valor;
     }
 
 }

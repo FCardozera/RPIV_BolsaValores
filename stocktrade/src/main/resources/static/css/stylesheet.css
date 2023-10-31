@@ -720,7 +720,7 @@ h4 {
 /* CSS ACORDEAO TABLE VENDER */
 .container-vender {
   margin-left: auto;
-  width: 550px;
+  width: 50%;
   display: none;
   grid-template-columns: 1fr 1fr;
   gap: 0px 0px;
@@ -728,8 +728,8 @@ h4 {
   letter-spacing: 1.5px;
   grid-template-areas:
     "label-comprar label-vender"
-    "input-quantidade preco-atual"
-    "input-preco-acao-venda input-preco-acao-venda"
+    "input-quantidade quantidade-disponivel"
+    "input-preco-acao-venda preco-atual"
     "label-valor-total-operacao valor-total-da-operacao"
     "label-saldo-atual saldo-atual"
     "senha-autenticacao senha-autenticacao"

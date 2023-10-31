@@ -211,7 +211,7 @@
         precoAcao: precoAcao
       }
 
-      fetch("/carteira/vender", {
+      fetch("/invistaLogado/vender", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -220,7 +220,7 @@
       })
         .then((response) => {
           if (response.ok) {
-            window.location.href = "/carteira";
+            window.location.href = "/invistaLogado";
           } else {
             console.log(response.data);
             response.json().then(data => {

@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
-import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
-import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.acao.iterator.listarAcao.AcaoIterator;
 import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
@@ -24,7 +22,6 @@ import com.unipampa.stocktrade.model.entity.oferta.iterator.vendaOferta.VendaOfe
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
-import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
 import com.unipampa.stocktrade.model.repository.oferta.CompraOfertaRepository;
 import com.unipampa.stocktrade.model.repository.oferta.VendaOfertaRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
@@ -45,9 +42,6 @@ public class ServiceInvistaLogado {
 
     @Autowired
     private CompraOfertaRepository compraOfertaRepository;
-
-    @Autowired
-    private CompraAcaoRepository compraAcaoRepository;
 
     public List<Acao> getAcoesSiglaPrecoIterator() {
         Iterator<String[]> acoesString = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco().iterator();
@@ -124,17 +118,14 @@ public class ServiceInvistaLogado {
                 VendaOferta vendaOferta = ofertaIterator.next();
                 Acao acao = vendaOferta.getAcao();
 
-                Cliente clienteAntigo = cliente.comprarAcao(vendaOferta);
+                cliente.comprarAcao(vendaOferta);
                 clienteRepository.save(cliente);
-                clienteRepository.save(clienteAntigo);
 
                 acaoRepository.save(acao);
                 
                 vendaOfertaRepository.save(vendaOferta);
                 vendaOfertaRepository.deleteById(vendaOferta.getId());
             }
-
-            updateSession(session);
         } catch (Exception e) {
             throw e;
         }
@@ -143,33 +134,7 @@ public class ServiceInvistaLogado {
         return ResponseEntity.ok("Ações compradas");
     }
 
-    public List<String[]> buscarAcoesBySigla(String busca) {
-        if (busca == null || busca.trim().isEmpty()) {
-            return vendaOfertaRepository.findOfertasVendaBySiglaAndPreco();
-        }
-
-        List<String[]> listaAcoes = vendaOfertaRepository.findOfertaBySiglaOrEmpresaNome(busca);
-        List<String[]> listaAcoesFinal = new ArrayList<>();
-
-        for (String[] acao : listaAcoes) {
-
-            String[] acaoFinal = new String[6];
-
-            for (int i = 0; i < acao.length; i++) {
-                acaoFinal[i] = acao[i];
-            }
-
-            acaoFinal[3] = "0";
-            acaoFinal[4] = "0";
-            acaoFinal[5] = acao[2];
-
-            listaAcoesFinal.add(acaoFinal);
-        }
-
-        return listaAcoesFinal;
-    }
-
-        public ResponseEntity<String> venderAcoes(HttpSession session, VendaAcoesDTO dados) {
+    public ResponseEntity<String> venderAcoes(HttpSession session, VendaAcoesDTO dados) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
     
         if (usuario == null) {
@@ -197,34 +162,66 @@ public class ServiceInvistaLogado {
 
 
         for (int i = 0; i < dados.quantidadeAcoes() - ofertasCompra.size(); i++) {
-        VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesCliente.get(i).getEmpresa() , acoesCliente.get(i), TipoOferta.VENDA);
-        vendaOfertaRepository.save(oferta);
+            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesCliente.get(i).getEmpresa() , acoesCliente.get(i), TipoOferta.VENDA);
+            vendaOfertaRepository.save(oferta);
         }
         
-        // Iterator<CompraOferta> ofertaIterator = ofertasCompra.iterator();
-        // try {
-        //     while (ofertaIterator.hasNext()) {
-        //         CompraOferta compraOferta = ofertaIterator.next();
-        //         String siglaAcao = compraOferta.getSigla();
+        Iterator<CompraOferta> ofertaIterator = ofertasCompra.iterator();
+        try {
+            int i = 0;
+            while (ofertaIterator.hasNext()) {
+                CompraOferta compraOferta = ofertaIterator.next();
 
-        //         VendaAcao vendaAcao = cliente.venderAcao(compraOferta);
-        //         vendaAcaoRepository.save(vendaAcao);
+                cliente.venderAcao(compraOferta, acoesCliente.get(i));
+                clienteRepository.save(cliente);
 
-        //         acaoRepository.save(siglaAcao);
+                acaoRepository.save(acoesCliente.get(i));
                 
-        //         compraOfertaRepository.save(compraOferta);
-        //         compraOfertaRepository.deleteById(compraOferta.getId());
-        //     }
-        // } catch (Exception e) {
-        //     throw e;
-        // }
+                compraOfertaRepository.save(compraOferta);
+                compraOfertaRepository.deleteById(compraOferta.getId());
+                i++;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
     
         clienteRepository.save(cliente);
         return ResponseEntity.ok("Ações vendidas");
     }
+
+    public List<String[]> buscarAcoesBySigla(String busca) {
+        if (busca == null || busca.trim().isEmpty()) {
+            return vendaOfertaRepository.findOfertasVendaBySiglaAndPreco();
+        }
+
+        List<String[]> listaAcoes = vendaOfertaRepository.findOfertaBySiglaOrEmpresaNome(busca);
+        List<String[]> listaAcoesFinal = new ArrayList<>();
+
+        for (String[] acao : listaAcoes) {
+
+            String[] acaoFinal = new String[6];
+
+            for (int i = 0; i < acao.length; i++) {
+                acaoFinal[i] = acao[i];
+            }
+
+            acaoFinal[3] = "0";
+            acaoFinal[4] = "0";
+            acaoFinal[5] = acao[2];
+
+            listaAcoesFinal.add(acaoFinal);
+        }
+
+        return listaAcoesFinal;
+    }
     
     private void verificarAcoesParaVenda(Cliente cliente, int quantidadeParaVender, String siglaAcao) {
         Integer qntAcoesClienteSigla = acaoRepository.findQntAcoesBySiglaClienteId(siglaAcao, cliente.getId());
+
+        if (qntAcoesClienteSigla == null) {
+            throw new RuntimeException("Você não possui ações suficientes para a venda");
+        }
+
         if (qntAcoesClienteSigla < quantidadeParaVender) {
             throw new RuntimeException("Você não possui ações suficientes para a venda");
         }

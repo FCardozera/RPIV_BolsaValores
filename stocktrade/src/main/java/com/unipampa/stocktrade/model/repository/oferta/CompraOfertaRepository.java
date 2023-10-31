@@ -12,7 +12,7 @@ import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 
 public interface CompraOfertaRepository extends JpaRepository<CompraOferta, UUID> {
 
-    @Query("SELECT o FROM compraOferta o WHERE o.sigla = :siglaAcao AND o.valorOferta <= :precoAcao ORDER BY o.valorOferta ASC")
+    @Query("SELECT o FROM compraOferta o WHERE o.sigla = :siglaAcao AND o.valorOferta >= :precoAcao ORDER BY o.valorOferta ASC")
     public List<CompraOferta> findOfertasCompraBySiglaAndPreco(@Param("siglaAcao") String siglaAcao, Pageable pageable, Double precoAcao);
 
     @Query("SELECT o FROM compraOferta o WHERE o.sigla = :siglaAcao")
