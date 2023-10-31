@@ -16,21 +16,16 @@ import org.springframework.stereotype.Service;
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
-import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
-import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.oferta.enums.TipoOferta;
 import com.unipampa.stocktrade.model.entity.oferta.factoryMethod.OfertaFactory;
-import com.unipampa.stocktrade.model.entity.oferta.iterator.compraOferta.CompraOfertaIterator;
 import com.unipampa.stocktrade.model.entity.oferta.iterator.vendaOferta.VendaOfertaIterator;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
-import com.unipampa.stocktrade.model.entity.usuario.Empresa;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
-import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
-import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
+// import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
 import com.unipampa.stocktrade.model.repository.oferta.CompraOfertaRepository;
 import com.unipampa.stocktrade.model.repository.oferta.VendaOfertaRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
@@ -46,8 +41,8 @@ public class CarteiraService {
     @Autowired
     private AcaoRepository acaoRepository;
 
-    @Autowired
-    private CompraAcaoRepository compraAcaoRepository;
+    // @Autowired
+    // private CompraAcaoRepository compraAcaoRepository;
 
     @Autowired
     private VendaOfertaRepository vendaOfertaRepository;
@@ -106,23 +101,24 @@ public class CarteiraService {
     public List<String[]> getAcoesUser (HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
         Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        List<String[]> acoesString = acaoRepository.findAcoesCliente(cliente.getId());
+        // List<String[]> acoesString = acaoRepository.findAcoesCliente(cliente.getId());
         List<String[]> acoesString2 = acaoRepository.findAcoesCliente2(cliente.getId());
         List<String[]> acoes = new ArrayList<>();
 
-        for (String[] acaoQueryBanco : acoesString) {
+        for (String[] acaoQueryBanco : acoesString2) {
             String[] acaoFinal = new String[6];
 
             acaoFinal[0] = acaoQueryBanco[0];
             String[] valorAtualEQuantidadeDisponivel = vendaOfertaRepository.findMenorPrecoOfertaVendaEQuantidadeDisponivelBySigla(acaoQueryBanco[0]).split(",");
             acaoFinal[1] = valorAtualEQuantidadeDisponivel[0];
             acaoFinal[2] = acaoQueryBanco[1];
-            acaoFinal[3] = acaoQueryBanco[2];
+            acaoFinal[3] = "0";
 
             Double valorAtualDouble = Double.parseDouble(valorAtualEQuantidadeDisponivel[0]);
-            Double precoMedio = Double.parseDouble(acaoQueryBanco[2]);
+            Double precoMedio = Double.parseDouble(acaoFinal[3]);
 
             Double variacao = (((valorAtualDouble-precoMedio)*100)/precoMedio);
+            variacao = precoMedio; // POR ENQUANTO ASSIM PARA EVITAR BUGS
             String variacaoFormatada = String.format("%.2f", variacao);
             acaoFinal[4] = variacaoFormatada;
             acaoFinal[5] = valorAtualEQuantidadeDisponivel[1];
@@ -184,8 +180,6 @@ public class CarteiraService {
         clienteRepository.save(cliente);
         return ResponseEntity.ok("Ações compradas");
     }
-
-
 
     public ResponseEntity<String> venderAcoes(HttpSession session, VendaAcoesDTO dados) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
