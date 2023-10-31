@@ -23,7 +23,8 @@ import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
 import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
 import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
-import com.unipampa.stocktrade.model.entity.oferta.Oferta;
+import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
+import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
 
 import jakarta.persistence.OneToMany;
@@ -59,7 +60,10 @@ public class Cliente extends Usuario {
     private Set<Acao> acoes;
 
     @OneToMany(mappedBy = "cliente")
-    private Set<Oferta> ofertas;
+    private Set<CompraOferta> compraOfertas;
+
+    @OneToMany(mappedBy = "cliente")
+    private Set<VendaOferta> vendaOfertas;
 
     @OneToMany(mappedBy = "cliente")
     private Set<CompraAcao> compraAcoes;
@@ -287,12 +291,27 @@ public class Cliente extends Usuario {
         }
     }
 
-    public CompraAcao comprarAcao(Acao acao) {
+    public Cliente comprarAcao(VendaOferta oferta) {
+        reduzirSaldo(oferta.getValorOferta());
+
+        Acao acao = oferta.getAcao();
+
+        Cliente clienteAntigo = acao.getCliente();
+
         acao.setCliente(this);
-        reduzirSaldo(acao.getValor());
-        CompraAcao compraAcao = new CompraAcao(acao, this);
+
+        CompraAcao compraAcao = new CompraAcao(oferta, this);
+
+        acao.setVendaOferta(null);
+        oferta.setAcao(null); // Para poder deletar a oferta
+
+        if (acao.getCompraAcao() == null) {
+            acao.setCompraAcao(compraAcao);
+        }
+
         compraAcoes.add(compraAcao);
-        return compraAcao;
+
+        return clienteAntigo;
     }
 
     private void reduzirSaldo(Double valor) {
@@ -302,4 +321,31 @@ public class Cliente extends Usuario {
 
         saldo -= valor;
     }
+
+    public Cliente venderAcao(CompraOferta compraOferta, Acao acao) {
+        aumentarSaldo(compraOferta.getValorOferta());
+
+        Cliente clienteAntigo = this;
+        Cliente clienteNovo = compraOferta.getCliente();
+
+        acao.setCliente(clienteNovo);
+        clienteNovo.reduzirSaldo(compraOferta.getValorOferta());
+
+        VendaAcao vendaAcao = new VendaAcao(null, acao, this, compraOferta.getValorOferta(), Instant.now());
+
+        compraOferta.setSigla(null);
+
+        if (acao.getVendaAcao() == null) {
+            acao.setVendaAcao(vendaAcao);
+        }
+
+        vendaAcoes.add(vendaAcao);
+
+        return clienteAntigo;
+    }
+
+    private void aumentarSaldo(Double valor) {
+        saldo += valor;
+    }
+
 }

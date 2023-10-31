@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
+import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.service.ServiceInvistaLogado;
 
 import jakarta.servlet.http.HttpSession;
@@ -29,7 +30,7 @@ public class InvistaLogadoController {
 
         service.updateSession(session);
         if (busca == null) {
-            List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidade();
+            List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidadeVenda();
             mv.addObject("acoesBD", acoesBancoDeDados);
             return mv;
         }
@@ -41,6 +42,11 @@ public class InvistaLogadoController {
     @PostMapping("/comprar")
     public Object comprarAcoes(HttpSession session, @RequestBody CompraAcoesDTO dados) {
         return service.comprarAcoes(session, dados);
+    }
+
+    @PostMapping("/vender")
+    public Object venderAcoes(HttpSession session, @RequestBody VendaAcoesDTO dados){
+        return service.venderAcoes(session, dados);
     }
 
 }

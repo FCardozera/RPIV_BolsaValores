@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
+import com.unipampa.stocktrade.model.entity.usuario.FactoryMethod.UsuarioFactory;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 @Service
@@ -21,7 +22,7 @@ public class CadastroService {
             throw new RuntimeException("Já existe um usuário cadastrado para o e-mail: " + dados.email());
         }
 
-        cliente = new Cliente(dados);
+        cliente = (Cliente) UsuarioFactory.novoUsuario(dados);
         clienteRepository.save(cliente);
     }
     

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 
 import jakarta.persistence.CascadeType;
@@ -53,10 +54,10 @@ public class CompraAcao implements Serializable {
     @Column(name = "data_compra")
     private Instant dataCompra;
 
-    public CompraAcao(Acao acao, Cliente cliente) {
-        this.acao = acao;
+    public CompraAcao(VendaOferta oferta, Cliente cliente) {
+        this.acao = oferta.getAcao();
         this.cliente = cliente;
-        this.valorCompra = acao.getValor();
+        this.valorCompra = oferta.getValorOferta();
         this.dataCompra = Instant.now();
     }
 }

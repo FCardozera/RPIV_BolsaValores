@@ -552,7 +552,7 @@ h4 {
 /* CSS ACORDEAO TABLE COMPRAR */
 .container-comprar {
   margin-left: auto;
-  width: 550px;
+  width: 50%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0px 0px;
@@ -560,12 +560,22 @@ h4 {
   letter-spacing: 1.5px;
   grid-template-areas:
     "label-comprar label-vender"
-    "input-quantidade preco-atual"
-    "input-preco-acao-compra input-preco-acao-compra"
+    "input-quantidade quantidade-disponivel"
+    "input-preco-acao-compra preco-atual"
     "label-valor-total-operacao valor-total-da-operacao"
     "label-saldo-atual saldo-atual"
     "senha-autenticacao senha-autenticacao"
     "button-comprar button-comprar";
+}
+
+.quantidade-disponivel {
+  grid-area: quantidade-disponivel;
+  text-wrap: nowrap;
+  margin-bottom: 0px;
+}
+
+.quantidade-disponivel p:first-child  {
+  margin-bottom: 10px;
 }
 
 .button-comprar { 
@@ -683,7 +693,7 @@ h4 {
   color: var(--white);
   border: none;
   border-radius: 40px;
-  width: 100%;
+  width: 95% !important;
   padding: 3px 3px 3px 10px;
 }
 
@@ -710,7 +720,7 @@ h4 {
 /* CSS ACORDEAO TABLE VENDER */
 .container-vender {
   margin-left: auto;
-  width: 550px;
+  width: 50%;
   display: none;
   grid-template-columns: 1fr 1fr;
   gap: 0px 0px;
@@ -718,8 +728,8 @@ h4 {
   letter-spacing: 1.5px;
   grid-template-areas:
     "label-comprar label-vender"
-    "input-quantidade preco-atual"
-    "input-preco-acao-venda input-preco-acao-venda"
+    "input-quantidade quantidade-disponivel"
+    "input-preco-acao-venda preco-atual"
     "label-valor-total-operacao valor-total-da-operacao"
     "label-saldo-atual saldo-atual"
     "senha-autenticacao senha-autenticacao"

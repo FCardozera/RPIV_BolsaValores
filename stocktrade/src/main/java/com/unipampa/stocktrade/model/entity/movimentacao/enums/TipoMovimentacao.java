@@ -6,7 +6,6 @@ public enum TipoMovimentacao {
     DEPOSITO(1),
     TRANSFERENCIA(2),
     DIVIDENDO(3);
-
     private int codigo;
 
     TipoMovimentacao(int codigo) {

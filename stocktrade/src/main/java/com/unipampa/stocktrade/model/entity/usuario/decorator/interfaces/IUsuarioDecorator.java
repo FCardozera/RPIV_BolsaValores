@@ -4,4 +4,5 @@ public interface IUsuarioDecorator {
     String getNome();
     String getEmail();
     String getCPF();
+    String getCNPJ();
 }
