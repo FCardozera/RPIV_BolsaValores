@@ -23,11 +23,7 @@ public class CadastroController {
     @PostMapping
     public ModelAndView cadastrarUsuario(@RequestBody ClienteRequestDTO dados) {
         ModelAndView mv = new ModelAndView("/cadastro");
-        try {
-            serviceCadastro.salvarCliente(dados);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        serviceCadastro.salvarCliente(dados);
         
         return mv;
     }

@@ -26,13 +26,9 @@ public class LoginController {
     public ModelAndView login(@RequestBody ClienteRequestDTO dados, HttpSession session) {
         ModelAndView mv = new ModelAndView();
 
-        try {
-            Usuario userLogin = serviceLogin.login(dados, session);
-            mv.addObject("usuario", userLogin);
-            mv.setViewName("indexLogado");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Usuario userLogin = serviceLogin.login(dados, session);
+        mv.addObject("usuario", userLogin);
+        mv.setViewName("indexLogado");
         return mv;
     }
 
