@@ -1,74 +1,143 @@
 <div class="container-comprar" th:fragment="secaoComprarAcao">
-    <div class="text-uppercase fw-bold">
-      <button class="label label-comprar-ativo text-uppercase fw-bold">Compra</button>
-    </div>
+  <script>
+    function restricaoDeNumeros(inputElement) {
+      inputElement.value = inputElement.value.replace(/[^0-9]/g, "");
 
-    <div class="text-uppercase fw-bold">
-      <button class="label label-vender-inativo text-uppercase fw-bold" onclick="sumirContainerCompraEAparecerContainerVender(this)">Venda</button>
-    </div>
-    
-    <div class="input-quantidade text-start fw-bold">
-      <p class="text-uppercase">Quantidade</p>
-      <input
-          type="text"
-          class="form-control custom-input-acoes quantidadeAcoesInputCompra"
-          placeholder="Insira a quantidade de ações"
-        />
-    </div>
+      calcularValorTotalDaCompra();
+    }
 
-    <div class="quantidade-disponivel text-uppercase fw-bold">
-      <p>Quantidade disponível</p>
-      <p th:text="${acao[5]}"></p>
-    </div>
+    function validarPrecoAcao(inputElement) {
+      inputElement.value = inputElement.value.replace(/[^0-9.]/g, "");
 
-    <div class="input-preco-acao-compra text-start fw-bold">
-      <p class="text-uppercase">Preço desejado por ação</p>
-      <input
-          type="text"
-          class="form-control custom-input-acoes quantidadePrecoAcoesInputCompra"
-          placeholder="Insira o preço desejado por ação"
-        />
-    </div>
+      const parts = inputElement.value.split(".");
+      if (parts.length > 2) {
+        inputElement.value = parts[0] + "." + parts[1].slice(0, 2);
+      } else if (parts.length === 2 && parts[1].length > 2) {
+        inputElement.value = parts[0] + "." + parts[1].slice(0, 2);
+      }
 
-    <div class="preco-atual text-uppercase fw-bold">
-      <p>Preço atual</p>
-      <p th:text="'R$ ' + ${acao[1]}"></p>
-    </div>
+      calcularValorTotalDaCompra();
+    }
 
-    <div class="label-valor-total-operacao text-uppercase text-start fw-bold">
-      <span>Valor total da operação</span>
-    </div>
+    function calcularValorTotalDaCompra() {
+      const quantidadeAcoes = parseInt(
+        document.querySelector(".quantidadeAcoesInputCompra").value
+      );
+      const valorUnitarioAcao = parseFloat(
+        document.querySelector(".quantidadePrecoAcoesInputCompra").value
+      );
 
-    <div class="valor-total-da-operacao text-uppercase fw-bold">
-      <span>R$ XX,XX</span>
-    </div>
+      if (isNaN(quantidadeAcoes) || isNaN(valorUnitarioAcao)) {
+        document.querySelector("#valor-total-da-compra").innerHTML = "R$ XX.XX";
+      } else {
+        const valorTotalDaCompra = (
+          quantidadeAcoes * valorUnitarioAcao
+        ).toFixed(2);
+        document.querySelector(
+          "#valor-total-da-compra"
+        ).innerHTML = `R$ ${valorTotalDaCompra}`;
+      }
+    }
+  </script>
 
-    <div class="label-saldo-atual text-uppercase text-start fw-bold">
-      <span>Saldo atual</span>
-    </div>
-
-    <div class="saldo-atual text-uppercase fw-bold">
-      <span th:text="'R$ ' + ${session.usuarioLogado.saldo}"></span>
-    </div>
-
-    <div class="senha-autenticacao text-start fw-bold">
-      <img src="../icons/seguranca2-icon.png"><span class="text-uppercase">Insira sua senha de Autenticação</span>
-      <div class="div-input-senha-autenticacao">
-        <input
-          type="password"
-          class="form-control custom-input-acoes senhaAutenticacaoInputCompra"
-          placeholder="Senha de autenticação"
-          oninput="limitSenhaAutenticacao(this)"
-        />
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-          <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
-        </svg>
-      </div>
-      <p class="text-danger mt-2 senha-error-compra"></p>
-    </div>
-    
-    <div class="button-comprar text-uppercase text-center fw-bold">
-      <button class="text-uppercase fw-bold" onclick="verificarCamposSolicitacaoCompra(this)">Comprar</button> 
-    </div>
+  <div class="text-uppercase fw-bold">
+    <button class="label label-comprar-ativo text-uppercase fw-bold">
+      Compra
+    </button>
   </div>
+
+  <div class="text-uppercase fw-bold">
+    <button
+      class="label label-vender-inativo text-uppercase fw-bold"
+      onclick="sumirContainerCompraEAparecerContainerVender(this)"
+    >
+      Venda
+    </button>
+  </div>
+
+  <div class="input-quantidade text-start fw-bold">
+    <p class="text-uppercase">Quantidade</p>
+    <input
+      type="text"
+      class="form-control custom-input-acoes quantidadeAcoesInputCompra"
+      placeholder="Insira a quantidade de ações"
+      oninput="restricaoDeNumeros(this)"
+    />
+  </div>
+
+  <div class="quantidade-disponivel text-uppercase fw-bold">
+    <p>Quantidade disponível</p>
+    <p th:text="${acao[5]}"></p>
+  </div>
+
+  <div class="input-preco-acao-compra text-start fw-bold">
+    <p class="text-uppercase">Preço desejado por ação</p>
+    <input
+      type="text"
+      class="form-control custom-input-acoes quantidadePrecoAcoesInputCompra"
+      placeholder="Insira o preço desejado por ação"
+      oninput="calcularValorTotalDaCompra(this.value, document.querySelector('.quantidadeAcoesInputCompra').value);"
+      onblur="validarPrecoAcao(this)"
+    />
+  </div>
+
+  <div class="preco-atual text-uppercase fw-bold">
+    <p>Preço atual</p>
+    <p th:text="'R$ ' + ${acao[1]}"></p>
+  </div>
+
+  <div class="label-valor-total-operacao text-uppercase text-start fw-bold">
+    <span>Valor total da operação</span>
+  </div>
+
+  <div class="valor-total-da-operacao text-uppercase fw-bold">
+    <span id="valor-total-da-compra">R$ XX.XX</span>
+  </div>
+
+  <div class="label-saldo-atual text-uppercase text-start fw-bold">
+    <span>Saldo atual</span>
+  </div>
+
+  <div class="saldo-atual text-uppercase fw-bold">
+    <span th:text="'R$ ' + ${session.usuarioLogado.saldo}"></span>
+  </div>
+
+  <div class="senha-autenticacao text-start fw-bold">
+    <img src="../icons/seguranca2-icon.png" /><span class="text-uppercase"
+      >Insira sua senha de Autenticação</span
+    >
+    <div class="div-input-senha-autenticacao">
+      <input
+        type="password"
+        class="form-control custom-input-acoes senhaAutenticacaoInputCompra"
+        placeholder="Senha de autenticação"
+        oninput="limitSenhaAutenticacao(this)"
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-question-circle"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+        />
+        <path
+          d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"
+        />
+      </svg>
+    </div>
+    <p class="text-danger mt-2 senha-error-compra"></p>
+  </div>
+
+  <div class="button-comprar text-uppercase text-center fw-bold">
+    <button
+      class="text-uppercase fw-bold"
+      onclick="verificarCamposSolicitacaoCompra(this)"
+    >
+      Comprar
+    </button>
+  </div>
+</div>
