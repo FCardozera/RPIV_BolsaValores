@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
 import java.util.ArrayList;import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Profile;
 
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
-import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
 import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;

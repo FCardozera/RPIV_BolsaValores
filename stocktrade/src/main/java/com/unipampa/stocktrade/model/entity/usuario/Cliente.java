@@ -17,8 +17,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
@@ -28,8 +26,6 @@ import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
 import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
-import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
-import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
 
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -300,8 +296,6 @@ public class Cliente extends Usuario {
 
         Acao acao = oferta.getAcao();
 
-        Cliente clienteAntigo = acao.getCliente();
-
         acao.setCliente(this);
 
         CompraAcao compraAcao = new CompraAcao(oferta, this);
@@ -328,8 +322,7 @@ public class Cliente extends Usuario {
 
     public VendaAcao venderAcao(CompraOferta compraOferta, Acao acao) {
         aumentarSaldo(compraOferta.getValorOferta());
-
-        Cliente clienteAntigo = this;
+        
         Cliente clienteNovo = compraOferta.getCliente();
 
         acao.setCliente(clienteNovo);
