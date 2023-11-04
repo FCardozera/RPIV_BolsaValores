@@ -4,8 +4,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
-import java.util.HashSet;
-import java.util.List;
+import java.util.ArrayList;import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,11 +138,11 @@ public class TestConfig implements CommandLineRunner {
 
         empresaRepository.saveAll(List.of(empresa1, empresa2, empresa3, empresa4, empresa5));
 
-        Set<VendaOferta> ofertasEmpresa1 = new HashSet<>();
-        Set<VendaOferta> ofertasEmpresa2 = new HashSet<>();
-        // Set<Oferta> ofertasEmpresa3 = new HashSet<>();
-        // Set<Oferta> ofertasEmpresa4 = new HashSet<>();
-        // Set<Oferta> ofertasEmpresa5 = new HashSet<>();
+        List<VendaOferta> ofertasEmpresa1 = new ArrayList<>();
+        List<VendaOferta> ofertasEmpresa2 = new ArrayList<>();
+        // List<Oferta> ofertasEmpresa3 = new ArrayList<>();
+        List<VendaOferta> ofertasEmpresa4 = new ArrayList<>();
+        // List<Oferta> ofertasEmpresa5 = new ArrayList<>();
 
         for (int i = 0; i < 1000; i++) {
             Acao acao = new Acao(null, "PETR4", empresa1, null, null, null, null);
@@ -184,7 +183,8 @@ public class TestConfig implements CommandLineRunner {
             acao.setVendaOferta(oferta);
 
             acaoRepository.save(acao);
-            vendaOfertaRepository.save(oferta);
+            VendaOferta ofertaSalva = vendaOfertaRepository.save(oferta);
+            ofertasEmpresa4.add(ofertaSalva);
         }
 
         for (int i = 0; i < 75; i++) {
@@ -195,6 +195,17 @@ public class TestConfig implements CommandLineRunner {
 
             acaoRepository.save(acao);
             vendaOfertaRepository.save(oferta);
+        }
+
+        for (int i = 0; i < 100; i++) {
+            Acao acao = new Acao(null, "AMAR3", empresa4, null, null, null, null);
+            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, null, 85.9, Instant.now(), null, empresa4, acao, TipoOferta.VENDA);
+
+            acao.setVendaOferta(oferta);
+
+            acaoRepository.save(acao);
+            VendaOferta ofertaSalva = vendaOfertaRepository.save(oferta);
+            ofertasEmpresa4.add(ofertaSalva);
         }
 
         // Cliente 1 comprou 20 Ações da PETR4
@@ -208,6 +219,30 @@ public class TestConfig implements CommandLineRunner {
                     acao.setCliente(cliente1);
 
                     CompraAcao compraAcao = new CompraAcao(null, acao, cliente1, oferta.getValorOferta(), instant1);
+                    compraAcaoRepository.save(compraAcao);
+
+                    acaoRepository.save(acao);
+
+                    oferta.setAcao(null);
+                    vendaOfertaRepository.save(oferta);
+                    vendaOfertaRepository.deleteById(oferta.getId());
+
+                    count++;
+                }
+            }
+        }
+
+        // Cliente 2 comprou 50 Ações da AMAR3
+        count = 0;
+
+        for (VendaOferta oferta : ofertasEmpresa4) {
+            if (count < 50 && oferta.getAcao() != null) {
+                if (oferta.getAcao().getCliente() == null) {
+
+                    Acao acao = oferta.getAcao();
+                    acao.setCliente(cliente2);
+
+                    CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, oferta.getValorOferta(), instant1);
                     compraAcaoRepository.save(compraAcao);
 
                     acaoRepository.save(acao);
@@ -332,27 +367,27 @@ public class TestConfig implements CommandLineRunner {
         }
 
 
-        // Cliente 1 vendeu 10 Ações da VALE5
-        count = 0;
-        for (VendaOferta oferta : ofertasEmpresa2) {
-            if (count < 10 && oferta.getAcao() != null) {
-                if (oferta.getAcao().getCliente() == null) {
-                    Acao acao = oferta.getAcao();
-                    acao.setCliente(cliente2);
+        // // Cliente 1 vendeu 10 Ações da VALE5
+        // count = 0;
+        // for (VendaOferta oferta : ofertasEmpresa2) {
+        //     if (count < 10 && oferta.getAcao() != null) {
+        //         if (oferta.getAcao().getCliente() == null) {
+        //             Acao acao = oferta.getAcao();
+        //             acao.setCliente(cliente2);
 
-                    VendaAcao vendaAcao = new VendaAcao(null, acao, cliente2, oferta.getValorOferta(), instant2);
-                    vendaAcaoRepository.save(vendaAcao);
+        //             VendaAcao vendaAcao = new VendaAcao(null, acao, cliente2, oferta.getValorOferta(), instant2);
+        //             vendaAcaoRepository.save(vendaAcao);
 
-                    acaoRepository.save(acao);
+        //             acaoRepository.save(acao);
 
-                    oferta.setAcao(null);
-                    vendaOfertaRepository.save(oferta);
-                    vendaOfertaRepository.deleteById(oferta.getId());
+        //             oferta.setAcao(null);
+        //             vendaOfertaRepository.save(oferta);
+        //             vendaOfertaRepository.deleteById(oferta.getId());
 
-                    count++;
-                }
-            }
-        }
+        //             count++;
+        //         }
+        //     }
+        // }
 
         System.out.println("Registros inseridos com sucesso!");
 

@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
+import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
+import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 // import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
@@ -26,6 +28,8 @@ import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
+import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
+import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
 // import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
 import com.unipampa.stocktrade.model.repository.oferta.CompraOfertaRepository;
 import com.unipampa.stocktrade.model.repository.oferta.VendaOfertaRepository;
@@ -42,14 +46,17 @@ public class CarteiraService {
     @Autowired
     private AcaoRepository acaoRepository;
 
-    // @Autowired
-    // private CompraAcaoRepository compraAcaoRepository;
-
     @Autowired
     private VendaOfertaRepository vendaOfertaRepository;
 
     @Autowired
     private CompraOfertaRepository compraOfertaRepository;
+
+    @Autowired 
+    private CompraAcaoRepository compraAcaoRepository;
+
+    @Autowired 
+    private VendaAcaoRepository vendaAcaoRepository;
 
     private static final String USUARIO_LOGADO = "usuarioLogado";
 
@@ -103,24 +110,22 @@ public class CarteiraService {
     public List<String[]> getAcoesUser (HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
         Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        // List<String[]> acoesString = acaoRepository.findAcoesCliente(cliente.getId());
-        List<String[]> acoesString2 = acaoRepository.findAcoesCliente2(cliente.getId());
+        List<String[]> acoesString = acaoRepository.findAcoesClientePrecoMedio(cliente.getId());
         List<String[]> acoes = new ArrayList<>();
 
-        for (String[] acaoQueryBanco : acoesString2) {
+        for (String[] acaoQueryBanco : acoesString) {
             String[] acaoFinal = new String[6];
 
-            acaoFinal[0] = acaoQueryBanco[0];
+            acaoFinal[0] = acaoQueryBanco[0]; //SIGLA
             String[] valorAtualEQuantidadeDisponivel = vendaOfertaRepository.findMenorPrecoOfertaVendaEQuantidadeDisponivelBySigla(acaoQueryBanco[0]).split(",");
             acaoFinal[1] = valorAtualEQuantidadeDisponivel[0];
             acaoFinal[2] = acaoQueryBanco[1];
-            acaoFinal[3] = "0";
+            acaoFinal[3] = acaoQueryBanco[2];
 
             Double valorAtualDouble = Double.parseDouble(valorAtualEQuantidadeDisponivel[0]);
             Double precoMedio = Double.parseDouble(acaoFinal[3]);
 
-            Double variacao = (((valorAtualDouble-precoMedio)*100)/precoMedio);
-            variacao = precoMedio; // POR ENQUANTO ASSIM PARA EVITAR BUGS
+            Double variacao = ((valorAtualDouble*100)/precoMedio)-100;
             String variacaoFormatada = String.format("%.2f", variacao);
             acaoFinal[4] = variacaoFormatada;
             acaoFinal[5] = valorAtualEQuantidadeDisponivel[1];
@@ -167,7 +172,9 @@ public class CarteiraService {
                 VendaOferta vendaOferta = ofertaIterator.next();
                 Acao acao = vendaOferta.getAcao();
 
-                cliente.comprarAcao(vendaOferta);
+                CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);    
+
+                compraAcaoRepository.save(compraAcao); // SALVA A NOVA COMPRAACAO
                 clienteRepository.save(cliente);
 
                 acaoRepository.save(acao);
@@ -221,7 +228,11 @@ public class CarteiraService {
             while (ofertaIterator.hasNext()) {
                 CompraOferta compraOferta = ofertaIterator.next();
 
-                cliente.venderAcao(compraOferta, acoesCliente.get(i));
+                Acao acao = acoesCliente.get(i);
+
+                VendaAcao vendaAcao = cliente.venderAcao(compraOferta, acao);
+
+                vendaAcaoRepository.save(vendaAcao);
                 clienteRepository.save(cliente);
 
                 acaoRepository.save(acoesCliente.get(i));

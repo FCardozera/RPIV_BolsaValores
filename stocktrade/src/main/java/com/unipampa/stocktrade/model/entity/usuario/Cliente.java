@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
@@ -26,6 +28,8 @@ import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
 import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
+import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
+import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
 
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -291,7 +295,7 @@ public class Cliente extends Usuario {
         }
     }
 
-    public Cliente comprarAcao(VendaOferta oferta) {
+    public CompraAcao comprarAcao(VendaOferta oferta) {
         reduzirSaldo(oferta.getValorOferta());
 
         Acao acao = oferta.getAcao();
@@ -310,8 +314,8 @@ public class Cliente extends Usuario {
         }
 
         compraAcoes.add(compraAcao);
-
-        return clienteAntigo;
+        
+        return compraAcao;
     }
 
     private void reduzirSaldo(Double valor) {
@@ -322,7 +326,7 @@ public class Cliente extends Usuario {
         saldo -= valor;
     }
 
-    public Cliente venderAcao(CompraOferta compraOferta, Acao acao) {
+    public VendaAcao venderAcao(CompraOferta compraOferta, Acao acao) {
         aumentarSaldo(compraOferta.getValorOferta());
 
         Cliente clienteAntigo = this;
@@ -330,7 +334,7 @@ public class Cliente extends Usuario {
 
         acao.setCliente(clienteNovo);
         clienteNovo.reduzirSaldo(compraOferta.getValorOferta());
-
+        
         VendaAcao vendaAcao = new VendaAcao(null, acao, this, compraOferta.getValorOferta(), Instant.now());
 
         compraOferta.setSigla(null);
@@ -341,7 +345,7 @@ public class Cliente extends Usuario {
 
         vendaAcoes.add(vendaAcao);
 
-        return clienteAntigo;
+        return vendaAcao;
     }
 
     private void aumentarSaldo(Double valor) {
