@@ -135,6 +135,14 @@ public class CarteiraService {
         return acoes;
     }
 
+    public List<String[]> getCompraOfertasUser(HttpSession session) {
+        Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
+        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+        
+        List<String[]> ofertas = compraOfertaRepository.findOfertasCompraByClienteId(cliente.getId());
+        return ofertas;
+    }
+
     public ResponseEntity<String> comprarAcoes(HttpSession session, CompraAcoesDTO dados) {
         Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
 
@@ -254,6 +262,14 @@ public class CarteiraService {
         if (qntAcoesClienteSigla < quantidadeParaVender || qntAcoesClienteSigla == null) {
             throw new RuntimeException("Você não possui ações suficientes para a venda");
         }
+    }
+
+    public List<String[]> getVendaOfertasUser(HttpSession session) {
+        Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
+        Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
+        
+        List<String[]> ofertas = vendaOfertaRepository.findOfertasVendaByClienteId(cliente.getId());
+        return ofertas;
     }
  
 }

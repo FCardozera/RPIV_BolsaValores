@@ -21,4 +21,7 @@ public interface CompraOfertaRepository extends JpaRepository<CompraOferta, UUID
     @Query("SELECT o.sigla, MIN(o.valorOferta), COUNT(o.sigla) FROM compraOferta o GROUP BY o.sigla")
     public List<String[]> findOfertasCompraBySiglaAndPreco();
 
+    @Query("SELECT o.sigla, o.valorOferta, COUNT(*) FROM compraOferta o WHERE o.cliente.id = :clienteId GROUP BY o.sigla, o.valorOferta")
+    public List<String[]> findOfertasCompraByClienteId(@Param("clienteId") UUID clienteId);
+
 }

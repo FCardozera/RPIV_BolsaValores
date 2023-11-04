@@ -1,0 +1,22 @@
+<div class="container row justify-content-center" th:fragment="tabelaOfertasCompraUser">
+    <link href="css/stylesheet.css" rel="stylesheet" />
+    
+    <table class="table table-custom margin-table accordion">
+        <thead>
+            <tr>
+                <th scope="col">SIGLA</th>
+                <th scope="col">VALOR</th>
+                <th scope="col">QUANTIDADE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <div th:each="oferta, ofertaStat : ${ofertasCompra} ">
+              <tr>
+                  <td th:text="${oferta[0]}" th:id="ofertaCompra + ${ofertaStat.index}" ></td>
+                  <td th:text="'R$ ' + ${oferta[1]}"></td>
+                  <td th:text="${oferta[2]}"></td>
+              </tr>
+            </div>
+        </tbody>
+    </table>
+</div>

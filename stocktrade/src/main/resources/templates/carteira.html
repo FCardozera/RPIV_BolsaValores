@@ -92,6 +92,35 @@
       </div>
 
       <div th:replace="~{fragments/tabela/tabelaAcoesUser :: tabelaAcoesUser}"></div>
+
+    </div>
+
+    <div class="container-fluid mt-2 mb-2">
+      <div class="row ms-5 mt-5">
+        <!-- Coluna dos textos à esquerda -->
+        <div class="col-md-6">
+          <h1 class="h1">
+            Suas Ofertas de Compra
+          </h1>
+        </div>
+      </div>
+
+      <div th:replace="~{fragments/tabela/tabelaOfertasCompraUser :: tabelaOfertasCompraUser}"></div>
+    </div>
+
+    <div class="container-fluid mt-2 mb-2">
+      <div class="row ms-5 mt-5">
+        <!-- Coluna dos textos à esquerda -->
+        <div class="col-md-6">
+          <h1 class="h1">
+            Suas Ofertas de Venda
+          </h1>
+        </div>
+      </div>
+
+      <div th:replace="~{fragments/tabela/tabelaOfertasVendaUser :: tabelaOfertasVendaUser}"></div>
+    </div>
+
   </main>
 
   <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>

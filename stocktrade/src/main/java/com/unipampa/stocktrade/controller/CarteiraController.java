@@ -36,6 +36,10 @@ public class CarteiraController {
         mv.addObject("saldosFinaisMovimentacoes1Ano", saldosFinaisMovimentacoes1Ano);
         List<String[]> acoesUsuario = carteiraService.getAcoesUser(session);
         mv.addObject("acoesUsuario", acoesUsuario);
+        List<String[]> ofertasCompraUsuario = carteiraService.getCompraOfertasUser(session);
+        mv.addObject("ofertasCompra", ofertasCompraUsuario);
+        List<String[]> ofertasVendaUsuario = carteiraService.getVendaOfertasUser(session);
+        mv.addObject("ofertasVenda", ofertasVendaUsuario);
         return mv;
     }
 

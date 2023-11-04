@@ -24,6 +24,9 @@ public interface VendaOfertaRepository extends JpaRepository<VendaOferta, UUID> 
     @Query("SELECT a.sigla, MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a WHERE (LOWER(a.sigla) LIKE LOWER(CONCAT('%', :busca, '%')) OR LOWER(a.empresa.nome) LIKE LOWER(CONCAT('%', :busca, '%'))) GROUP BY a.sigla")
     public List<String[]> findOfertaBySiglaOrEmpresaNome(@Param("busca") String busca);
 
-    @Query("Select MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a WHERE a.sigla = :siglaAcao")
+    @Query("SELECT MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a WHERE a.sigla = :siglaAcao")
     public String findMenorPrecoOfertaVendaEQuantidadeDisponivelBySigla(@Param("siglaAcao") String siglaAcao);
+
+    @Query("SELECT a.sigla, o.valorOferta, COUNT(*) FROM vendaOferta o JOIN o.acao a WHERE o.cliente.id = :clienteId GROUP BY a.sigla, o.valorOferta")
+    public List<String[]> findOfertasVendaByClienteId(@Param("clienteId") UUID clienteId);
 }
