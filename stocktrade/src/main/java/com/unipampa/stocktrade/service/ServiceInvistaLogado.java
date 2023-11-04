@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
+import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
+import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.acao.iterator.listarAcao.AcaoIterator;
 import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
@@ -22,6 +24,8 @@ import com.unipampa.stocktrade.model.entity.oferta.iterator.vendaOferta.VendaOfe
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
+import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
+import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
 import com.unipampa.stocktrade.model.repository.oferta.CompraOfertaRepository;
 import com.unipampa.stocktrade.model.repository.oferta.VendaOfertaRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
@@ -42,6 +46,12 @@ public class ServiceInvistaLogado {
 
     @Autowired
     private CompraOfertaRepository compraOfertaRepository;
+
+    @Autowired 
+    private CompraAcaoRepository compraAcaoRepository;
+
+    @Autowired 
+    private VendaAcaoRepository vendaAcaoRepository;
 
     private static final String USUARIO_LOGADO = "usuarioLogado";
 
@@ -120,7 +130,9 @@ public class ServiceInvistaLogado {
                 VendaOferta vendaOferta = ofertaIterator.next();
                 Acao acao = vendaOferta.getAcao();
 
-                cliente.comprarAcao(vendaOferta);
+                CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);    
+
+                compraAcaoRepository.save(compraAcao); // SALVA A NOVA COMPRAACAO
                 clienteRepository.save(cliente);
 
                 acaoRepository.save(acao);
@@ -173,8 +185,11 @@ public class ServiceInvistaLogado {
             int i = 0;
             while (ofertaIterator.hasNext()) {
                 CompraOferta compraOferta = ofertaIterator.next();
+                Acao acao = acoesCliente.get(i);
 
-                cliente.venderAcao(compraOferta, acoesCliente.get(i));
+                VendaAcao vendaAcao = cliente.venderAcao(compraOferta, acao);
+
+                vendaAcaoRepository.save(vendaAcao);
                 clienteRepository.save(cliente);
 
                 acaoRepository.save(acoesCliente.get(i));

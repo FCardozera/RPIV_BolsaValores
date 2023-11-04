@@ -14,9 +14,6 @@ public interface AcaoRepository extends JpaRepository<Acao, UUID> {
     @Query("SELECT COUNT(*) FROM acao WHERE sigla = :siglaAcao GROUP BY sigla")
     public Integer findAcoesSigla(@Param("siglaAcao") String siglaAcao);
 
-    @Query("SELECT a.sigla, COUNT(a.sigla), ROUND(AVG(ca.valorCompra), 2) FROM acao a JOIN a.compraAcao ca WHERE ca.cliente.id = :cliente_id GROUP BY a.sigla")
-    public List<String[]> findAcoesCliente(@Param("cliente_id") UUID cliente_id);
-
     @Query("SELECT a.sigla, COUNT(a.sigla) FROM acao a WHERE a.cliente.id = :cliente_id GROUP BY a.sigla")
     public List<String[]> findAcoesCliente2(@Param("cliente_id") UUID cliente_id);
 
@@ -25,4 +22,7 @@ public interface AcaoRepository extends JpaRepository<Acao, UUID> {
 
     @Query("SELECT a FROM acao a JOIN a.cliente c LEFT JOIN a.vendaOferta o WHERE sigla = :siglaAcao AND c.id = :clienteId AND o.acao.id IS NULL")
     public List<Acao> findAcoesClienteByClienteIdSigla(@Param("clienteId") UUID clienteId, @Param("siglaAcao") String siglaAcao);
+
+    @Query("SELECT a.sigla, COUNT(a.sigla), ROUND(AVG(ca.valorCompra), 2) FROM acao a INNER JOIN compraAcao ca WHERE ca.cliente.id = :clienteId AND a.cliente.id = :clienteId GROUP BY a.sigla")
+    public List<String[]> findAcoesClientePrecoMedio(@Param("clienteId") UUID clienteId);
 }
