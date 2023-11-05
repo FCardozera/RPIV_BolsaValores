@@ -1,222 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head
-    th:replace="~{fragments/headFragment :: head('StockTrade - Cadastro')}"
-  ></head>
 
-  <body>
-    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+<head th:replace="~{fragments/headFragment :: head('StockTrade - Cadastro')}"></head>
 
-    <main>
-      <div th:replace="~{fragments/headerFragment :: header('Cadastro')}"></div>
+<body>
+  <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
 
-      <div class="container-fluid container-img-background2">
-        <div class="row justify-content-end">
-          <div class="col-md-4">
-            <div class="card2">
-              <div class="card-body2">
-                <form>
-                  <div class="mb-3">
-                    <label
-                      for="username"
-                      class="form-label text-color-blue text-uppercase"
-                      >Nome</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control custom-input"
-                      id="name"
-                      placeholder="Digite seu nome completo"
-                      oninput="validateNome(this)"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label
-                      for="username"
-                      class="form-label text-color-blue text-uppercase"
-                      >CPF</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control custom-input"
-                      id="cpf"
-                      placeholder="Digite seu CPF"
-                      oninput="formatCpf(this)"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label
-                      for="username"
-                      class="form-label text-color-blue text-uppercase"
-                      >Email</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control custom-input"
-                      id="email"
-                      placeholder="Digite seu email"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label
-                      for="password"
-                      class="form-label text-color-blue text-uppercase"
-                      >Senha</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control custom-input"
-                      id="password"
-                      placeholder="Digite sua senha"
-                      oninput="limitSenha(this)"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label
-                      for="username"
-                      class="form-label text-color-blue text-uppercase"
-                      >Senha de Autenticação</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control custom-input"
-                      id="authenticationPassword"
-                      placeholder="Digite a senha utilizada para autenticação das atividades no sistema"
-                      oninput="limitSenhaAutenticacao(this)"
-                    />
-                    <p id="senha-error" class="text-danger mt-2"></p>
-                  </div>
-                  <div class="text-center">
-                    <button
-                      type="submit"
-                      class="btn btn-outline-primary botao1 mb-3 mt-3"
-                      onclick="enviarCadastro(event)"
-                    >
-                      Cadastrar
-                    </button>
-                  </div>
-                </form>
-              </div>
+  <main>
+    <div th:replace="~{fragments/headerFragment :: header('Cadastro')}"></div>
+
+    <div class="container-fluid container-img-background2">
+      <div class="row justify-content-end">
+        <div class="col-md-4">
+          <div class="card2">
+            <div class="card-body2">
+              <form>
+                <div class="mb-3">
+                  <label for="userType" class="form-label text-color-blue text-uppercase">Tipo de Cadastro</label>
+                  <select class="form-select custom-input" id="userType" aria-label="Tipo de Cadastro"
+                    onchange="toggleFields()">
+                    <option selected disabled>Escolha o tipo de cadastro</option>
+                    <option value="pessoaFisica">Pessoa Física</option>
+                    <option value="pessoaJuridica">Pessoa Jurídica</option>
+                  </select>
+                </div>
+                <div class="mb-3" id="nomeDiv">
+                  <label for="name" class="form-label text-color-blue text-uppercase">Nome</label>
+                  <input type="text" class="form-control custom-input" id="name"
+                    placeholder="Digite seu nome completo"
+                    oninput="validateNome(this)"
+                   />
+                </div>
+                <div class="mb-3" id="cpfDiv">
+                  <label for="cpf" class="form-label text-color-blue text-uppercase">CPF</label>
+                  <input type="text" class="form-control custom-input" id="cpf" placeholder="Digite seu CPF" oninput="formatCpf(this)" />
+                </div>
+                <div class="mb-3" id="cnpjDiv" style="display: none;">
+                  <label for="cnpj" class="form-label text-color-blue text-uppercase">CNPJ</label>
+                  <input type="text" class="form-control custom-input" id="cnpj" placeholder="Digite seu CNPJ" oninput="formatCnpj(this)"/>
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label text-color-blue text-uppercase">Email</label>
+                  <input type="text" class="form-control custom-input" id="email" placeholder="Digite seu email" />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label text-color-blue text-uppercase">Senha</label>
+                  <input type="password" class="form-control custom-input" id="password"
+                    placeholder="Digite sua senha"  oninput="limitSenha(this)" />
+                </div>
+                <div class="mb-3">
+                  <label for="authenticationPassword" class="form-label text-color-blue text-uppercase">Senha de
+                    Autenticação</label>
+                  <input type="password" class="form-control custom-input" id="authenticationPassword"
+                    placeholder="Digite a senha utilizada para autenticação das atividades no sistema" oninput="limitSenhaAutenticacao(this)"/>
+                  <p id="senha-error" class="text-danger mt-2"></p>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-outline-primary botao1 mb-3 mt-3"
+                    onclick="enviarCadastro(event)">Cadastrar</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
-    </main>
+    <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
+  </main>
 
-    <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
   <script src="/js/main.js"></script> -->
-    <script>
-      function validateNome(input) {
-        input.value = input.value.replace(/[^a-zA-Z\s]/g, ""); // permite apenas letras e espaços
+  <script>
+
+    function toggleFields() {
+      const userType = document.getElementById("userType").value;
+      const nomeDiv = document.getElementById("nomeDiv");
+      const cpfDiv = document.getElementById("cpfDiv");
+      const cnpjDiv = document.getElementById("cnpjDiv");
+
+      if (userType === "pessoaFisica") {
+        nomeDiv.style.display = "block";
+        cpfDiv.style.display = "block";
+        cnpjDiv.style.display = "none";
+      } else if (userType === "pessoaJuridica") {
+        nomeDiv.style.display = "block";
+        cpfDiv.style.display = "none";
+        cnpjDiv.style.display = "block";
+      } else {
+        nomeDiv.style.display = "none";
+        cpfDiv.style.display = "none";
+        cnpjDiv.style.display = "none";
       }
+    }
 
-      function formatCpf(input) {
-        let cpf = input.value.replace(/\D/g, ""); // remove caracteres não numéricos e pontos existentes
-        if (cpf.length > 11) {
-          cpf = cpf.slice(0, 11); // limita a 11 dígitos
-        }
-        cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"); // Adiciona pontos e traço ao CPF
-        input.value = cpf;
+
+    function validateNome(input) {
+      input.value = input.value.replace(/[^a-zA-Z\s]/g, ""); // permite apenas letras e espaços
+    }
+
+    function formatCpf(input) {
+      let cpf = input.value.replace(/\D/g, ""); // remove caracteres não numéricos e pontos existentes
+      if (cpf.length > 11) {
+        cpf = cpf.slice(0, 11); // limita a 11 dígitos
       }
+      cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"); // Adiciona pontos e traço ao CPF
+      input.value = cpf;
+    }
 
-      function limitSenha(input) {
-        input.value = input.value.replace(/\D/g, ""); // permite apenas dígitos
-        if (input.value.length > 8) {
-          input.value = input.value.slice(0, 8); // limita a 8 dígitos
-        }
+    function formatCnpj(input) {
+    let cnpj = input.value.replace(/\D/g, ""); // remove caracteres não numéricos e pontos existentes
+    if (cnpj.length > 14) {
+      cnpj = cnpj.slice(0, 14); // limita a 14 dígitos
+    }
+    cnpj = cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5"); // Adiciona pontos, barra e traço ao CNPJ
+    input.value = cnpj;
+  }
+
+    function limitSenha(input) {
+      input.value = input.value.replace(/\D/g, ""); // permite apenas dígitos
+      if (input.value.length > 8) {
+        input.value = input.value.slice(0, 8); // limita a 8 dígitos
       }
+    }
 
-      function limitSenhaAutenticacao(input) {
-        input.value = input.value.replace(/\D/g, ""); // permite apenas dígitos
-        if (input.value.length > 4) {
-          input.value = input.value.slice(0, 4); // limita a 4 dígitos
-        }
+    function limitSenhaAutenticacao(input) {
+      input.value = input.value.replace(/\D/g, ""); // permite apenas dígitos
+      if (input.value.length > 4) {
+        input.value = input.value.slice(0, 4); // limita a 4 dígitos
       }
+    }
 
-      function enviarCadastro(event) {
-        event.preventDefault();
-        console.log("validateForm function called");
+    function enviarCadastro(event) {
+    event.preventDefault();
+    console.log("Formulário enviado");
 
-        let name = document.getElementById("name").value;
-        let cpf = document.getElementById("cpf").value;
-        let email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
-        let authenticationPassword = document.getElementById(
-          "authenticationPassword"
-        ).value;
-        cpf = cpf.replace(/\D/g, "");
+    let userType = document.getElementById("userType").value;
+    let name = document.getElementById("name").value;
+    let cpf = document.getElementById("cpf").value;
+    let cnpj = document.getElementById("cnpj").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let authenticationPassword = document.getElementById("authenticationPassword").value;
 
-        let senhaError = document.getElementById("senha-error"); // Elemento para mostrar a mensagem de erro
+    cpf = cpf.replace(/\D/g, "");
+    cnpj = cnpj.replace(/\D/g, "");
 
-        if (
-          name === "" ||
-          cpf === "" ||
-          email === "" ||
-          password === "" ||
-          authenticationPassword === ""
-        ) {
-          alert("Por favor, preencha todos os campos para efetuar o cadastro.");
-          return false;
-        }
+    let senhaError = document.getElementById("senha-error"); // Elemento para mostrar a mensagem de erro
 
-        if (name.length < 3 || name.length > 80) {
-          alert("O nome completo deve ter entre 3 e 80 caracteres.");
-          return false;
-        }
+    if (
+      userType === "pessoaFisica" &&
+      (name === "" || cpf === "" || email === "" || password === "" || authenticationPassword === "")
+    ) {
+      alert("Por favor, preencha todos os campos para efetuar o cadastro.");
+      return false;
+    } else if (
+      userType === "pessoaJuridica" &&
+      (name === "" || cnpj === "" || email === "" || password === "" || authenticationPassword === "")
+    ) {
+      alert("Por favor, preencha todos os campos para efetuar o cadastro.");
+      return false;
+    }
 
-        if (cpf.length !== 11) {
-          alert("O campo de CPF deve conter 11 dígitos.");
-          return false;
-        }
+    if (userType === "pessoaFisica" && (name.length < 3 || name.length > 80)) {
+      alert("O nome completo deve ter entre 3 e 80 caracteres.");
+      return false;
+    }
 
-        if (password.length !== 8) {
-          alert("A senha deve possuir 8 dígitos numéricos.");
-          return false;
-        }
+    if (userType === "pessoaFisica" && cpf.length !== 11) {
+      alert("O campo de CPF deve conter 11 dígitos.");
+      return false;
+    }
 
-        if (authenticationPassword.length !== 4) {
-          alert("A senha de autenticação deve possuir 4 dígitos numéricos.");
-          return false;
-        }
+    if (userType === "pessoaJuridica" && cnpj.length !== 14) {
+      alert("O campo de CNPJ deve conter 14 dígitos.");
+      return false;
+    }
 
-        if (!email.includes("@") || !email.includes(".com")) {
-          alert("E-mail inválido!");
-          return false;
-        }
+    if (password.length !== 8) {
+      alert("A senha deve possuir 8 dígitos numéricos.");
+      return false;
+    }
 
-        const data = {
-          nome: name,
-          cpf: cpf,
-          email: email,
-          senha: password,
-          senhaAutenticacao: authenticationPassword,
-        };
+    if (authenticationPassword.length !== 4) {
+      alert("A senha de autenticação deve possuir 4 dígitos numéricos.");
+      return false;
+    }
 
-        fetch("/cadastro", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+    if (!email.includes("@") || !email.includes(".com")) {
+      alert("E-mail inválido!");
+      return false;
+    }
+
+    const data = {
+      tipoCadastro: userType,
+      nome: name,
+      cpf: cpf,
+      cnpj: cnpj,
+      email: email,
+      senha: password,
+      senhaAutenticacao: authenticationPassword,
+    };
+
+      fetch("/cadastro", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.href = "/";
+          } else {
+            response.json().then(data => {
+              senhaError.textContent = data.message;
+            });
+          }
         })
-          .then((response) => {
-            if (response.ok) {
-              window.location.href = "/";
-            } else {
-              response.json().then(data => {
-                senhaError.textContent = data.message;
-              });
-            }
-          })
-          .catch((error) => {
-            alert("Ocorreu um erro ao cadastrar!");
-            console.error(error);
-          });
-      }
-    </script>
+        .catch((error) => {
+          alert("Ocorreu um erro ao cadastrar!");
+          console.error(error);
+        });
+    }
+  </script>
 
-  </body>
+</body>
+
 </html>
