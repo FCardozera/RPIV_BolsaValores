@@ -47,10 +47,10 @@ public class ServiceInvistaLogado {
     @Autowired
     private CompraOfertaRepository compraOfertaRepository;
 
-    @Autowired 
+    @Autowired
     private CompraAcaoRepository compraAcaoRepository;
 
-    @Autowired 
+    @Autowired
     private VendaAcaoRepository vendaAcaoRepository;
 
     private static final String USUARIO_LOGADO = "usuarioLogado";
@@ -110,17 +110,20 @@ public class ServiceInvistaLogado {
             throw new RuntimeException("Sigla de ação inválida");
         }
 
-        List<VendaOferta> ofertasVenda = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
+        List<VendaOferta> ofertasVenda = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco(dados.siglaAcao(),
+                PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
         if (ofertasVenda.isEmpty()) {
             for (int i = 0; i < dados.quantidadeAcoes(); i++) {
-                CompraOferta oferta = (CompraOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), null, null, TipoOferta.COMPRA);
+                CompraOferta oferta = (CompraOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(),
+                        Instant.now(), dados.siglaAcao(), null, null, TipoOferta.COMPRA);
                 compraOfertaRepository.save(oferta);
             }
             return ResponseEntity.ok("Aguardando ofertas");
         }
 
         for (int i = 0; i < dados.quantidadeAcoes() - ofertasVenda.size(); i++) {
-            CompraOferta oferta = (CompraOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), null, null, TipoOferta.COMPRA);
+            CompraOferta oferta = (CompraOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(),
+                    Instant.now(), dados.siglaAcao(), null, null, TipoOferta.COMPRA);
             compraOfertaRepository.save(oferta);
         }
 
@@ -130,13 +133,13 @@ public class ServiceInvistaLogado {
                 VendaOferta vendaOferta = ofertaIterator.next();
                 Acao acao = vendaOferta.getAcao();
 
-                CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);    
+                CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);
 
                 compraAcaoRepository.save(compraAcao); // SALVA A NOVA COMPRAACAO
                 clienteRepository.save(cliente);
 
                 acaoRepository.save(acao);
-                
+
                 vendaOfertaRepository.save(vendaOferta);
                 vendaOfertaRepository.deleteById(vendaOferta.getId());
             }
@@ -150,36 +153,39 @@ public class ServiceInvistaLogado {
 
     public ResponseEntity<String> venderAcoes(HttpSession session, VendaAcoesDTO dados) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
-    
+
         if (usuario == null) {
             throw new RuntimeException("Não existe um usuário logado");
         }
-    
+
         Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
-    
+
         if (!cliente.isSenhaAutenticacaoCorreta(dados.senhaAutenticacao())) {
             throw new RuntimeException("Senha incorreta");
         }
-    
+
         verificarAcoesParaVenda(cliente, dados.quantidadeAcoes(), dados.siglaAcao());
-        List<CompraOferta> ofertasCompra = compraOfertaRepository.findOfertasCompraBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
+        List<CompraOferta> ofertasCompra = compraOfertaRepository.findOfertasCompraBySiglaAndPreco(dados.siglaAcao(),
+                PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
 
         List<Acao> acoesCliente = acaoRepository.findAcoesClienteByClienteIdSigla(cliente.getId(), dados.siglaAcao());
-    
+
         if (ofertasCompra.isEmpty()) {
             for (int i = 0; i < dados.quantidadeAcoes(); i++) {
-                VendaOferta vendaOferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesCliente.get(i).getEmpresa() , acoesCliente.get(i), TipoOferta.VENDA);
+                VendaOferta vendaOferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(),
+                        Instant.now(), dados.siglaAcao(), acoesCliente.get(i).getEmpresa(), acoesCliente.get(i),
+                        TipoOferta.VENDA);
                 vendaOfertaRepository.save(vendaOferta);
             }
             return ResponseEntity.ok("Aguardando ofertas de compra");
         }
 
-
         for (int i = 0; i < dados.quantidadeAcoes() - ofertasCompra.size(); i++) {
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesCliente.get(i).getEmpresa() , acoesCliente.get(i), TipoOferta.VENDA);
+            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(),
+                    dados.siglaAcao(), acoesCliente.get(i).getEmpresa(), acoesCliente.get(i), TipoOferta.VENDA);
             vendaOfertaRepository.save(oferta);
         }
-        
+
         Iterator<CompraOferta> ofertaIterator = ofertasCompra.iterator();
         try {
             int i = 0;
@@ -193,7 +199,7 @@ public class ServiceInvistaLogado {
                 clienteRepository.save(cliente);
 
                 acaoRepository.save(acoesCliente.get(i));
-                
+
                 compraOfertaRepository.save(compraOferta);
                 compraOfertaRepository.deleteById(compraOferta.getId());
                 i++;
@@ -201,7 +207,7 @@ public class ServiceInvistaLogado {
         } catch (Exception e) {
             throw e;
         }
-    
+
         clienteRepository.save(cliente);
         return ResponseEntity.ok("Ações vendidas");
     }
@@ -231,7 +237,36 @@ public class ServiceInvistaLogado {
 
         return listaAcoesFinal;
     }
-    
+
+    public List<String[]> buscarAcoesByPreco(String preco) {
+        if (preco == null || preco.trim().isEmpty()) {
+            return vendaOfertaRepository.findOfertasVendaBySiglaAndPreco();
+        }
+
+        try {
+            Double precoBusca = Double.parseDouble(preco);
+            List<String[]> ofertas = vendaOfertaRepository.findOfertasVendaByPreco(precoBusca);
+            List<String[]> acoesFinal = new ArrayList<>();
+
+            for (String[] oferta : ofertas) {
+                String[] acaoFinal = new String[6];
+
+                for (int i = 0; i < oferta.length; i++) {
+                    acaoFinal[i] = oferta[i];
+                }
+                acaoFinal[3] = "0";
+                acaoFinal[4] = "0";
+
+                acoesFinal.add(acaoFinal);
+            }
+
+            return acoesFinal;
+
+        } catch (Exception e) {
+            throw new NumberFormatException();
+        }
+    }
+
     private void verificarAcoesParaVenda(Cliente cliente, int quantidadeParaVender, String siglaAcao) {
         Integer qntAcoesClienteSigla = acaoRepository.findQntAcoesBySiglaClienteId(siglaAcao, cliente.getId());
 
@@ -245,4 +280,3 @@ public class ServiceInvistaLogado {
 
     }
 }
- 
