@@ -25,17 +25,21 @@ public class InvistaLogadoController {
     private ServiceInvistaLogado service;
 
     @GetMapping
-    public ModelAndView invistaLogado (HttpSession session, @RequestParam(required = false) String busca) {
+    public ModelAndView invistaLogado(HttpSession session, @RequestParam(required = false) String busca, @RequestParam(required = false) String preco) {
         ModelAndView mv = new ModelAndView("invistaLogado");
-
         service.updateSession(session);
-        if (busca == null) {
+
+        if (busca != null && busca != "") {
+            List<String[]> listaAcoes = service.buscarAcoesBySigla(busca);
+            mv.addObject("acoesBD", listaAcoes);
+        } else if (preco != null && preco !=  "") {
+            List<String[]> listaAcoes = service.buscarAcoesByPreco(preco);
+            mv.addObject("acoesBD", listaAcoes);
+        } else {
             List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidadeVenda();
             mv.addObject("acoesBD", acoesBancoDeDados);
-            return mv;
         }
-        List<String[]> listaAcoes = service.buscarAcoesBySigla(busca);
-        mv.addObject("acoesBD", listaAcoes);
+
         return mv;
     }
 
@@ -45,7 +49,7 @@ public class InvistaLogadoController {
     }
 
     @PostMapping("/vender")
-    public Object venderAcoes(HttpSession session, @RequestBody VendaAcoesDTO dados){
+    public Object venderAcoes(HttpSession session, @RequestBody VendaAcoesDTO dados) {
         return service.venderAcoes(session, dados);
     }
 
