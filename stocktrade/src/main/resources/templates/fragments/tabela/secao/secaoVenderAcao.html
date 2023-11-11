@@ -1,45 +1,4 @@
 <div class="container-vender" th:fragment="secaoVenderAcao">
-  <script>
-    function restricaoDeNumeros(inputElement) {
-      inputElement.value = inputElement.value.replace(/[^0-9]/g, "");
-
-      calcularValorTotalDaVenda();
-    }
-
-    function validarPrecoAcao(inputElement) {
-      inputElement.value = inputElement.value.replace(/[^0-9.]/g, "");
-
-      const parts = inputElement.value.split(".");
-      if (parts.length > 2) {
-        inputElement.value = parts[0] + "." + parts[1].slice(0, 2);
-      } else if (parts.length === 2 && parts[1].length > 2) {
-        inputElement.value = parts[0] + "." + parts[1].slice(0, 2);
-      }
-
-      calcularValorTotalDaVenda();
-    }
-
-    function calcularValorTotalDaVenda() {
-      const quantidadeAcoes = parseInt(
-        document.querySelector(".quantidadeAcoesInputVenda").value
-      );
-      const valorUnitarioAcao = parseFloat(
-        document.querySelector(".quantidadePrecoAcoesInputVenda").value
-      );
-
-      if (isNaN(quantidadeAcoes) || isNaN(valorUnitarioAcao)) {
-        document.querySelector("#valor-total-da-compra").innerHTML = "R$ XX.XX";
-      } else {
-        const valorTotalDaVenda = (
-          quantidadeAcoes * valorUnitarioAcao
-        ).toFixed(2);
-        document.querySelector(
-          "#valor-total-da-venda"
-        ).innerHTML = `R$ ${valorTotalDaVenda}`;
-      }
-    }
-  </script>
-
   <div class="text-uppercase fw-bold">
     <button
       class="label label-comprar-inativo text-uppercase fw-bold"
@@ -58,10 +17,13 @@
   <div class="input-quantidade text-start fw-bold">
     <p class="text-uppercase">Quantidade</p>
     <input
-      type="text"
+      type="number"
       class="form-control custom-input-acoes quantidadeAcoesInputVenda"
       placeholder="Insira a quantidade de ações"
-      oninput="restricaoDeNumeros(this)"
+      oninput="verificarQuantidadeEPrecoVenda(this)"
+      onblur="formatarQuantidade(this)"
+      min="1"
+      step="0.01"
     />
   </div>
 
@@ -76,8 +38,9 @@
       type="text"
       class="form-control custom-input-acoes quantidadePrecoAcoesInputVenda"
       placeholder="Insira o preço desejado por ação"
-      oninput="calcularValorTotalDaVenda(this.value, document.querySelector('.quantidadeAcoesInputVenda').value);"
-      onblur="validarPrecoAcao(this)"
+      oninput="verificarQuantidadeEPrecoVenda(this)"
+      onblur="verificarCasasDecimaisVenda(this)"
+      min="0.01"
     />
   </div>
 
@@ -91,7 +54,7 @@
   </div>
 
   <div class="valor-total-da-operacao text-uppercase fw-bold">
-    <span id="valor-total-da-venda">R$ XX.XX</span>
+    <span class="valor-total-da-venda">R$ XX.XX</span>
   </div>
 
   <div class="label-saldo-atual text-uppercase text-start fw-bold">

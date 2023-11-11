@@ -1,239 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head
+    th:replace="~{fragments/headFragment :: head('StockTrade - Invista')}"
+  ></head>
 
-<head th:replace="~{fragments/headFragment :: head('StockTrade - Invista')}"></head>
+  <body id="sobre-page">
+    <svg xmlns="../images/logo-bg-off.png" style="display: none"></svg>
 
-<body id="sobre-page">
-  <svg xmlns="../images/logo-bg-off.png" style="display: none"></svg>
+    <main>
+      <div
+        th:replace="~{fragments/headerLogadoFragment :: header('Invista')}"
+      ></div>
 
-  <main>
-    <div th:replace="~{fragments/headerLogadoFragment :: header('Invista')}"></div>
-
-    <div class="col-12">
-      <h2 class="text-left custom-margin-left">Invista</h2>
-    </div>
-    <div class="col-12">
-      <div class="d-flex align-items-center">
-        <h6 class="text-left custom-margin-left mb-0 me-2">Saldo Atual</h6>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye ml-2"
-          viewBox="0 0 16 16" id="toggleEye">
-          <path
-            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-        </svg>
+      <div class="col-12">
+        <h2 class="text-left custom-margin-left">Invista</h2>
       </div>
-      <p class="h3 fs-8 custom-margin-left" id="saldo">R$<span th:text="${session.usuarioLogado.saldo}"></span></p>
-      <div class="d-flex align-items-center">
-        <p class="h3 fs-8 custom-margin-left mt-4">Ativos Disponíveis</p>
-        <form method="get" action="invistaLogado" class="d-flex custom-margin-left2">
-          <input id="form-busca-acao" class="form-control me-2 input-custom" placeholder="Busque no site..."
-            aria-label="Search" name="busca" />
-          <button class="btn btn-outline-success btn-custom" type="submit">
-            Pesquisar
-          </button>
-        </form>
+      <div class="col-12">
+        <div class="d-flex align-items-center">
+          <h6 class="text-left custom-margin-left mb-0 me-2">Saldo Atual</h6>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-eye ml-2"
+            viewBox="0 0 16 16"
+            id="toggleEye"
+          >
+            <path
+              d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+            />
+            <path
+              d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+            />
+          </svg>
+        </div>
+        <p class="h3 fs-8 custom-margin-left" id="saldo">
+          R$<span th:text="${session.usuarioLogado.saldo}"></span>
+        </p>
+        <div class="d-flex align-items-center">
+          <p class="h3 fs-8 custom-margin-left mt-4">Ativos Disponíveis</p>
+          <form
+            method="get"
+            action="invistaLogado"
+            class="d-flex custom-margin-left2"
+          >
+            <input
+              id="form-busca-acao"
+              class="form-control me-2 input-custom"
+              placeholder="Busque no site..."
+              aria-label="Search"
+              name="busca"
+            />
+            <button class="btn btn-outline-success btn-custom" type="submit">
+              Pesquisar
+            </button>
+          </form>
+        </div>
       </div>
 
-
-    </div>
-
-    <div class="container mb-4 justify-content-center">
-      <div class="container row justify-content-center">
-        <div th:replace="~{fragments/tabela/tabelaInvistaLogado :: tabelaInvistaLogado}"></div>
+      <div class="container mb-4 justify-content-center">
+        <div class="container row justify-content-center">
+          <div
+            th:replace="~{fragments/tabela/tabelaInvistaLogado :: tabelaInvistaLogado}"
+          ></div>
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <script>
-    // Função para alternar a visibilidade do saldo quando o ícone do olho é clicado
-    document
-      .getElementById("toggleEye")
-      .addEventListener("click", function () {
-        const saldo = document.getElementById("saldo");
-        if (saldo.style.opacity === "0") {
-          saldo.style.opacity = "1";
+    <script>
+      // Função para alternar a visibilidade do saldo quando o ícone do olho é clicado
+      document
+        .getElementById("toggleEye")
+        .addEventListener("click", function () {
+          const saldo = document.getElementById("saldo");
+          if (saldo.style.opacity === "0") {
+            saldo.style.opacity = "1";
+          } else {
+            saldo.style.opacity = "0";
+          }
+        });
+    </script>
+
+    <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
+
+    <script>
+      function sumirContainerCompraEAparecerContainerVender(event) {
+        const containerCompra =
+          document.getElementsByClassName("container-comprar");
+        const containerVender =
+          document.getElementsByClassName("container-vender");
+
+        for (i = 0; i < containerCompra.length; i++) {
+          containerCompra.item(i).style.display = "none";
+          containerVender.item(i).style.display = "grid";
+        }
+      }
+
+      function sumirContainerVenderEAparecerContainerCompra(event) {
+        const containerCompra =
+          document.getElementsByClassName("container-comprar");
+        const containerVender =
+          document.getElementsByClassName("container-vender");
+
+        for (i = 0; i < containerCompra.length; i++) {
+          containerCompra.item(i).style.display = "grid";
+          containerVender.item(i).style.display = "none";
+        }
+      }
+    </script>
+
+    <script>
+      function limparCampos(input) {
+        const acoesCompra = document.getElementsByClassName(
+          "quantidadeAcoesInputCompra"
+        );
+        const senhasCompra = document.getElementsByClassName(
+          "senhaAutenticacaoInputCompra"
+        );
+
+        const acoesVenda = document.getElementsByClassName(
+          "quantidadeAcoesInputVenda"
+        );
+        const senhasVenda = document.getElementsByClassName(
+          "senhaAutenticacaoInputVenda"
+        );
+
+        const precoAcaoVenda = document.getElementsByClassName(
+          "quantidadePrecoAcoesInputVenda"
+        );
+        const precoAcaoCompra = document.getElementsByClassName(
+          "quantidadePrecoAcoesInputCompra"
+        );
+
+        const valorTotalDaCompra = document.getElementsByClassName(
+          "valor-total-da-compra"
+        );
+
+        for (i = 0; i < acoesCompra.length; i++) {
+          acoesCompra.item(i).value = "";
+          senhasCompra.item(i).value = "";
+
+          acoesVenda.item(i).value = "";
+          senhasVenda.item(i).value = "";
+
+          precoAcaoVenda.item(i).value = "";
+          precoAcaoCompra.item(i).value = "";
+
+          valorTotalDaCompra.item(i).innerHTML = "R$ " + "XX.XX";
+        }
+      }
+
+      function limitSenhaAutenticacao(input) {
+        input.value = input.value.replace(/\D/g, ""); // permite apenas dígitos
+        if (input.value.length > 4) {
+          input.value = input.value.slice(0, 4); // limita a 4 dígitos
+        }
+      }
+
+      function verificarCamposSolicitacaoCompra(event) {
+        const acoes = document.getElementsByClassName(
+          "quantidadeAcoesInputCompra"
+        );
+        const senhas = document.getElementsByClassName(
+          "senhaAutenticacaoInputCompra"
+        );
+        const precoPorAcao = document.getElementsByClassName(
+          "quantidadePrecoAcoesInputCompra"
+        );
+        const senhaError =
+          document.getElementsByClassName("senha-error-compra");
+
+        j = acoes.length;
+
+        for (i = 0; i < acoes.length; i++) {
+          if (
+            acoes.item(i).value != "" &&
+            senhas.item(i).value != "" &&
+            precoPorAcao.item(i).value != ""
+          ) {
+            const siglaAcao = document.getElementById("siglaAcao" + i);
+
+            enviarSolicitacaoCompra(
+              event,
+              acoes.item(i).value,
+              senhas.item(i).value,
+              siglaAcao.innerText,
+              precoPorAcao.item(i).value,
+              senhaError.item(i)
+            );
+            break;
+          }
+          j--;
+        }
+
+        if (j == 0) {
+          alert("Preencha todos os campos obrigatórios");
+        }
+      }
+
+      function enviarSolicitacaoCompra(
+        event,
+        quantidadeAcoes,
+        senhaAutenticacao,
+        siglaAcao,
+        precoAcao,
+        senhaError
+      ) {
+        const data = {
+          siglaAcao: siglaAcao,
+          quantidadeAcoes: quantidadeAcoes,
+          senhaAutenticacao: senhaAutenticacao,
+          precoAcao: precoAcao,
+        };
+
+        fetch("/invistaLogado/comprar", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (response.ok) {
+              window.location.href = "/invistaLogado";
+            } else {
+              console.log(response.data);
+              response.json().then((data) => {
+                senhaError.textContent = data.message;
+              });
+            }
+          })
+          .catch((error) => {
+            alert("Ocorreu um erro ao comprar!");
+            console.error(error);
+          });
+      }
+    </script>
+
+    <script>
+      function verificarCamposSolicitacaoVenda(event) {
+        const acoes = document.getElementsByClassName(
+          "quantidadeAcoesInputVenda"
+        );
+        const senhas = document.getElementsByClassName(
+          "senhaAutenticacaoInputVenda"
+        );
+        const precoPorAcao = document.getElementsByClassName(
+          "quantidadePrecoAcoesInputVenda"
+        );
+        const senhaError = document.getElementsByClassName("senha-error-venda");
+
+        j = acoes.length;
+
+        for (i = 0; i < acoes.length; i++) {
+          if (
+            acoes.item(i).value != "" &&
+            senhas.item(i).value != "" &&
+            precoPorAcao.item(i).value != ""
+          ) {
+            const siglaAcao = document.getElementById("siglaAcao" + i);
+            console.log(senhaError.item(i));
+
+            enviarSolicitacaoVenda(
+              event,
+              acoes.item(i).value,
+              senhas.item(i).value,
+              siglaAcao.innerText,
+              precoPorAcao.item(i).value,
+              senhaError.item(i)
+            );
+            break;
+          }
+          j--;
+        }
+
+        if (j == 0) {
+          alert("Preencha todos os campos obrigatórios");
+        }
+      }
+
+      function enviarSolicitacaoVenda(
+        event,
+        quantidadeAcoes,
+        senhaAutenticacao,
+        siglaAcao,
+        precoAcao,
+        senhaError
+      ) {
+        console.log(
+          quantidadeAcoes + " " + senhaAutenticacao + " " + siglaAcao
+        );
+
+        const data = {
+          siglaAcao: siglaAcao,
+          quantidadeAcoes: quantidadeAcoes,
+          senhaAutenticacao: senhaAutenticacao,
+          precoAcao: precoAcao,
+        };
+
+        fetch("/invistaLogado/vender", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (response.ok) {
+              window.location.href = "/invistaLogado";
+            } else {
+              console.log(response.data);
+              response.json().then((data) => {
+                senhaError.textContent = data.message;
+              });
+            }
+          })
+          .catch((error) => {
+            alert("Ocorreu um erro ao vender!");
+            console.error(error);
+          });
+      }
+    </script>
+
+    <script>
+      function verificarQuantidadeEPrecoCompra(event) {
+        const quantidadeInput = document.getElementsByClassName(
+          "quantidadeAcoesInputCompra"
+        );
+        const precoInput = document.getElementsByClassName(
+          "quantidadePrecoAcoesInputCompra"
+        );
+
+        for (let i = 0; i < quantidadeInput.length; i++) {
+          const quantidadeValue = quantidadeInput[i].value.trim();
+          if (/^\d+$/.test(quantidadeValue) && precoInput[i].value != "") {
+            let quantidade = parseInt(quantidadeValue, 10);
+            const preco = parseFloat(precoInput[i].value);
+
+            const valorTotal = quantidade * preco;
+
+            const valorTotalDaCompra = document.getElementsByClassName(
+              "valor-total-da-compra"
+            );
+            valorTotalDaCompra[i].innerHTML = "R$ " + valorTotal.toFixed(2);
+
+            console.log(valorTotal.toFixed(2));
+          } else {
+            const valorTotalDaCompra = document.getElementsByClassName(
+              "valor-total-da-compra"
+            );
+            valorTotalDaCompra[i].innerHTML = "R$ " + "XX.XX";
+          }
+        }
+      }
+    </script>
+
+    <script>
+      function verificarQuantidadeEPrecoVenda(event) {
+        const quantidadeInput = document.getElementsByClassName(
+          "quantidadeAcoesInputVenda"
+        );
+        const precoInput = document.getElementsByClassName(
+          "quantidadePrecoAcoesInputVenda"
+        );
+
+        for (let i = 0; i < quantidadeInput.length; i++) {
+          const quantidadeValue = quantidadeInput[i].value.trim();
+          if (/^\d+$/.test(quantidadeValue) && precoInput[i].value != "") {
+            let quantidade = parseInt(quantidadeValue, 10);
+            const preco = parseFloat(precoInput[i].value);
+
+            const valorTotal = quantidade * preco;
+
+            const valorTotalDaVenda = document.getElementsByClassName(
+              "valor-total-da-venda"
+            );
+            valorTotalDaVenda[i].innerHTML = "R$ " + valorTotal.toFixed(2);
+
+            console.log(valorTotal.toFixed(2));
+          } else {
+            const valorTotalDaVenda = document.getElementsByClassName(
+              "valor-total-da-venda"
+            );
+            valorTotalDaVenda[i].innerHTML = "R$ " + "XX.XX";
+          }
+        }
+      }
+    </script>
+
+    <script>
+      function verificarCasasDecimaisCompra(input) {
+        if (input.value !== "") {
+          const precoInput = document.getElementsByClassName(
+            "quantidadePrecoAcoesInputCompra"
+          );
+
+          const preco = parseFloat(input.value);
+
+          input.value = preco.toFixed(2);
+        }
+      }
+    </script>
+
+    <script>
+      function verificarCasasDecimaisVenda(input) {
+        if (input.value !== "") {
+          const precoInput = document.getElementsByClassName(
+            "quantidadePrecoAcoesInputVenda"
+          );
+
+          const preco = parseFloat(input.value);
+
+          input.value = preco.toFixed(2);
+        }
+      }
+    </script>
+
+    <script>
+      function formatarQuantidade(input) {
+        const quantidadeValue = input.value.trim();
+        if (/^\d+$/.test(quantidadeValue)) {
+          input.value = parseInt(quantidadeValue, 10);
         } else {
-          saldo.style.opacity = "0";
+          input.value = "";
         }
-      });
-  </script>
-
-  <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
-
-  <script>
-
-    function sumirContainerCompraEAparecerContainerVender(event) {
-      const containerCompra = document.getElementsByClassName("container-comprar");
-      const containerVender = document.getElementsByClassName("container-vender");
-
-      for (i = 0; i < containerCompra.length; i++) {
-        containerCompra.item(i).style.display = "none";
-        containerVender.item(i).style.display = "grid";
       }
-    }
-
-    function sumirContainerVenderEAparecerContainerCompra(event) {
-      const containerCompra = document.getElementsByClassName("container-comprar");
-      const containerVender = document.getElementsByClassName("container-vender");
-
-      for (i = 0; i < containerCompra.length; i++) {
-        containerCompra.item(i).style.display = "grid";
-        containerVender.item(i).style.display = "none";
-      }
-    }
-  </script>
-
-  <script>
-
-    function limparCampos(input) {
-      const acoesCompra = document.getElementsByClassName('quantidadeAcoesInputCompra')
-      const senhasCompra = document.getElementsByClassName('senhaAutenticacaoInputCompra')
-
-      const acoesVenda = document.getElementsByClassName('quantidadeAcoesInputVenda')
-      const senhasVenda = document.getElementsByClassName('senhaAutenticacaoInputVenda')
-
-      const precoAcaoVenda = document.getElementsByClassName('quantidadePrecoAcoesInputVenda')
-      const precoAcaoCompra = document.getElementsByClassName('quantidadePrecoAcoesInputCompra')
-
-      for (i = 0; i < acoesCompra.length; i++) {
-        acoesCompra.item(i).value = ""
-        senhasCompra.item(i).value = ""
-
-        acoesVenda.item(i).value = ""
-        senhasVenda.item(i).value = ""
-
-        precoAcaoVenda.item(i).value = ""
-        precoAcaoCompra.item(i).value = ""
-      }
-    }
-
-    function limitSenhaAutenticacao(input) {
-      input.value = input.value.replace(/\D/g, ""); // permite apenas dígitos
-      if (input.value.length > 4) {
-        input.value = input.value.slice(0, 4); // limita a 4 dígitos
-      }
-    }
-
-    function verificarCamposSolicitacaoCompra(event) {
-      const acoes = document.getElementsByClassName('quantidadeAcoesInputCompra')
-      const senhas = document.getElementsByClassName('senhaAutenticacaoInputCompra')
-      const precoPorAcao = document.getElementsByClassName('quantidadePrecoAcoesInputCompra')
-      const senhaError = document.getElementsByClassName('senha-error-compra')
-
-      j = acoes.length;
-
-      for (i = 0; i < acoes.length; i++) {
-
-        if (acoes.item(i).value != "" && senhas.item(i).value != "" && precoPorAcao.item(i).value != "") {
-
-          const siglaAcao = document.getElementById("siglaAcao" + i)
-
-          enviarSolicitacaoCompra(event, acoes.item(i).value, senhas.item(i).value, siglaAcao.innerText, precoPorAcao.item(i).value, senhaError.item(i))
-          break;
-        }
-        j--;
-      }
-
-      if (j == 0) {
-        alert("Preencha todos os campos obrigatórios")
-      }
-    }
-
-    function enviarSolicitacaoCompra(event, quantidadeAcoes, senhaAutenticacao, siglaAcao, precoAcao, senhaError) {
-
-      const data = {
-        siglaAcao: siglaAcao,
-        quantidadeAcoes: quantidadeAcoes,
-        senhaAutenticacao: senhaAutenticacao,
-        precoAcao: precoAcao
-      }
-
-      fetch("/invistaLogado/comprar", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          if (response.ok) {
-            window.location.href = "/invistaLogado";
-          } else {
-            console.log(response.data);
-            response.json().then(data => {
-              senhaError.textContent = data.message;
-            });
-          }
-        })
-        .catch((error) => {
-          alert("Ocorreu um erro ao comprar!");
-          console.error(error);
-        });
-    }
-
-  </script>
-
-  <script>
-    function verificarCamposSolicitacaoVenda(event) {
-      const acoes = document.getElementsByClassName('quantidadeAcoesInputVenda')
-      const senhas = document.getElementsByClassName('senhaAutenticacaoInputVenda')
-      const precoPorAcao = document.getElementsByClassName('quantidadePrecoAcoesInputVenda')
-      const senhaError = document.getElementsByClassName('senha-error-venda')
-
-      j = acoes.length;
-
-      for (i = 0; i < acoes.length; i++) {
-
-        if (acoes.item(i).value != "" && senhas.item(i).value != "" && precoPorAcao.item(i).value != "") {
-
-          const siglaAcao = document.getElementById("siglaAcao" + i)
-          console.log(senhaError.item(i))
-
-          enviarSolicitacaoVenda(event, acoes.item(i).value, senhas.item(i).value, siglaAcao.innerText, precoPorAcao.item(i).value, senhaError.item(i))
-          break;
-        }
-        j--;
-      }
-
-      if (j == 0) {
-        alert("Preencha todos os campos obrigatórios")
-      }
-    }
-
-    function enviarSolicitacaoVenda(event, quantidadeAcoes, senhaAutenticacao, siglaAcao, precoAcao, senhaError) {
-
-      console.log(quantidadeAcoes + " " + senhaAutenticacao + " " + siglaAcao)
-
-      const data = {
-        siglaAcao: siglaAcao,
-        quantidadeAcoes: quantidadeAcoes,
-        senhaAutenticacao: senhaAutenticacao,
-        precoAcao: precoAcao
-      }
-
-      fetch("/invistaLogado/vender", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => {
-          if (response.ok) {
-            window.location.href = "/invistaLogado";
-          } else {
-            console.log(response.data);
-            response.json().then(data => {
-              senhaError.textContent = data.message;
-            });
-          }
-        })
-        .catch((error) => {
-          alert("Ocorreu um erro ao vender!");
-          console.error(error);
-        });
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

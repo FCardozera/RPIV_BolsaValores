@@ -92,6 +92,7 @@
       </div>
 
       <div th:replace="~{fragments/tabela/tabelaAcoesUser :: tabelaAcoesUser}"></div>
+    </div>
   </main>
 
   <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
@@ -142,7 +143,7 @@
 
   <script>
 
-    function limparCampos(input) {
+    function limparCampos(event) {
       const acoesCompra = document.getElementsByClassName('quantidadeAcoesInputCompra')
       const senhasCompra = document.getElementsByClassName('senhaAutenticacaoInputCompra')
 
@@ -198,8 +199,6 @@
     }
 
     function enviarSolicitacaoCompra(event, quantidadeAcoes, senhaAutenticacao, siglaAcao, precoAcao, senhaError) {
-
-      console.log(quantidadeAcoes + " " + senhaAutenticacao + " " + siglaAcao)
 
       const data = {
         siglaAcao: siglaAcao,
@@ -262,8 +261,6 @@
 
     function enviarSolicitacaoVenda(event, quantidadeAcoes, senhaAutenticacao, siglaAcao, precoAcao, senhaError) {
 
-      console.log(quantidadeAcoes + " " + senhaAutenticacao + " " + siglaAcao)
-
       const data = {
         siglaAcao: siglaAcao,
         quantidadeAcoes: quantidadeAcoes,
@@ -318,7 +315,6 @@
       }
     }
   </script>
-
 
 </body>
 
