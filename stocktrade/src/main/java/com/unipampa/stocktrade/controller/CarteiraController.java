@@ -36,6 +36,12 @@ public class CarteiraController {
         mv.addObject("saldosFinaisMovimentacoes1Ano", saldosFinaisMovimentacoes1Ano);
         List<String[]> acoesUsuario = carteiraService.getAcoesUser(session);
         mv.addObject("acoesUsuario", acoesUsuario);
+        String lucroTotal = carteiraService.getLucroTotal(acoesUsuario);
+        mv.addObject("lucroTotal", lucroTotal);
+        String melhorPerformance = carteiraService.getMelhorPerformance(acoesUsuario);
+        mv.addObject("melhorPerformance", melhorPerformance);
+        String piorPerformance = carteiraService.getPiorPerformance(acoesUsuario);
+        mv.addObject("piorPerformance", piorPerformance);
         List<String[]> ofertasCompraUsuario = carteiraService.getCompraOfertasUser(session);
         mv.addObject("ofertasCompra", ofertasCompraUsuario);
         List<String[]> ofertasVendaUsuario = carteiraService.getVendaOfertasUser(session);
