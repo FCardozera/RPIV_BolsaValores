@@ -542,11 +542,15 @@ h4 {
 }
 
 .custom-margin-left2{
-  margin-left: 43%;
+  margin-left: 30%;
 }
 
 .margin-table{
   margin-left: 400px;
+}
+
+.margin-left{
+  margin-left: 10px
 }
 
 /* CSS ACORDEAO TABLE COMPRAR */

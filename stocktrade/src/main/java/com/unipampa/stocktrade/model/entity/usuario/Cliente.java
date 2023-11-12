@@ -291,12 +291,10 @@ public class Cliente extends Usuario {
         }
     }
 
-    public Cliente comprarAcao(VendaOferta oferta) {
+    public CompraAcao comprarAcao(VendaOferta oferta) {
         reduzirSaldo(oferta.getValorOferta());
 
         Acao acao = oferta.getAcao();
-
-        Cliente clienteAntigo = acao.getCliente();
 
         acao.setCliente(this);
 
@@ -310,8 +308,8 @@ public class Cliente extends Usuario {
         }
 
         compraAcoes.add(compraAcao);
-
-        return clienteAntigo;
+        
+        return compraAcao;
     }
 
     private void reduzirSaldo(Double valor) {
@@ -322,15 +320,14 @@ public class Cliente extends Usuario {
         saldo -= valor;
     }
 
-    public Cliente venderAcao(CompraOferta compraOferta, Acao acao) {
+    public VendaAcao venderAcao(CompraOferta compraOferta, Acao acao) {
         aumentarSaldo(compraOferta.getValorOferta());
-
-        Cliente clienteAntigo = this;
+        
         Cliente clienteNovo = compraOferta.getCliente();
 
         acao.setCliente(clienteNovo);
         clienteNovo.reduzirSaldo(compraOferta.getValorOferta());
-
+        
         VendaAcao vendaAcao = new VendaAcao(null, acao, this, compraOferta.getValorOferta(), Instant.now());
 
         compraOferta.setSigla(null);
@@ -341,7 +338,7 @@ public class Cliente extends Usuario {
 
         vendaAcoes.add(vendaAcao);
 
-        return clienteAntigo;
+        return vendaAcao;
     }
 
     private void aumentarSaldo(Double valor) {

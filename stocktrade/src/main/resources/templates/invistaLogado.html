@@ -51,11 +51,18 @@
               placeholder="Busque no site..."
               aria-label="Search"
               name="busca"
-            />
+           />
             <button class="btn btn-outline-success btn-custom" type="submit">
               Pesquisar
             </button>
+            <form method="get" action="invistaLogado" class="d-flex custom-margin-left2">
+            <input id="form-busca-preco" class="form-control me-2 input-custom margin-left" placeholder="Digite o preço máximo..."
+            aria-label="Price" name="preco" />
+            <button class="btn btn-outline-success btn-custom text-nowrap" type="submit">
+            Pesquisar Preço
+            </button>
           </form>
+        </form>
         </div>
       </div>
 
