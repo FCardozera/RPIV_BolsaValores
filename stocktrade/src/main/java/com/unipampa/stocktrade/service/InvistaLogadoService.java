@@ -33,7 +33,7 @@ import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 import jakarta.servlet.http.HttpSession;
 
 @Service
-public class ServiceInvistaLogado {
+public class InvistaLogadoService {
 
     @Autowired
     private AcaoRepository acaoRepository;
@@ -110,21 +110,14 @@ public class ServiceInvistaLogado {
             throw new RuntimeException("Sigla de ação inválida");
         }
 
-        List<VendaOferta> ofertasVenda = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco(dados.siglaAcao(),
-                PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
+        List<VendaOferta> ofertasVenda = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
         if (ofertasVenda.isEmpty()) {
-            for (int i = 0; i < dados.quantidadeAcoes(); i++) {
-                CompraOferta oferta = (CompraOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(),
-                        Instant.now(), dados.siglaAcao(), null, null, TipoOferta.COMPRA);
-                compraOfertaRepository.save(oferta);
-            }
+            agendarCompraOferta(dados.quantidadeAcoes(), cliente, dados);
             return ResponseEntity.ok("Aguardando ofertas");
         }
 
-        for (int i = 0; i < dados.quantidadeAcoes() - ofertasVenda.size(); i++) {
-            CompraOferta oferta = (CompraOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(),
-                    Instant.now(), dados.siglaAcao(), null, null, TipoOferta.COMPRA);
-            compraOfertaRepository.save(oferta);
+        if (quantidadeOfertaMaiorQueAQuantidadeDeAcoesDesejadas(ofertasVenda.size(), dados.quantidadeAcoes())) {
+            agendarCompraOferta(dados.quantidadeAcoes() - ofertasVenda.size(), cliente, dados);
         }
 
         Iterator<VendaOferta> ofertaIterator = new VendaOfertaIterator(ofertasVenda.iterator());
@@ -133,13 +126,13 @@ public class ServiceInvistaLogado {
                 VendaOferta vendaOferta = ofertaIterator.next();
                 Acao acao = vendaOferta.getAcao();
 
-                CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);
+                CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);    
 
-                compraAcaoRepository.save(compraAcao); // SALVA A NOVA COMPRAACAO
+                compraAcaoRepository.save(compraAcao);
                 clienteRepository.save(cliente);
 
                 acaoRepository.save(acao);
-
+                
                 vendaOfertaRepository.save(vendaOferta);
                 vendaOfertaRepository.deleteById(vendaOferta.getId());
             }
@@ -165,23 +158,19 @@ public class ServiceInvistaLogado {
         }
     
         verificarAcoesParaVenda(cliente, dados.quantidadeAcoes(), dados.siglaAcao());
-        List<CompraOferta> ofertasCompra = compraOfertaRepository.findOfertasCompraBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
 
+        List<CompraOferta> ofertasCompra = compraOfertaRepository.findOfertasCompraBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
         List<Acao> acoesCliente = acaoRepository.findAcoesClienteByClienteIdSigla(cliente.getId(), dados.siglaAcao());
 
         Iterator<Acao> acoesIteratorAgendarVendaOferta = acoesCliente.iterator();
         if (ofertasCompra.isEmpty()) {
-            for (int i = 0; i < dados.quantidadeAcoes(); i++) {
-                VendaOferta vendaOferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesIteratorAgendarVendaOferta.next().getEmpresa(), acoesIteratorAgendarVendaOferta.next(), TipoOferta.VENDA);
-                vendaOfertaRepository.save(vendaOferta);
-            }
+            agendarVendaOferta(dados.quantidadeAcoes(), cliente, dados, acoesIteratorAgendarVendaOferta);
             return ResponseEntity.ok("Aguardando ofertas de compra");
         }
 
         Iterator<Acao> acoesIteratorAgendarParcialmenteVendaOferta = acoesCliente.iterator();
-        for (int i = 0; i < dados.quantidadeAcoes() - ofertasCompra.size(); i++) {
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesIteratorAgendarParcialmenteVendaOferta.next().getEmpresa(), acoesIteratorAgendarParcialmenteVendaOferta.next(), TipoOferta.VENDA);
-            vendaOfertaRepository.save(oferta);
+        if (quantidadeOfertaMaiorQueAQuantidadeDeAcoesDesejadas(ofertasCompra.size(), dados.quantidadeAcoes())) {
+            agendarVendaOferta(dados.quantidadeAcoes() - ofertasCompra.size(), cliente, dados, acoesIteratorAgendarParcialmenteVendaOferta);
         }
         
         Iterator<CompraOferta> ofertaIterator = ofertasCompra.iterator();
@@ -275,6 +264,35 @@ public class ServiceInvistaLogado {
         if (qntAcoesClienteSigla < quantidadeParaVender) {
             throw new RuntimeException("Você não possui ações suficientes para a venda");
         }
+    }
 
+    private boolean quantidadeOfertaMaiorQueAQuantidadeDeAcoesDesejadas(Integer quantidadeOferta, Integer quantidadeAcoes) {
+        return quantidadeOferta > quantidadeAcoes;
+    }
+
+    private boolean agendarCompraOferta(Integer quantidadeAgendamento, Cliente cliente, CompraAcoesDTO dados) {
+        if (quantidadeAgendamento <= 0) {
+            return false;
+        }
+
+        for (int i = 0; i < quantidadeAgendamento; i++) {
+            CompraOferta oferta = (CompraOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), null, null, TipoOferta.COMPRA);
+            compraOfertaRepository.save(oferta);
+        }
+
+        return true;
+    }
+
+    private boolean agendarVendaOferta(Integer quantidadeAgendamento, Cliente cliente, VendaAcoesDTO dados, Iterator<Acao> acoesIterator) {
+        if (quantidadeAgendamento <= 0) {
+            return false;
+        }
+
+        for (int i = 0; i < quantidadeAgendamento; i++) {
+            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesIterator.next().getEmpresa(), acoesIterator.next(), TipoOferta.VENDA);
+            vendaOfertaRepository.save(oferta);
+        }
+
+        return true;
     }
 }

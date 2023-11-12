@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
-import com.unipampa.stocktrade.service.ServiceInvistaLogado;
+import com.unipampa.stocktrade.service.InvistaLogadoService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpSession;
 public class InvistaLogadoController {
 
     @Autowired
-    private ServiceInvistaLogado service;
+    private InvistaLogadoService service;
 
     @GetMapping
     public ModelAndView invistaLogado(HttpSession session, @RequestParam(required = false) String busca, @RequestParam(required = false) String preco) {
