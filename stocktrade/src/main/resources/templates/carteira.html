@@ -42,10 +42,10 @@
             <!-- Primeira coluna de informações -->
             <div class="col">
               <p class="h6 mt-60">
-                Lucro Total
+                Lucro Total da Carteira
               </p>
-              <p class="h9 fs-8 verde">
-                + 2,52% (+R$324,82)
+              <p class="h9 fs-8" id="lucro-total">
+                <span th:text="${lucroTotal}"></span>
               </p>
             </div>
 
@@ -54,9 +54,8 @@
               <p class="h6 mt-60">
                 Melhor Performance
               </p>
-              <p class="h9 fs-8 verde">
-                <img src="images/itau-icon.png" class="img-fluid rounded-start" alt="edu-financeira" /> + 10.52%
-                (+R$627.82)
+              <p class="h9 fs-8" id="melhor-performance">
+                <span th:text="${melhorPerformance}"></span>
               </p>
             </div>
 
@@ -65,9 +64,8 @@
               <p class="h6 mt-60">
                 Pior Performance
               </p>
-              <p class="h9 fs-8 vermelho">
-                <img src="images/vale1-icon.png" class="img-fluid rounded-start" alt="edu-financeira" /> - 1,23%
-                (-R$87,32)
+              <p class="h9 fs-8" id="pior-performance">
+                <span th:text="${piorPerformance}"></span>
               </p>
             </div>
           </div>
@@ -161,6 +159,42 @@
       } else {
         elementoVariacaoSaldo.classList.add("branco");
         elementoVariacaoSaldo.querySelector('span').textContent = "R$" + valorSaldo
+      }
+
+      // Atualizar Lucro Total
+      const elementoLucroTotal = document.getElementById("lucro-total");
+      const stringCharElmLucroTotal = elementoLucroTotal.querySelector('span').textContent;
+
+      if (stringCharElmLucroTotal.includes("+")) {
+        elementoLucroTotal.classList.add("verde");
+      } else if (stringCharElmLucroTotal.includes("-")) {
+        elementoLucroTotal.classList.add("vermelho");
+      } else {
+        elementoLucroTotal.classList.add("branco");
+      }
+
+      // Atualizar Melhor Performance
+      const elementoMelhorPerformance = document.getElementById("melhor-performance");
+      const stringElmMelPerformance = elementoMelhorPerformance.querySelector('span').textContent;
+
+      if (stringElmMelPerformance.includes("+")) {
+        elementoMelhorPerformance.classList.add("verde");
+      } else if (stringElmMelPerformance.includes("-")) {
+        elementoMelhorPerformance.classList.add("vermelho");
+      } else {
+        elementoMelhorPerformance.classList.add("branco");
+      }
+
+      // Atualizar Pior Performance
+      const elementoPiorPerformance = document.getElementById("pior-performance");
+      const stringElmPiorPerformance = elementoPiorPerformance.querySelector('span').textContent;
+
+      if (stringElmPiorPerformance.includes("+")) {
+        elementoPiorPerformance.classList.add("verde");
+      } else if (stringElmPiorPerformance.includes("-")) {
+        elementoPiorPerformance.classList.add("vermelho");
+      } else {
+        elementoPiorPerformance.classList.add("branco");
       }
     }
 

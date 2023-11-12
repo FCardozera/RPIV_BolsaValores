@@ -298,5 +298,119 @@ public class CarteiraService {
         List<String[]> ofertas = vendaOfertaRepository.findOfertasVendaByClienteId(cliente.getId());
         return ofertas;
     }
+
+    public String getLucroTotal(List<String[]> acoesUsuario) {
+        if (acoesUsuario.isEmpty()) {
+            return "R$0.00 (0%)";
+        }
+
+        Double lucroTotal = 0.0D;
+        Double totalInvestido = 0.0D;
+        Double totalAtual = 0.0D;
+        Double porcentagemLucroTotal = 0.0D;
+
+        for (String[] acao : acoesUsuario) {
+            Double precoAtual = Double.parseDouble(acao[1]);
+            Double precoMedioCompra = Double.parseDouble(acao[3]);
+            int qtdAcoes = Integer.parseInt(acao[2]);
+            Double totalAtualAcao = (precoAtual * qtdAcoes);
+            Double totalInvestidoAcao = (precoMedioCompra * qtdAcoes);
+            Double lucroTotalAcao = totalAtualAcao - totalInvestidoAcao;
+            lucroTotal += lucroTotalAcao;
+            totalInvestido += totalInvestidoAcao;
+            totalAtual += totalAtualAcao;
+        }
+        // Garantir que o total investido não seja 0 par a divisão funcionar
+        if (totalInvestido != 0) {
+            porcentagemLucroTotal = ((totalAtual * 100)/totalInvestido) - 100;
+        }
+
+        String porcentagemFormatada = String.format("%.2f", porcentagemLucroTotal);
+        if (lucroTotal > 0) {
+            return "R$+" + lucroTotal + " (" + porcentagemFormatada + "%)";
+        } else if (lucroTotal < 0) {
+            return "R$" + lucroTotal + " (" + porcentagemFormatada + "%)";
+        } else {
+            return "R$" + lucroTotal + " (" + porcentagemFormatada + "%)";
+        }
+    }
+
+    public String getMelhorPerformance(List<String[]> acoesUsuario) {
+        if (acoesUsuario.isEmpty()) {
+            return "Não há";
+        }
+
+        String siglaMelhorAtivo = "";
+        Double lucroMelhorAtivo = 0.0D;
+        String porcentagemLucroMelhorAtivo = "";
+        int count = 0;
+
+        for (String[] acao : acoesUsuario) {
+            Double precoAtual = Double.parseDouble(acao[1]);
+            Double precoMedioCompra = Double.parseDouble(acao[3]);
+            int qtdAcoes = Integer.parseInt(acao[2]);
+            Double totalAtualAcao = (precoAtual * qtdAcoes);
+            Double totalInvestidoAcao = (precoMedioCompra * qtdAcoes);
+            Double lucroTotalAcao = totalAtualAcao - totalInvestidoAcao;
+            if (count == 0) {
+                siglaMelhorAtivo = acao[0];
+                lucroMelhorAtivo = lucroTotalAcao;
+                porcentagemLucroMelhorAtivo = acao[4];
+                count++;
+            }
+            if (lucroTotalAcao > lucroMelhorAtivo) {
+                siglaMelhorAtivo = acao[0];
+                lucroMelhorAtivo = lucroTotalAcao;
+                porcentagemLucroMelhorAtivo = acao[4];
+            }
+        }
+        
+        if (lucroMelhorAtivo > 0) {
+            return siglaMelhorAtivo + " | R$+" + lucroMelhorAtivo + " (" + porcentagemLucroMelhorAtivo + "%)";
+        } else if (lucroMelhorAtivo < 0) {
+            return siglaMelhorAtivo + " | R$" + lucroMelhorAtivo + " (" + porcentagemLucroMelhorAtivo + "%)";
+        } else {
+            return siglaMelhorAtivo + " | R$" + lucroMelhorAtivo + " (" + porcentagemLucroMelhorAtivo + "%)";
+        }
+    }
+
+    public String getPiorPerformance(List<String[]> acoesUsuario) {
+        if (acoesUsuario.isEmpty()) {
+            return "Não há";
+        }
+
+        String siglaPiorAtivo = "";
+        Double lucroPiorAtivo = 0.0D;
+        String porcentagemLucroPiorAtivo = "";
+        int count = 0;
+
+        for (String[] acao : acoesUsuario) {
+            Double precoAtual = Double.parseDouble(acao[1]);
+            Double precoMedioCompra = Double.parseDouble(acao[3]);
+            int qtdAcoes = Integer.parseInt(acao[2]);
+            Double totalAtualAcao = (precoAtual * qtdAcoes);
+            Double totalInvestidoAcao = (precoMedioCompra * qtdAcoes);
+            Double lucroTotalAcao = totalAtualAcao - totalInvestidoAcao;
+            if (count == 0) {
+                siglaPiorAtivo = acao[0];
+                lucroPiorAtivo = lucroTotalAcao;
+                porcentagemLucroPiorAtivo = acao[4];
+                count++;
+            }
+            if (lucroTotalAcao < lucroPiorAtivo) {
+                siglaPiorAtivo = acao[0];
+                lucroPiorAtivo = lucroTotalAcao;
+                porcentagemLucroPiorAtivo = acao[4];
+            }
+        }
+        
+        if (lucroPiorAtivo > 0) {
+            return siglaPiorAtivo + " | R$+" + lucroPiorAtivo + " (" + porcentagemLucroPiorAtivo + "%)";
+        } else if (lucroPiorAtivo < 0) {
+            return siglaPiorAtivo + " | R$" + lucroPiorAtivo + " (" + porcentagemLucroPiorAtivo + "%)";
+        } else {
+            return siglaPiorAtivo + " | R$" + lucroPiorAtivo + " (" + porcentagemLucroPiorAtivo + "%)";
+        }
+    }
  
 }
