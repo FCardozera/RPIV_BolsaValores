@@ -182,7 +182,7 @@ public class CarteiraService {
 
                 CompraAcao compraAcao = cliente.comprarAcao(vendaOferta);    
 
-                compraAcaoRepository.save(compraAcao); // SALVA A NOVA COMPRAACAO
+                compraAcaoRepository.save(compraAcao);
                 clienteRepository.save(cliente);
 
                 acaoRepository.save(acao);
@@ -215,39 +215,39 @@ public class CarteiraService {
         List<CompraOferta> ofertasCompra = compraOfertaRepository.findOfertasCompraBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
 
         List<Acao> acoesCliente = acaoRepository.findAcoesClienteByClienteIdSigla(cliente.getId(), dados.siglaAcao());
-    
+
+        Iterator<Acao> acoesIteratorAgendarVendaOferta = acoesCliente.iterator();
         if (ofertasCompra.isEmpty()) {
             for (int i = 0; i < dados.quantidadeAcoes(); i++) {
-                VendaOferta vendaOferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesCliente.get(i).getEmpresa() , acoesCliente.get(i), TipoOferta.VENDA);
+                VendaOferta vendaOferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesIteratorAgendarVendaOferta.next().getEmpresa(), acoesIteratorAgendarVendaOferta.next(), TipoOferta.VENDA);
                 vendaOfertaRepository.save(vendaOferta);
             }
             return ResponseEntity.ok("Aguardando ofertas de compra");
         }
 
-
+        Iterator<Acao> acoesIteratorAgendarParcialmenteVendaOferta = acoesCliente.iterator();
         for (int i = 0; i < dados.quantidadeAcoes() - ofertasCompra.size(); i++) {
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesCliente.get(i).getEmpresa() , acoesCliente.get(i), TipoOferta.VENDA);
+            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesIteratorAgendarParcialmenteVendaOferta.next().getEmpresa(), acoesIteratorAgendarParcialmenteVendaOferta.next(), TipoOferta.VENDA);
             vendaOfertaRepository.save(oferta);
         }
         
         Iterator<CompraOferta> ofertaIterator = ofertasCompra.iterator();
+        Iterator<Acao> acoesIterator = acoesCliente.iterator();
         try {
-            int i = 0;
             while (ofertaIterator.hasNext()) {
                 CompraOferta compraOferta = ofertaIterator.next();
 
-                Acao acao = acoesCliente.get(i);
+                Acao acao = acoesIterator.next();
 
                 VendaAcao vendaAcao = cliente.venderAcao(compraOferta, acao);
 
                 vendaAcaoRepository.save(vendaAcao);
                 clienteRepository.save(cliente);
 
-                acaoRepository.save(acoesCliente.get(i));
+                acaoRepository.save(acao);
                 
                 compraOfertaRepository.save(compraOferta);
                 compraOfertaRepository.deleteById(compraOferta.getId());
-                i++;
             }
         } catch (Exception e) {
             throw e;
@@ -259,7 +259,12 @@ public class CarteiraService {
     
     private void verificarAcoesParaVenda(Cliente cliente, int quantidadeParaVender, String siglaAcao) {
         Integer qntAcoesClienteSigla = acaoRepository.findQntAcoesBySiglaClienteId(siglaAcao, cliente.getId());
-        if (qntAcoesClienteSigla < quantidadeParaVender || qntAcoesClienteSigla == null) {
+
+        if (qntAcoesClienteSigla == null) {
+            throw new RuntimeException("Você não possui ações suficientes para a venda");
+        }
+
+        if (qntAcoesClienteSigla < quantidadeParaVender) {
             throw new RuntimeException("Você não possui ações suficientes para a venda");
         }
     }
