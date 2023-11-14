@@ -229,28 +229,36 @@ public class InvistaLogadoService {
         if (preco == null || preco.trim().isEmpty()) {
             return vendaOfertaRepository.findOfertasVendaBySiglaAndPreco();
         }
-
+    
         try {
+            preco = preco.replaceAll("[^\\d.,]", "");
+            preco = preco.replace(',', '.');
+            int indexOfDot = preco.indexOf('.');
+            if (indexOfDot != -1) {
+                preco = preco.substring(0, indexOfDot);
+            }
+    
             Double precoBusca = Double.parseDouble(preco);
+    
             List<String[]> ofertas = vendaOfertaRepository.findOfertasVendaByPreco(precoBusca);
             List<String[]> acoesFinal = new ArrayList<>();
-
+    
             for (String[] oferta : ofertas) {
                 String[] acaoFinal = new String[6];
-
+    
                 for (int i = 0; i < oferta.length; i++) {
                     acaoFinal[i] = oferta[i];
                 }
                 acaoFinal[3] = "0";
                 acaoFinal[4] = "0";
-
+    
                 acoesFinal.add(acaoFinal);
             }
-
+    
             return acoesFinal;
-
-        } catch (Exception e) {
-            throw new NumberFormatException();
+    
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Formato inválido para o preço");
         }
     }
 
