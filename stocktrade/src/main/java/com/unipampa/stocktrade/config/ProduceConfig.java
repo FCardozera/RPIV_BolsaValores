@@ -142,227 +142,32 @@ public class ProduceConfig implements CommandLineRunner {
         List<VendaOferta> ofertasEmpresa4 = new ArrayList<>();
         // List<Oferta> ofertasEmpresa5 = new ArrayList<>();
 
-        for (int i = 0; i < 1000; i++) {
-            Acao acao = new Acao(null, "PETR4", empresa1, null, null, null, null);
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, null, 50.01, Instant.now(), null, empresa1, acao, TipoOferta.VENDA);
-            
-            acao.setVendaOferta(oferta);
-
-            acaoRepository.save(acao);
-            VendaOferta ofertaSalva = vendaOfertaRepository.save(oferta);
-            ofertasEmpresa1.add(ofertaSalva);
-        }
-        
-        for (int i = 0; i < 200; i++) {
-            Acao acao = new Acao(null, "VALE5", empresa2, null, null, null, null);
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, null, 25.41, Instant.now(), null, empresa2, acao, TipoOferta.VENDA);
-
-            acao.setVendaOferta(oferta);
-            
-            acaoRepository.save(acao);
-            VendaOferta ofertaSalva = vendaOfertaRepository.save(oferta);
-            ofertasEmpresa2.add(ofertaSalva);
-        }
-
-        for (int i = 0; i < 100; i++) {
-            Acao acao = new Acao(null, "ITUB4", empresa3, null, null, null, null);
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, null, 104.52, Instant.now(), null, empresa3, acao, TipoOferta.VENDA);
-
-            acao.setVendaOferta(oferta);
-
-            acaoRepository.save(acao);
-            vendaOfertaRepository.save(oferta);
-        }
-
-        for (int i = 0; i < 25; i++) {
-            Acao acao = new Acao(null, "AMAR3", empresa4, null, null, null, null);
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, null, 84.33, Instant.now(), null, empresa4, acao, TipoOferta.VENDA);
-
-            acao.setVendaOferta(oferta);
-
-            acaoRepository.save(acao);
-            VendaOferta ofertaSalva = vendaOfertaRepository.save(oferta);
-            ofertasEmpresa4.add(ofertaSalva);
-        }
-
-        for (int i = 0; i < 75; i++) {
-            Acao acao = new Acao(null, "AZUL4", empresa5, null, null, null, null);
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, null, 32.64, Instant.now(), null, empresa5, acao, TipoOferta.VENDA);
-
-            acao.setVendaOferta(oferta);
-
-            acaoRepository.save(acao);
-            vendaOfertaRepository.save(oferta);
-        }
-
-        for (int i = 0; i < 100; i++) {
-            Acao acao = new Acao(null, "AMAR3", empresa4, null, null, null, null);
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, null, 85.9, Instant.now(), null, empresa4, acao, TipoOferta.VENDA);
-
-            acao.setVendaOferta(oferta);
-
-            acaoRepository.save(acao);
-            VendaOferta ofertaSalva = vendaOfertaRepository.save(oferta);
-            ofertasEmpresa4.add(ofertaSalva);
-        }
+        gerarVendarOfertas(empresa1, ofertasEmpresa1, 1000, 50.01, "PETR4");
+        gerarVendarOfertas(empresa2, ofertasEmpresa2, 200, 25.41, "VALE5");
+        gerarVendarOfertas(empresa3, 100, 104.52, "ITUB4");
+        gerarVendarOfertas(empresa4, ofertasEmpresa4, 125, 84.33, "AMAR3");
+        gerarVendarOfertas(empresa5, 75, 32.64, "AZUL4");
 
         // Cliente 1 comprou 20 Ações da PETR4
-        int count = 0;
-
-        for (VendaOferta oferta : ofertasEmpresa1) {
-            if (count < 20 && oferta.getAcao() != null) {
-                if (oferta.getAcao().getCliente() == null) {
-
-                    Acao acao = oferta.getAcao();
-                    acao.setCliente(cliente1);
-
-                    CompraAcao compraAcao = new CompraAcao(null, acao, cliente1, oferta.getValorOferta(), instant1);
-                    compraAcaoRepository.save(compraAcao);
-
-                    acaoRepository.save(acao);
-
-                    oferta.setAcao(null);
-                    vendaOfertaRepository.save(oferta);
-                    vendaOfertaRepository.deleteById(oferta.getId());
-
-                    count++;
-                }
-            }
-        }
+        processarCompra(ofertasEmpresa1, cliente1, instant1, 20);
 
         // Cliente 2 comprou 50 Ações da AMAR3
-        count = 0;
-
-        for (VendaOferta oferta : ofertasEmpresa4) {
-            if (count < 50 && oferta.getAcao() != null) {
-                if (oferta.getAcao().getCliente() == null) {
-
-                    Acao acao = oferta.getAcao();
-                    acao.setCliente(cliente2);
-
-                    CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, oferta.getValorOferta(), instant1);
-                    compraAcaoRepository.save(compraAcao);
-
-                    acaoRepository.save(acao);
-
-                    oferta.setAcao(null);
-                    vendaOfertaRepository.save(oferta);
-                    vendaOfertaRepository.deleteById(oferta.getId());
-
-                    count++;
-                }
-            }
-        }
+        processarCompra(ofertasEmpresa4, cliente2, instant1, 50);
 
         // Cliente 2 comprou 40 Ações da PETR4
-        count = 0;
-        for (VendaOferta oferta : ofertasEmpresa1) {
-            if (count < 40 && oferta.getAcao() != null) {
-                if (oferta.getAcao().getCliente() == null) {
-                    Acao acao = oferta.getAcao();
-                    acao.setCliente(cliente2);
-
-                    CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, oferta.getValorOferta(), instant2);
-                    compraAcaoRepository.save(compraAcao);
-
-                    acaoRepository.save(acao);
-
-                    oferta.setAcao(null);
-                    vendaOfertaRepository.save(oferta);
-                    vendaOfertaRepository.deleteById(oferta.getId());
-
-                    count++;
-                }
-            }
-        }
+        processarCompra(ofertasEmpresa1, cliente2, instant2, 40);
 
         // Cliente 2 comprou 10 Ações da PETR4
-        count = 0;
-        for (VendaOferta oferta : ofertasEmpresa1) {
-            if (count < 10 && oferta.getAcao() != null) {
-                if (oferta.getAcao().getCliente() == null) {
-                    Acao acao = oferta.getAcao();
-                    acao.setCliente(cliente2);
-
-                    CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, oferta.getValorOferta(), instant2);
-                    compraAcaoRepository.save(compraAcao);
-
-                    acaoRepository.save(acao);
-
-                    oferta.setAcao(null);
-                    vendaOfertaRepository.save(oferta);
-                    vendaOfertaRepository.deleteById(oferta.getId());
-
-                    count++;
-                }
-            }
-        }
+        processarCompra(ofertasEmpresa1, cliente2, instant2, 10);
 
         // Cliente 1 comprou 20 Ações da VALE5
-        count = 0;
-        for (VendaOferta oferta : ofertasEmpresa2) {
-            if (count < 20 && oferta.getAcao() != null) {
-                if (oferta.getAcao().getCliente() == null) {
-                    Acao acao = oferta.getAcao();
-                    acao.setCliente(cliente1);
-
-                    CompraAcao compraAcao = new CompraAcao(null, acao, cliente1, oferta.getValorOferta(), instant2);
-                    compraAcaoRepository.save(compraAcao);
-
-                    acaoRepository.save(acao);
-
-                    oferta.setAcao(null);
-                    vendaOfertaRepository.save(oferta);
-                    vendaOfertaRepository.deleteById(oferta.getId());
-
-                    count++;
-                }
-            }
-        }
+        processarCompra(ofertasEmpresa2, cliente1, instant2, 20);
 
         // Cliente 2 comprou 10 Ações da VALE5
-        count = 0;
-        for (VendaOferta oferta : ofertasEmpresa2) {
-            if (count < 10 && oferta.getAcao() != null) {
-                if (oferta.getAcao().getCliente() == null) {
-                    Acao acao = oferta.getAcao();
-                    acao.setCliente(cliente2);
-
-                    CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, oferta.getValorOferta(), instant1);
-                    compraAcaoRepository.save(compraAcao);
-
-                    acaoRepository.save(acao);
-
-                    oferta.setAcao(null);
-                    vendaOfertaRepository.save(oferta);
-                    vendaOfertaRepository.deleteById(oferta.getId());
-
-                    count++;
-                }
-            }
-        }
+        processarCompra(ofertasEmpresa2, cliente2, instant1, 10);
 
         // Cliente 2 comprou 20 Ações da VALE5
-        count = 0;
-        for (VendaOferta oferta : ofertasEmpresa2) {
-            if (count < 20 && oferta.getAcao() != null) {
-                if (oferta.getAcao().getCliente() == null) {
-                    Acao acao = oferta.getAcao();
-                    acao.setCliente(cliente2);
-
-                    CompraAcao compraAcao = new CompraAcao(null, acao, cliente2, oferta.getValorOferta(), instant1);
-                    compraAcaoRepository.save(compraAcao);
-
-                    acaoRepository.save(acao);
-
-                    oferta.setAcao(null);
-                    vendaOfertaRepository.save(oferta);
-                    vendaOfertaRepository.deleteById(oferta.getId());
-
-                    count++;
-                }
-            }
-        }
+        processarCompra(ofertasEmpresa2, cliente2, instant1, 20);
 
 
         // // Cliente 1 vendeu 10 Ações da VALE5
@@ -391,4 +196,55 @@ public class ProduceConfig implements CommandLineRunner {
 
         System.out.println("Configuração de teste finalizada com sucesso!");
     }
+
+    public void gerarVendarOfertas(Empresa empresa, List<VendaOferta> ofertasEmpresa, int quantidade, Double valor, String sigla) {
+        for (int i = 0; i < quantidade; i++) {
+            Acao acao = new Acao(null, sigla, empresa, null, null, null, null);
+            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, null, valor, Instant.now(), null, empresa, acao, TipoOferta.VENDA);
+            
+            acao.setVendaOferta(oferta);
+
+            acaoRepository.save(acao);
+            VendaOferta ofertaSalva = vendaOfertaRepository.save(oferta);
+            ofertasEmpresa.add(ofertaSalva);
+        }
+    }
+
+    public void gerarVendarOfertas(Empresa empresa, int quantidade, Double valor, String sigla) {
+        for (int i = 0; i < quantidade; i++) {
+            Acao acao = new Acao(null, sigla, empresa, null, null, null, null);
+            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, null, valor, Instant.now(), null, empresa, acao, TipoOferta.VENDA);
+            
+            acao.setVendaOferta(oferta);
+
+            acaoRepository.save(acao);
+            vendaOfertaRepository.save(oferta);
+        }
+    }
+
+    public void processarCompra(List<VendaOferta> ofertasEmpresa, Cliente cliente, Instant instant, int quantidade) {
+        int count = 0;
+
+        for (VendaOferta oferta : ofertasEmpresa) {
+            if (count < quantidade && oferta.getAcao() != null) {
+                if (oferta.getAcao().getCliente() == null) {
+
+                    Acao acao = oferta.getAcao();
+                    acao.setCliente(cliente);
+
+                    CompraAcao compraAcao = new CompraAcao(null, acao, cliente, oferta.getValorOferta(), instant);
+                    compraAcaoRepository.save(compraAcao);
+
+                    acaoRepository.save(acao);
+
+                    oferta.setAcao(null);
+                    vendaOfertaRepository.save(oferta);
+                    vendaOfertaRepository.deleteById(oferta.getId());
+
+                    count++;
+                }
+            }
+        }
+    }
+
 }
