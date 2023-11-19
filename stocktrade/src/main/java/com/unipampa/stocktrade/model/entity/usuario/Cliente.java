@@ -74,6 +74,10 @@ public class Cliente extends Usuario {
     public Cliente(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao) {
         super(id, nome, email, senha, senhaAutenticacao, TipoUsuario.CLIENTE);
 
+        if (cpf == null || cpf.trim().isEmpty() || cpf.trim().length() != 11) {
+            throw new IllegalArgumentException("CPF não pode ser nulo ou vazio e deve ter 11 dígitos");
+        }
+
         this.cpf = cpf;
         this.saldo = 0.0;
 

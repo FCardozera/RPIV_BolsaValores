@@ -1,5 +1,7 @@
 package com.unipampa.stocktrade;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,4 +47,79 @@ public class CadastroUserTests {
 	
 	}
 
+	@Test
+	public void testCriarUsuarioCpfErrado(){
+        ClienteRequestDTO clienteDTO = new ClienteRequestDTO("Nome", "012345678901", "test@mail.com", "12345678", "1234", null, null);
+	
+		Exception e = null;
+        
+        try {
+            cadastroService.salvarCliente(clienteDTO);
+        } catch (Exception err) {
+            e = err;
+        }
+
+        assertNotNull(e);
+	}
+
+	@Test
+	public void testCriarUsuarioEmailErrado(){
+		ClienteRequestDTO clienteDTO = new ClienteRequestDTO("Nome", "12345678901", "testmail.com", "12345678", "1234", null, null);
+
+		Exception e = null;
+		
+		try {
+			cadastroService.salvarCliente(clienteDTO);
+		} catch (Exception err) {
+			e = err;
+		}
+
+		assertNotNull(e);
+	}
+
+	@Test
+	public void testCriarUsuarioSenhaLetras(){
+		ClienteRequestDTO clienteDTO = new ClienteRequestDTO("Nome", "12345678901", "test@mail.com", "senhaLetra", "1234", null, null);
+
+		Exception e = null;
+
+		try {
+			cadastroService.salvarCliente(clienteDTO);
+		} catch (Exception err) {
+			e = err;
+		}
+
+		assertNotNull(e);
+	}
+
+	@Test
+	public void testCriarUsuarioSenhaTamanho(){
+		ClienteRequestDTO clienteDTO = new ClienteRequestDTO("Nome", "12345678901", "test@mail.com", "1234567800000000", "1234", null, null);
+
+		Exception e = null;
+
+		try {
+			cadastroService.salvarCliente(clienteDTO);
+		} catch (Exception err) {
+			e = err;
+		}
+
+		assertNotNull(e);
+	}
+
+	@Test
+	public void testCriarUsuarioSenhaAutenticacaoTamanho(){
+		ClienteRequestDTO clienteDTO = new ClienteRequestDTO("Nome", "12345678901", "test@mail.com", "12345678", "12341111111", null, null);
+
+		Exception e = null;
+
+		try {
+			cadastroService.salvarCliente(clienteDTO);
+		} catch (Exception err) {
+			e = err;
+		}
+
+		assertNotNull(e);
+	
+	}
 }
