@@ -73,8 +73,10 @@ public class Cliente extends Usuario {
 
     public Cliente(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao) {
         super(id, nome, email, senha, senhaAutenticacao, TipoUsuario.CLIENTE);
+
         this.cpf = cpf;
         this.saldo = 0.0;
+
     }
 
     public Cliente(ClienteRequestDTO data) {
