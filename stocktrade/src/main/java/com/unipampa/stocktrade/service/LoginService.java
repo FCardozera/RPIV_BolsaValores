@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
+import com.unipampa.stocktrade.model.entity.usuario.exception.usuario.SenhaIncorretaException;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -20,7 +21,7 @@ public class LoginService {
         Cliente cliente = clienteRepository.findByEmail(dados.email());
             
         if (cliente == null || !cliente.isSenhaCorreta(dados.senha())) {
-            throw new RuntimeException("Email e/ou senha incorretos");
+            throw new SenhaIncorretaException("Email e/ou senha incorretos");
         }
 
         session.setAttribute("usuarioLogado", cliente);

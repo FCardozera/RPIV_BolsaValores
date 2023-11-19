@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
+import com.unipampa.stocktrade.model.entity.usuario.exception.cliente.CpfIncorretoException;
+import com.unipampa.stocktrade.model.entity.usuario.exception.usuario.EmailInvalidoException;
+import com.unipampa.stocktrade.model.entity.usuario.exception.usuario.SenhaInvalidaException;
 import com.unipampa.stocktrade.service.CadastroService;
 
 @SpringBootTest
@@ -28,7 +31,6 @@ public class CadastroUserTests {
 		assert(cliente.getEmail().equals(clienteDTO.email()));
 		assert(cliente.isSenhaCorreta(clienteDTO.senha()));
 		assert(cliente.isSenhaAutenticacaoCorreta(clienteDTO.senhaAutenticacao()));
-	
 	}
 
 	@Test
@@ -44,7 +46,6 @@ public class CadastroUserTests {
 		assert(cliente.getEmail().equals(clienteDTO.email()));
 		assert(!cliente.isSenhaCorreta("12345666"));
 		assert(cliente.isSenhaAutenticacaoCorreta(clienteDTO.senhaAutenticacao()));
-	
 	}
 
 	@Test
@@ -55,7 +56,7 @@ public class CadastroUserTests {
         
         try {
             cadastroService.salvarCliente(clienteDTO);
-        } catch (Exception err) {
+        } catch (CpfIncorretoException err) {
             e = err;
         }
 
@@ -70,7 +71,7 @@ public class CadastroUserTests {
 		
 		try {
 			cadastroService.salvarCliente(clienteDTO);
-		} catch (Exception err) {
+		} catch (EmailInvalidoException err) {
 			e = err;
 		}
 
@@ -85,7 +86,7 @@ public class CadastroUserTests {
 
 		try {
 			cadastroService.salvarCliente(clienteDTO);
-		} catch (Exception err) {
+		} catch (SenhaInvalidaException err) {
 			e = err;
 		}
 
@@ -100,7 +101,7 @@ public class CadastroUserTests {
 
 		try {
 			cadastroService.salvarCliente(clienteDTO);
-		} catch (Exception err) {
+		} catch (SenhaInvalidaException err) {
 			e = err;
 		}
 
@@ -115,11 +116,10 @@ public class CadastroUserTests {
 
 		try {
 			cadastroService.salvarCliente(clienteDTO);
-		} catch (Exception err) {
+		} catch (SenhaInvalidaException err) {
 			e = err;
 		}
 
 		assertNotNull(e);
-	
 	}
 }

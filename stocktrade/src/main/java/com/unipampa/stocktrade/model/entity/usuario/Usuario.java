@@ -8,6 +8,8 @@ import java.util.UUID;
 
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
+import com.unipampa.stocktrade.model.entity.usuario.exception.usuario.EmailInvalidoException;
+import com.unipampa.stocktrade.model.entity.usuario.exception.usuario.SenhaInvalidaException;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -61,15 +63,15 @@ public abstract class Usuario implements Serializable {
 
     protected Usuario(UUID id, String nome, String email, String senha, String senhaAutenticacao) {
         if (email == null || email.trim().isEmpty() || !email.contains("@")) {
-            throw new IllegalArgumentException("Email não pode ser nulo ou vazio e deve conter '@'");
+            throw new EmailInvalidoException("Email não pode ser nulo ou vazio e deve conter '@'");
         }
 
         if (senha == null || senha.trim().isEmpty() || senha.trim().length() != 8 || !senha.matches("\\d+")) {
-            throw new IllegalArgumentException("Senha não pode ser nula ou vazia, deve ter no mínimo 8 dígitos e deve conter apenas números");
+            throw new SenhaInvalidaException("Senha não pode ser nula ou vazia, deve ter no mínimo 8 dígitos e deve conter apenas números");
         }
         
         if (senhaAutenticacao == null || senhaAutenticacao.trim().isEmpty() || senhaAutenticacao.trim().length() != 4 || !senhaAutenticacao.matches("\\d+")) {
-            throw new IllegalArgumentException("Senha de autenticação não pode ser nula ou vazia, deve ter no mínimo 4 dígitos e deve conter apenas números");
+            throw new SenhaInvalidaException("Senha de autenticação não pode ser nula ou vazia, deve ter no mínimo 4 dígitos e deve conter apenas números");
         }
 
         this.id = id;

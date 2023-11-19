@@ -26,6 +26,7 @@ import com.unipampa.stocktrade.model.entity.movimentacao.enums.TipoMovimentacao;
 import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.usuario.enums.TipoUsuario;
+import com.unipampa.stocktrade.model.entity.usuario.exception.cliente.CpfIncorretoException;
 
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -75,7 +76,7 @@ public class Cliente extends Usuario {
         super(id, nome, email, senha, senhaAutenticacao, TipoUsuario.CLIENTE);
 
         if (cpf == null || cpf.trim().isEmpty() || cpf.trim().length() != 11) {
-            throw new IllegalArgumentException("CPF não pode ser nulo ou vazio e deve ter 11 dígitos");
+            throw new CpfIncorretoException("CPF não pode ser nulo ou vazio e deve ter 11 dígitos");
         }
 
         this.cpf = cpf;
