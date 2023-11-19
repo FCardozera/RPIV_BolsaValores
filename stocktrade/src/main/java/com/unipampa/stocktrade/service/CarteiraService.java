@@ -160,6 +160,10 @@ public class CarteiraService {
             throw new RuntimeException("Sigla de ação inválida");
         }
 
+        if (!cliente.possuiSaldoSuficiente(dados.quantidadeAcoes(), dados.precoAcao())) {
+            throw new RuntimeException("Saldo insuficiente");
+        }
+
         List<VendaOferta> ofertasVenda = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
         if (ofertasVenda.isEmpty()) {
             agendarCompraOferta(dados.quantidadeAcoes(), cliente, dados);

@@ -345,4 +345,9 @@ public class Cliente extends Usuario {
         saldo += valor;
     }
 
+    public boolean possuiSaldoSuficiente(Integer quantidadeAcoes, Double precoAcao) {
+        Double valorTotal = quantidadeAcoes * precoAcao;
+        return saldo >= valorTotal;
+    }
+
 }
