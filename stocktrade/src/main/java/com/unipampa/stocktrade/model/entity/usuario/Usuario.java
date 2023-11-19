@@ -60,6 +60,18 @@ public abstract class Usuario implements Serializable {
     private byte[] saltSenhaAutenticacao;
 
     protected Usuario(UUID id, String nome, String email, String senha, String senhaAutenticacao) {
+        if (email == null || email.trim().isEmpty() || !email.contains("@")) {
+            throw new IllegalArgumentException("Email não pode ser nulo ou vazio e deve conter '@'");
+        }
+
+        if (senha == null || senha.trim().isEmpty() || senha.trim().length() != 8 || !senha.matches("\\d+")) {
+            throw new IllegalArgumentException("Senha não pode ser nula ou vazia, deve ter no mínimo 8 dígitos e deve conter apenas números");
+        }
+        
+        if (senhaAutenticacao == null || senhaAutenticacao.trim().isEmpty() || senhaAutenticacao.trim().length() != 4 || !senhaAutenticacao.matches("\\d+")) {
+            throw new IllegalArgumentException("Senha de autenticação não pode ser nula ou vazia, deve ter no mínimo 4 dígitos e deve conter apenas números");
+        }
+
         this.id = id;
         this.nome = nome;
         this.email = email;
