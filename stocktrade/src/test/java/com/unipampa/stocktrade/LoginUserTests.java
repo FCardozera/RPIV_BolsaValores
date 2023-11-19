@@ -56,7 +56,7 @@ public class LoginUserTests {
     }
 
     @Test
-    public void testLoginIncorretoUserSenha() {
+    public void testLoginIncorretoUserSenhaLetra() {
         ClienteRequestDTO clienteDTO = new ClienteRequestDTO(null, "11111111111", "joao@gmail.com", "12345678",
                 "1234", null, null);
         cadastroService.salvarCliente(clienteDTO);
