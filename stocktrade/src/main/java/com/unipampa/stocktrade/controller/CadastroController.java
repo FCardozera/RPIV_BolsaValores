@@ -1,6 +1,7 @@
 package com.unipampa.stocktrade.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +22,8 @@ public class CadastroController {
     private CadastroService serviceCadastro;
 
     @PostMapping
-    public ModelAndView cadastrarUsuario(@RequestBody ClienteRequestDTO dados) {
-        ModelAndView mv = new ModelAndView("/cadastro");
-        serviceCadastro.salvarCliente(dados);
-        
-        return mv;
+    public ResponseEntity<String> cadastrarUsuario(@RequestBody ClienteRequestDTO dados) {
+        return serviceCadastro.salvarCliente(dados);
     }
 
     @GetMapping

@@ -1,6 +1,7 @@
 package com.unipampa.stocktrade.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
@@ -13,6 +14,8 @@ import com.unipampa.stocktrade.model.repository.registro.RegistroRepository;
 import com.unipampa.stocktrade.model.repository.usuario.AdminRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 import com.unipampa.stocktrade.model.repository.usuario.EmpresaRepository;
+import com.unipampa.stocktrade.service.exception_handler.ExceptionHandlerChain;
+import com.unipampa.stocktrade.service.exception_handler.enums.TipoException;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -33,27 +36,27 @@ public class PerfilService {
 
     private static final String USUARIO_LOGADO = "usuarioLogado";
 
-    public void deleteConta(HttpSession session, ClienteRequestDTO dados) {
+    public ResponseEntity<String> deleteConta(HttpSession session, ClienteRequestDTO dados) {
         Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
 
         if (usuario == null) {
-            throw new RuntimeException("Não existe um usuário logado");
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SEM_USUARIO, null, registroRepository));
         }
 
         if (!usuario.isSenhaCorreta(dados.senha())) {
-            throw new RuntimeException("Senha incorreta");
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SENHA_INVALIDA, session, registroRepository));
         }
 
         if (usuario instanceof Cliente) {
             Cliente cliente = (Cliente) usuario;
             if (!cliente.getAcoes().isEmpty()) {
-                throw new RuntimeException("Não é possível deletar a conta pois existem ações vinculadas a ela");
+                return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.ACOES_AINDA_VINCULADAS, session, registroRepository));
             }
             clienteRepository.delete(cliente);
         } else if (usuario instanceof Empresa) {
             Empresa empresa = (Empresa) usuario;
             if (!empresa.getAcoes().isEmpty()) {
-                throw new RuntimeException("Não é possível deletar a conta pois existem ações vinculadas a ela");
+                return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.ACOES_AINDA_VINCULADAS, session, registroRepository));
             }
             empresaRepository.delete(empresa);
         } else if (usuario instanceof Admin) {
@@ -65,14 +68,16 @@ public class PerfilService {
         registroRepository.save(registro);
         
         session.invalidate();
+
+        return ResponseEntity.ok("Conta deletada com sucesso!");
     }
 
-    public void trocarEmail(HttpSession session, ClienteRequestDTO dados) {
+    public ResponseEntity<String> trocarEmail(HttpSession session, ClienteRequestDTO dados) {
         Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
         
 
         if (usuario == null) {
-            throw new RuntimeException("Não existe um usuário logado");
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SEM_USUARIO, null, registroRepository));
         }
 
         String emailAntigo = usuario.getEmail();
@@ -98,15 +103,16 @@ public class PerfilService {
 
         Registro registro = new Registro("O email de usuário " + emailAntigo + " foi trocado para " + usuario.getEmail() + " com sucesso.");
         registroRepository.save(registro);
+        return ResponseEntity.ok("Troca de e-mail realizada com sucesso.");
     }
 
-    public void trocarSenha(HttpSession session, ClienteRequestDTO dados) {
+    public ResponseEntity<String> trocarSenha(HttpSession session, ClienteRequestDTO dados) {
         Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
 
         if (dados.senha() != null && dados.newPassword() != null && !dados.senha().isEmpty()
                 && !dados.newPassword().isEmpty()) {
             if (!usuario.isSenhaCorreta(dados.senha())) {
-                throw new RuntimeException("Senha atual incorreta");
+                return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SENHA_INVALIDA, session, registroRepository));
             }
             usuario.trocarSenha(dados.newPassword());
         }
@@ -124,6 +130,7 @@ public class PerfilService {
 
         Registro registro = new Registro("A senha do usuário " + usuario.getEmail() + " foi trocada com sucesso.");
         registroRepository.save(registro);
+        return ResponseEntity.ok("Senha trocada com sucesso!");
     }
 
     
