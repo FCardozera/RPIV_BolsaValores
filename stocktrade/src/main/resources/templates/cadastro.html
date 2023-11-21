@@ -206,8 +206,8 @@
             if (response.ok) {
               window.location.href = "/";
             } else {
-              response.json().then(data => {
-                senhaError.textContent = data.message;
+              response.text().then(data => {
+                senhaError.textContent = data;
               });
             }
           })

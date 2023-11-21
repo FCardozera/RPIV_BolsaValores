@@ -4,7 +4,12 @@ public enum TipoException {
 
     USUARIO_NAO_AUTORIZADO(0),
     SENHA_INVALIDA(1),
-    SEM_USUARIO(2);
+    SEM_USUARIO(2),
+    USUARIO_JA_EXISTENTE(3),
+    SALDO_INSUFICIENTE(4),
+    SIGLA_INVALIDA(5),
+    QTD_ACOES_INSUFICIENTE(6),
+    ACOES_AINDA_VINCULADAS(7);
 
     private int codigo;
 

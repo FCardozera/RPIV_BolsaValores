@@ -18,7 +18,6 @@ import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
 import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
-// import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
 import com.unipampa.stocktrade.model.entity.oferta.CompraOferta;
 import com.unipampa.stocktrade.model.entity.oferta.VendaOferta;
 import com.unipampa.stocktrade.model.entity.oferta.enums.TipoOferta;
@@ -30,10 +29,12 @@ import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
 import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
 import com.unipampa.stocktrade.model.repository.acao.VendaAcaoRepository;
-// import com.unipampa.stocktrade.model.repository.acao.CompraAcaoRepository;
 import com.unipampa.stocktrade.model.repository.oferta.CompraOfertaRepository;
 import com.unipampa.stocktrade.model.repository.oferta.VendaOfertaRepository;
+import com.unipampa.stocktrade.model.repository.registro.RegistroRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
+import com.unipampa.stocktrade.service.exception_handler.ExceptionHandlerChain;
+import com.unipampa.stocktrade.service.exception_handler.enums.TipoException;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -57,6 +58,9 @@ public class CarteiraService {
 
     @Autowired 
     private VendaAcaoRepository vendaAcaoRepository;
+
+    @Autowired
+    private RegistroRepository registroRepository;
 
     private static final String USUARIO_LOGADO = "usuarioLogado";
 
@@ -138,30 +142,29 @@ public class CarteiraService {
     public List<String[]> getCompraOfertasUser(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
         Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        
-        List<String[]> ofertas = compraOfertaRepository.findOfertasCompraByClienteId(cliente.getId());
-        return ofertas;
+
+        return compraOfertaRepository.findOfertasCompraByClienteId(cliente.getId());
     }
 
     public ResponseEntity<String> comprarAcoes(HttpSession session, CompraAcoesDTO dados) {
         Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
 
         if (usuario == null) {
-            throw new RuntimeException("Não existe um usuário logado");
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SEM_USUARIO, null, registroRepository));
         }
 
         Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
 
         if (!cliente.isSenhaAutenticacaoCorreta(dados.senhaAutenticacao())) {
-            throw new RuntimeException("Senha incorreta");
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SENHA_INVALIDA, session, registroRepository));
         }
 
         if (acaoRepository.findAcoesSigla(dados.siglaAcao()) < 0) {
-            throw new RuntimeException("Sigla de ação inválida");
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SIGLA_INVALIDA, session, registroRepository));
         }
 
         if (!cliente.possuiSaldoSuficiente(dados.quantidadeAcoes(), dados.precoAcao())) {
-            throw new RuntimeException("Saldo insuficiente");
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SALDO_INSUFICIENTE, session, registroRepository));
         }
 
         List<VendaOferta> ofertasVenda = vendaOfertaRepository.findOfertasVendaBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
@@ -199,19 +202,22 @@ public class CarteiraService {
     }
 
     public ResponseEntity<String> venderAcoes(HttpSession session, VendaAcoesDTO dados) {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
     
         if (usuario == null) {
-            throw new RuntimeException("Não existe um usuário logado");
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SEM_USUARIO, null, registroRepository));
         }
     
         Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
     
         if (!cliente.isSenhaAutenticacaoCorreta(dados.senhaAutenticacao())) {
-            throw new RuntimeException("Senha incorreta");
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SENHA_INVALIDA, session, registroRepository));
         }
     
-        verificarAcoesParaVenda(cliente, dados.quantidadeAcoes(), dados.siglaAcao());
+        ResponseEntity<String> response = verificarAcoesParaVenda(cliente, dados.quantidadeAcoes(), dados.siglaAcao());
+        if (response != null) {
+            return response;
+        }
 
         List<CompraOferta> ofertasCompra = compraOfertaRepository.findOfertasCompraBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
         List<Acao> acoesCliente = acaoRepository.findAcoesClienteByClienteIdSigla(cliente.getId(), dados.siglaAcao());
@@ -246,23 +252,21 @@ public class CarteiraService {
                 compraOfertaRepository.deleteById(compraOferta.getId());
             }
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
     
         clienteRepository.save(cliente);
         return ResponseEntity.ok("Ações vendidas");
     }
     
-    private void verificarAcoesParaVenda(Cliente cliente, int quantidadeParaVender, String siglaAcao) {
+    private ResponseEntity<String> verificarAcoesParaVenda(Cliente cliente, int quantidadeParaVender, String siglaAcao) {
         Integer qntAcoesClienteSigla = acaoRepository.findQntAcoesBySiglaClienteId(siglaAcao, cliente.getId());
 
-        if (qntAcoesClienteSigla == null) {
-            throw new RuntimeException("Você não possui ações suficientes para a venda");
+        if (qntAcoesClienteSigla < quantidadeParaVender || qntAcoesClienteSigla == null) {
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.QTD_ACOES_INSUFICIENTE, null, registroRepository));
         }
 
-        if (qntAcoesClienteSigla < quantidadeParaVender) {
-            throw new RuntimeException("Você não possui ações suficientes para a venda");
-        }
+        return null;
     }
 
     private boolean quantidadeOfertaMaiorQueAQuantidadeDeAcoesDesejadas(Integer quantidadeOferta, Integer quantidadeAcoes) {
@@ -298,9 +302,8 @@ public class CarteiraService {
     public List<String[]> getVendaOfertasUser(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
         Cliente cliente = clienteRepository.findByEmail(usuarioLogado.getEmail());
-        
-        List<String[]> ofertas = vendaOfertaRepository.findOfertasVendaByClienteId(cliente.getId());
-        return ofertas;
+    
+        return vendaOfertaRepository.findOfertasVendaByClienteId(cliente.getId());
     }
 
     public String getLucroTotal(List<String[]> acoesUsuario) {

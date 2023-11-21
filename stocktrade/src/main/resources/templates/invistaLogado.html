@@ -233,8 +233,8 @@
               window.location.href = "/invistaLogado";
             } else {
               console.log(response.data);
-              response.json().then((data) => {
-                senhaError.textContent = data.message;
+              response.text().then((data) => {
+                senhaError.textContent = data;
               });
             }
           })
@@ -318,8 +318,8 @@
               window.location.href = "/invistaLogado";
             } else {
               console.log(response.data);
-              response.json().then((data) => {
-                senhaError.textContent = data.message;
+              response.text().then((data) => {
+                senhaError.textContent = data;
               });
             }
           })

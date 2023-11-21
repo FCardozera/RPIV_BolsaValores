@@ -12,14 +12,14 @@ import com.unipampa.stocktrade.service.exception_handler.enums.TipoException;
 import jakarta.servlet.http.HttpSession;
 
 @Component
-public class UsuarioNaoAutorizadoExceptionHandler extends ExceptionHandler {
+public class SaldoInsuficienteExceptionHandler extends ExceptionHandler {
     private static final String USUARIO_LOGADO = "usuarioLogado";
 
     @Override
     public String handle(TipoException tipoException, HttpSession session, RegistroRepository registroRepository) {
-        if (tipoException == TipoException.USUARIO_NAO_AUTORIZADO) {
+        if (tipoException == TipoException.SALDO_INSUFICIENTE) {
             Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
-            String erro = "O usuário tentou acessar uma área sem autorização.";
+            String erro = "Saldo insuficiente para realizar a operação desejada!";
             Registro logException = new Registro(null, usuario.getId(), erro, Instant.now());
 
             registroRepository.save(logException);

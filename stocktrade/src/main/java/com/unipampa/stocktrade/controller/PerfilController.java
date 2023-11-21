@@ -1,6 +1,7 @@
 package com.unipampa.stocktrade.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,23 +28,18 @@ public class PerfilController {
     }
 
     @DeleteMapping
-    public ModelAndView deleteConta(HttpSession session, @RequestBody ClienteRequestDTO dados) {
-        ModelAndView mv = new ModelAndView("/index");
-        service.deleteConta(session, dados);
-        return mv;
+    public ResponseEntity<String> deleteConta(HttpSession session, @RequestBody ClienteRequestDTO dados) {
+        return service.deleteConta(session, dados);
     }
 
     @PutMapping("/trocar-email")
-    public ModelAndView trocarEmail(HttpSession session, @RequestBody ClienteRequestDTO dados) {
-         
-        service.trocarEmail(session, dados);
-        return null;   
+    public ResponseEntity<String> trocarEmail(HttpSession session, @RequestBody ClienteRequestDTO dados) {
+        return service.trocarEmail(session, dados); 
     }
 
     @PutMapping("/trocar-senha")
-    public ModelAndView trocarSenha(HttpSession session, @RequestBody ClienteRequestDTO dados) {
-        service.trocarSenha(session, dados);
-        return null;   
+    public ResponseEntity<String> trocarSenha(HttpSession session, @RequestBody ClienteRequestDTO dados) {
+        return service.trocarSenha(session, dados); 
     }
 
 }

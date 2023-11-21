@@ -112,9 +112,9 @@
           alert("Email alterado com sucesso!");
           window.location.href = '/perfil';
         } else {
-          response.json().then(data => {
-            if (data.message) {
-              alert(data.message);
+          response.text().then(data => {
+            if (data) {
+              alert(data);
             } else {
               alert("Ocorreu um erro ao trocar o email!");
             }
@@ -163,9 +163,9 @@
           alert("Senha alterada com sucesso!");
           window.location.href = '/perfil';
         } else {
-          response.json().then(data => {
-            if (data.message) {
-              alert(data.message);
+          response.text().then(data => {
+            if (data) {
+              alert(data);
             } else {
               alert("Ocorreu um erro ao trocar a senha!");
             }
@@ -215,8 +215,8 @@
         if (response.ok) {
           window.location.href = '/indexLogado';
         } else {
-          response.json().then(data => {
-            senhaError.textContent = data.message;
+          response.text().then(data => {
+            senhaError.textContent = data;
           });
         }
       })
