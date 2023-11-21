@@ -1,32 +1,17 @@
 <div class="container-fluid pt-3" th:fragment="header(currentPage)">
   <header class="d-flex align-items-center justify-content-between py-3 mb-4 flex-nowrap mx-5">
     <!-- logo -->
-    <a href="/indexLogado">
+    <a href="/indexAdm">
       <img src="../images/logo-bg-off.png" alt="Logo" class="img-fluid logo small-logo2 me-5" />
     </a>
 
     <ul class="nav col-12 col-md-auto mb-2 mb-md-0 me-auto">
 
-      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/indexLogado', 'Home', ${currentPage})}"></li>
+      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/indexAdm', 'Home', ${currentPage})}"></li>
 
-      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/carteira', 'Carteira', ${currentPage})}"></li>
-
-      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/invistaLogado', 'Invista', ${currentPage})}"></li>
-
-      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/contatoLogado', 'Contato', ${currentPage})}"></li>
+      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/dividendo', 'Dividendo', ${currentPage})}"></li>
 
     </ul>
-
-
-    <!-- <nav class="navbar navbar-light bg-custom">
-      <div class="container-fluid">
-        <form class="d-flex">
-          <input class="form-control me-2 input-custom" type="search" placeholder="Busque no site..."
-            aria-label="Search">
-          <button class="btn btn-outline-success btn-custom" type="submit">Pesquisar</button>
-        </form>
-      </div>
-    </nav> -->
 
 
     <div class="col-md-3 text-end">

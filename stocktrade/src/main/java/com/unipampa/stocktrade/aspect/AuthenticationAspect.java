@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.model.entity.registro.Registro;
 import com.unipampa.stocktrade.model.entity.usuario.Admin;
-import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.registro.RegistroRepository;
 
@@ -39,7 +38,8 @@ public class AuthenticationAspect {
     public void loggedPointcut() {
     }
 
-    @Pointcut("execution(* com.unipampa.stocktrade.controller.DividendoController.dividendoPagina(..))")
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.DividendoController.dividendoPagina(..)) ||" +
+              "execution(* com.unipampa.stocktrade.controller.IndexAdmController.indexAdm(..))")
     public void loggedAdminPointCut() {
     }
 
@@ -73,10 +73,10 @@ public class AuthenticationAspect {
 
         Usuario user = (Usuario) session.getAttribute(USUARIO_LOGADO);
 
-        if (!(user instanceof Cliente)) {
-            ModelAndView mv = new ModelAndView("indexLogado");
+        if (user instanceof Admin) {
+            ModelAndView mv = new ModelAndView("indexAdm");
             // Logging...
-            Registro registro = new Registro("O usuário " + user.getEmail() + " tentou acessar uma página de administrador.");
+            Registro registro = new Registro("O usuário " + user.getEmail() + " tentou acessar uma página de cliente.");
             registroRepository.save(registro);
             return mv;
         }
