@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/headFragment :: head('StockTrade - Dividendos')}"></head>
+
+<body>
+    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+
+    <main>
+        <div th:replace="~{fragments/headerLogadoFragment :: header('indexLogado')}"></div>
+
+        <div class="container-fluid justify-content-center pe-5 ps-5">
+            <div class="row justify-content-center">
+                <div class="col-md-10 justify-content-center align-items-center text-center mx-auto">
+                    <h4>Gestão de Dividendos</h4>
+                    <div class="col-md-6 mb-3 mx-auto mt-5">
+                        <label for="sigla" class="form-label fs-4">Sigla</label>
+                        <input class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0" id="sigla" ></input>
+                    </div>                             
+                    <div class="col-md-6 mb-3 mx-auto mt-4">
+                        <label for="precoAcao" class="form-label fs-4">Preço por ação</label>
+                        <input class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0" id="precoAcao" ></input>
+                    </div>                 
+                    <div class="custom-padding-top custom-padding-bottom mx-auto">
+                        <button type="submit"
+                            class="btn btn-outline-primary botao1" id="enviarDividendo">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
