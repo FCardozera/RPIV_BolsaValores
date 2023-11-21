@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.unipampa.stocktrade.controller.dto.dividendo.DividendoRequestDTO;
 import com.unipampa.stocktrade.service.DividendoService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/dividendo")
 public class DividendoController {
@@ -19,12 +21,12 @@ public class DividendoController {
     private DividendoService serviceDividendo;
     
     @GetMapping
-    public ModelAndView dividendoPagina() {
+    public ModelAndView dividendoPagina(HttpSession session) {
         return new ModelAndView("/dividendo");
     }
 
     @PostMapping
-    public Object cadastrarDividendo(@RequestBody DividendoRequestDTO dividendoRequestDTO) {
+    public Object cadastrarDividendo(HttpSession session, @RequestBody DividendoRequestDTO dividendoRequestDTO) {
         return serviceDividendo.cadastrarDividendo(dividendoRequestDTO);
     }
 }

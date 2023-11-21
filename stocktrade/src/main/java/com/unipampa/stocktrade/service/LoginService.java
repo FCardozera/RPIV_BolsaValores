@@ -7,6 +7,7 @@ import com.unipampa.stocktrade.controller.dto.cliente.ClienteRequestDTO;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.entity.usuario.exception.usuario.SenhaIncorretaException;
+import com.unipampa.stocktrade.model.repository.usuario.AdminRepository;
 import com.unipampa.stocktrade.model.repository.usuario.ClienteRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -17,16 +18,31 @@ public class LoginService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private AdminRepository adminRepository;
+
     public Usuario login(ClienteRequestDTO dados, HttpSession session) {
-        Cliente cliente = clienteRepository.findByEmail(dados.email());
-            
-        if (cliente == null || !cliente.isSenhaCorreta(dados.senha())) {
-            throw new SenhaIncorretaException("Email e/ou senha incorretos");
+        Usuario usuario = null;
+    
+        try {
+            usuario = clienteRepository.findByEmail(dados.email());
+
+            if (usuario == null || !usuario.isSenhaCorreta(dados.senha())) {
+                throw new SenhaIncorretaException("Email e/ou senha incorretos");
+            }
+
+            session.setAttribute("usuarioLogado", (Cliente) usuario);
+        } catch (Exception e) {
+            usuario = adminRepository.findByEmail(dados.email());
+
+            if (usuario == null || !usuario.isSenhaCorreta(dados.senha())) {
+                throw e;
+            }
+
+            session.setAttribute("usuarioLogado", usuario);
         }
-
-        session.setAttribute("usuarioLogado", cliente);
-
-        return cliente;
+    
+        return usuario;
     }
 
     public void logout(HttpSession session) {

@@ -23,12 +23,14 @@
                         <label for="precoAcao" class="form-label fs-4">Preço por ação</label>
                         <input
                             class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0"
+                            onblur="verificarCasasDecimais(this)"
                             id="precoAcao"></input>
                     </div>
                     <p class="text-danger mt-2" id="error-dividendo"></p>
                     <div class="custom-padding-top custom-padding-bottom mx-auto">
                         <button type="submit" onclick="verificarCamposDividendo(this)"
-                            class="btn btn-outline-primary botao1" id="enviarDividendo">Enviar</button>
+                            class="btn btn-outline-primary botao1"
+                            id="enviarDividendo">Enviar</button>
                     </div>
                 </div>
             </div>
@@ -80,7 +82,23 @@
         }
     </script>
 
+    <script>
+        function verificarCasasDecimais(input) {
+
+            console.log("chamou")
+            if (input.value !== "") {
+                const precoInput = document.getElementById("precoAcao");
+
+                const preco = parseFloat(input.value);
+
+                input.value = preco.toFixed(2);
+            }
+        }
+    </script>
+
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+    
 
 </body>
 

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.model.entity.registro.Registro;
+import com.unipampa.stocktrade.model.entity.usuario.Admin;
+import com.unipampa.stocktrade.model.entity.usuario.Cliente;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.model.repository.registro.RegistroRepository;
 
@@ -32,8 +34,13 @@ public class AuthenticationAspect {
     @Pointcut("execution(* com.unipampa.stocktrade.controller.IndexLogadoController.indexLogado(..)) ||" +
     "execution(* com.unipampa.stocktrade.controller.CarteiraController.carteiraPagina(..)) ||" +
     "execution(* com.unipampa.stocktrade.controller.PerfilController.perfilPagina(..)) ||" + 
-    "execution(* com.unipampa.stocktrade.controller.InvistaLogadoController.invistaLogado(..))")
+    "execution(* com.unipampa.stocktrade.controller.InvistaLogadoController.invistaLogado(..))"
+    )
     public void loggedPointcut() {
+    }
+
+    @Pointcut("execution(* com.unipampa.stocktrade.controller.DividendoController.dividendoPagina(..))")
+    public void loggedAdminPointCut() {
     }
 
     @Around("notLoggedPointcut()")
@@ -60,6 +67,41 @@ public class AuthenticationAspect {
             ModelAndView mv = new ModelAndView("index");
             // Logging...
             Registro registro = new Registro("Tentativa de acesso inválida pois não está logado.");
+            registroRepository.save(registro);
+            return mv;
+        }
+
+        Usuario user = (Usuario) session.getAttribute(USUARIO_LOGADO);
+
+        if (!(user instanceof Cliente)) {
+            ModelAndView mv = new ModelAndView("indexLogado");
+            // Logging...
+            Registro registro = new Registro("O usuário " + user.getEmail() + " tentou acessar uma página de administrador.");
+            registroRepository.save(registro);
+            return mv;
+        }
+
+        return joinPoint.proceed();
+    }
+
+    @Around("loggedAdminPointCut()")
+    public Object aroundLoggedAdmin(ProceedingJoinPoint joinPoint) throws Throwable {
+        HttpSession session = (HttpSession) joinPoint.getArgs()[0];
+
+        if (session.getAttribute(USUARIO_LOGADO) == null) {
+            ModelAndView mv = new ModelAndView("index");
+            // Logging...
+            Registro registro = new Registro("Tentativa de acesso inválida pois não está logado.");
+            registroRepository.save(registro);
+            return mv;
+        }
+
+        Usuario user = (Usuario) session.getAttribute(USUARIO_LOGADO);
+
+        if (!(user instanceof Admin)) {
+            ModelAndView mv = new ModelAndView("indexLogado");
+            // Logging...
+            Registro registro = new Registro("O usuário " + user.getEmail() + " tentou acessar uma página de administrador.");
             registroRepository.save(registro);
             return mv;
         }
