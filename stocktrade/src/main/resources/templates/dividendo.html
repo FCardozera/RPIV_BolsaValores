@@ -15,14 +15,19 @@
                     <h4>Gestão de Dividendos</h4>
                     <div class="col-md-6 mb-3 mx-auto mt-5">
                         <label for="sigla" class="form-label fs-4">Sigla</label>
-                        <input class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0" id="sigla" ></input>
-                    </div>                             
+                        <input
+                            class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0"
+                            id="sigla"></input>
+                    </div>
                     <div class="col-md-6 mb-3 mx-auto mt-4">
                         <label for="precoAcao" class="form-label fs-4">Preço por ação</label>
-                        <input class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0" id="precoAcao" ></input>
-                    </div>                 
+                        <input
+                            class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0"
+                            id="precoAcao"></input>
+                    </div>
+                    <p class="text-danger mt-2" id="error-dividendo"></p>
                     <div class="custom-padding-top custom-padding-bottom mx-auto">
-                        <button type="submit"
+                        <button type="submit" onclick="verificarCamposDividendo(this)"
                             class="btn btn-outline-primary botao1" id="enviarDividendo">Enviar</button>
                     </div>
                 </div>
@@ -31,6 +36,49 @@
     </main>
 
     <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
+
+    <script>
+        function verificarCamposDividendo(event) {
+            const acao = document.getElementById('sigla').value
+            const precoPorAcao = document.getElementById('precoAcao').value
+
+            enviarSolicitacaoVenda(event, acao, precoPorAcao)
+        }
+
+        function enviarSolicitacaoVenda(event, sigla, valor) {
+
+            console.log(sigla)
+            console.log(valor)
+
+            const data = {
+                sigla: sigla,
+                valor: valor
+            }
+
+            fetch("/dividendo", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        window.location.href = "/dividendo";
+                    } else {
+                        console.log(response.data);
+                        response.text().then(data => {
+                            const errorDividendo = document.getElementById("error-dividendo");
+                            errorDividendo.textContent = data;
+                        });
+                    }
+                })
+                .catch((error) => {
+                    alert("Ocorreu um erro ao vender!");
+                    console.error(error);
+                });
+        }
+    </script>
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 

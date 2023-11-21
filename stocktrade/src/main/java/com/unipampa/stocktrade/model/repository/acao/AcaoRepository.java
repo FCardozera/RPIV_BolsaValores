@@ -25,4 +25,7 @@ public interface AcaoRepository extends JpaRepository<Acao, UUID> {
 
     @Query("SELECT a.sigla, COUNT(a.sigla), ROUND(AVG(ca.valorCompra), 2) FROM acao a INNER JOIN compraAcao ca WHERE ca.cliente.id = :clienteId AND a.cliente.id = :clienteId GROUP BY a.sigla")
     public List<String[]> findAcoesClientePrecoMedio(@Param("clienteId") UUID clienteId);
+
+    @Query("SELECT c.id, COUNT(a.sigla) FROM acao a JOIN a.cliente c WHERE a.sigla = :sigla GROUP BY c.id")
+    public List<String[]> findClienteQuantidadeBySigla(String sigla);
 }
