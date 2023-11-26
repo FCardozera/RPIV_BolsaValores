@@ -86,6 +86,30 @@
                     />
                     <p id="senha-error" class="text-danger mt-2"></p>
                   </div>
+                  <div class="mb-3">
+                    <label
+                      for="username"
+                      class="form-label text-color-blue text-uppercase"
+                      >Código de verificação</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control custom-input"
+                      id="verificationCode"
+                      placeholder="Digite o código de verificação enviado para o seu email"
+                    />
+                    <p id="senha-error" class="text-danger mt-2"></p>
+                  </div>
+                  <!-- Botão para gerar código -->
+                  <div class="text-center">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary botao1 mb-2"
+                      onclick="gerarCodigo()"
+                    >
+                      Gerar Código
+                    </button>
+                  </div>
                   <div class="text-center">
                     <button
                       type="submit"
@@ -109,6 +133,9 @@
   <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
   <script src="/js/main.js"></script> -->
     <script>
+
+      let verificationCode = 0; // Variável global para armazenar o código de verificação
+
       function validateNome(input) {
         input.value = input.value.replace(/[^a-zA-Z\s]/g, ""); // permite apenas letras e espaços
       }
@@ -136,9 +163,26 @@
         }
       }
 
+      function gerarCodigo() {
+        verificationCode = Math.floor(1000 + Math.random() * 9000);
+        alert("Código de verificação: " + verificationCode);
+      }
+
       function enviarCadastro(event) {
         event.preventDefault();
         console.log("validateForm function called");
+
+        // Obtem o código digitado pelo usuário
+        let userVerificationCode =
+          document.getElementById("verificationCode").value;
+
+        // Validação do código
+        if (userVerificationCode !== verificationCode.toString()) {
+          alert(
+            "Código de verificação incorreto. Por favor, verifique e tente novamente."
+          );
+          return false;
+        }
 
         let name = document.getElementById("name").value;
         let cpf = document.getElementById("cpf").value;
@@ -206,7 +250,7 @@
             if (response.ok) {
               window.location.href = "/";
             } else {
-              response.text().then(data => {
+              response.text().then((data) => {
                 senhaError.textContent = data;
               });
             }
@@ -217,6 +261,5 @@
           });
       }
     </script>
-
   </body>
 </html>

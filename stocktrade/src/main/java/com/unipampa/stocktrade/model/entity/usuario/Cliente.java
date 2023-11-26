@@ -73,6 +73,8 @@ public class Cliente extends Usuario {
     @OneToMany(mappedBy = "cliente")
     private Set<VendaAcao> vendaAcoes;
 
+    private int verificationToken;
+
     public Cliente(UUID id, String nome, String cpf, String email, String senha, String senhaAutenticacao) {
         super(id, nome, email, senha, senhaAutenticacao, TipoUsuario.CLIENTE);
 
