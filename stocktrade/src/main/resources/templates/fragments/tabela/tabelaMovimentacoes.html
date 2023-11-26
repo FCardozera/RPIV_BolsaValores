@@ -1,0 +1,24 @@
+<div class="container row justify-content-center" th:fragment="tabelaMovimentacoes">
+    <link href="css/stylesheet.css" rel="stylesheet" />
+
+    <table class="table table-custom margin-table accordion">
+        <thead>
+            <tr>
+                <th scope="col">DATA</th>
+                <th scope="col">TIPO</th>
+                <th scope="col">VALOR</th>
+            </tr>
+        </thead>
+        <tbody>
+            <div th:each="movimentacao, movimentacaoStat : ${movimentacoes}">
+                <tr>
+                    <div class="accordion-header" id="panelsStayOpen-headingOne">
+                        <td th:text="${movimentacao.data}"></td>
+                        <td th:text="${movimentacao.tipo}"></td>
+                        <td th:text="${movimentacao.valor}"></td>
+                    </div>
+                </tr>
+            </div>
+        </tbody>
+    </table>
+</div>
