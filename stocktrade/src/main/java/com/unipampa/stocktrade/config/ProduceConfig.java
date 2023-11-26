@@ -70,9 +70,17 @@ public class ProduceConfig implements CommandLineRunner {
     private RegistroRepository registroRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
-        System.out.println("Iniciando a configuração de teste...");
+        String corVerde = "\u001B[32m";
+        String resetCor = "\u001B[0m";
+        
+        System.out.println("\n\n\n\n");
+        System.out.println("===========================================================");
+        System.out.println("INICIANDO CONFIGURAÇÃO DE PRODUÇÃO...");
+        System.out.println("===========================================================");
+
+        long tempoDeletarInicio = System.currentTimeMillis();
 
         System.out.println("Deletando todos os registros do banco de dados...");
         vendaOfertaRepository.deleteAll();
@@ -85,7 +93,11 @@ public class ProduceConfig implements CommandLineRunner {
         empresaRepository.deleteAll();
         registroRepository.deleteAll();
         adminRepository.deleteAll();
-        System.out.println("Registros deletados com sucesso!");
+        System.out.println(corVerde + "Deletando todos os registros do banco de dados... OK" + resetCor);
+
+        long tempoDeletarFim = System.currentTimeMillis();
+
+        long tempoInserirInicio = System.currentTimeMillis();
 
         System.out.println("Inserindo registros no banco de dados...");
         Instant instant1 = Instant.now();
@@ -169,32 +181,19 @@ public class ProduceConfig implements CommandLineRunner {
         // Cliente 2 comprou 20 Ações da VALE5
         processarCompra(ofertasEmpresa2, cliente2, instant1, 20);
 
+        System.out.println(corVerde + "Inserindo registros no banco de dados... OK" + resetCor);
 
-        // // Cliente 1 vendeu 10 Ações da VALE5
-        // count = 0;
-        // for (VendaOferta oferta : ofertasEmpresa2) {
-        //     if (count < 10 && oferta.getAcao() != null) {
-        //         if (oferta.getAcao().getCliente() == null) {
-        //             Acao acao = oferta.getAcao();
-        //             acao.setCliente(cliente2);
+        long tempoInserirFim = System.currentTimeMillis();
 
-        //             VendaAcao vendaAcao = new VendaAcao(null, acao, cliente2, oferta.getValorOferta(), instant2);
-        //             vendaAcaoRepository.save(vendaAcao);
-
-        //             acaoRepository.save(acao);
-
-        //             oferta.setAcao(null);
-        //             vendaOfertaRepository.save(oferta);
-        //             vendaOfertaRepository.deleteById(oferta.getId());
-
-        //             count++;
-        //         }
-        //     }
-        // }
-
-        System.out.println("Registros inseridos com sucesso!");
-
-        System.out.println("Configuração de teste finalizada com sucesso!");
+        System.out.println("===========================================================");
+        System.out.println("TEMPO DE EXECUÇÃO:");
+        System.out.println("Deletar registros: " + (tempoDeletarFim - tempoDeletarInicio) + " ms");
+        System.out.println("Inserir registros: " + (tempoInserirFim - tempoInserirInicio) + " ms");
+        System.out.println("Total: " + ((tempoDeletarFim - tempoDeletarInicio) + (tempoInserirFim - tempoInserirInicio)) + " ms");
+        System.out.println("===========================================================");
+        System.out.println(corVerde + "CONFIGURAÇÃO DE PRODUÇÃO FINALIZADA." + resetCor);
+        System.out.println("===========================================================");
+        System.out.println("\n\n\n\n");
     }
 
     public void gerarVendarOfertas(Empresa empresa, List<VendaOferta> ofertasEmpresa, int quantidade, Double valor, String sigla) {
