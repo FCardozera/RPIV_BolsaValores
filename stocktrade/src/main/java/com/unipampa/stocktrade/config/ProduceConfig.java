@@ -73,12 +73,17 @@ public class ProduceConfig implements CommandLineRunner {
     public void run(String... args) {
 
         String corVerde = "\u001B[32m";
+        String corVermelha = "\u001B[31m";
         String resetCor = "\u001B[0m";
         
         System.out.println("\n\n\n\n");
-        System.out.println("===========================================================");
+        System.out.println("===================================================================================");
+        System.out.println(corVermelha + "BUGS PODEM OCORRER CASO INICIE A APLICAÇÃO ANTES DA EXECUÇÃO DESTE SCRIPT." + resetCor);
+        System.out.println("===================================================================================");
+        System.out.println("\n\n\n\n");
+        System.out.println("===================================================================================");
         System.out.println("INICIANDO CONFIGURAÇÃO DE PRODUÇÃO...");
-        System.out.println("===========================================================");
+        System.out.println("===================================================================================");
 
         long tempoDeletarInicio = System.currentTimeMillis();
 
@@ -185,14 +190,14 @@ public class ProduceConfig implements CommandLineRunner {
 
         long tempoInserirFim = System.currentTimeMillis();
 
-        System.out.println("===========================================================");
+        System.out.println("===================================================================================");
         System.out.println("TEMPO DE EXECUÇÃO:");
         System.out.println("Deletar registros: " + (tempoDeletarFim - tempoDeletarInicio) + " ms");
         System.out.println("Inserir registros: " + (tempoInserirFim - tempoInserirInicio) + " ms");
         System.out.println("Total: " + ((tempoDeletarFim - tempoDeletarInicio) + (tempoInserirFim - tempoInserirInicio)) + " ms");
-        System.out.println("===========================================================");
+        System.out.println("===================================================================================");
         System.out.println(corVerde + "CONFIGURAÇÃO DE PRODUÇÃO FINALIZADA." + resetCor);
-        System.out.println("===========================================================");
+        System.out.println("===================================================================================");
         System.out.println("\n\n\n\n");
     }
 
