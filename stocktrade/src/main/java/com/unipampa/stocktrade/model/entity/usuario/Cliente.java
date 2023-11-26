@@ -9,7 +9,6 @@ import java.time.format.TextStyle;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -357,16 +356,9 @@ public class Cliente extends Usuario {
         return saldo >= quantidadeAcoes * precoAcao;
     }
 
-    public List<Movimentacao> adicionarDividendo(Double quantidade, Double valorDividendo) {
-        List<Movimentacao> movimentacoesNovas = new ArrayList<>();
-
-        for (int i = 0; i < quantidade; i++) {
-            Movimentacao movimentacao = new Movimentacao(null, valorDividendo, Instant.now(), TipoMovimentacao.DIVIDENDO, this);
-            movimentacoesNovas.add(movimentacao);
-            aumentarSaldo(valorDividendo);
-        }
-
-        return movimentacoesNovas;
+    public Movimentacao adicionarDividendo(Double quantidade, Double valorDividendo) {
+        Movimentacao movimentacao = new Movimentacao(null, quantidade * valorDividendo, Instant.now(), TipoMovimentacao.DIVIDENDO, this);
+        return movimentacao;
     }
 
 }

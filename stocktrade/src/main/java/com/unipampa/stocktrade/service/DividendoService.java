@@ -46,12 +46,12 @@ public class DividendoService {
             UUID idCliente = UUID.fromString(acao[0]);
             Cliente cliente = clienteRepository.findById(idCliente).get();
 
-            List<Movimentacao> movimentacoes = cliente.adicionarDividendo(quantidade, valorDividendo);
-            movimentacaoRepository.saveAll(movimentacoes);
+            Movimentacao movimentacao = cliente.adicionarDividendo(quantidade, valorDividendo);
+            movimentacaoRepository.save(movimentacao);
 
             clienteRepository.save(cliente);
         }
 
-        return ResponseEntity.ok().body("Dividendo cadastrado com sucesso");
+        return ResponseEntity.ok().build();
     }
 }
