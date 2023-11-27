@@ -118,13 +118,13 @@ public class CarteiraService {
         List<String[]> acoes = new ArrayList<>();
 
         for (String[] acaoQueryBanco : acoesString) {
-            String[] acaoFinal = new String[6];
+            String[] acaoFinal = new String[7];
 
-            acaoFinal[0] = acaoQueryBanco[0]; //SIGLA
-            String[] valorAtualEQuantidadeDisponivel = vendaOfertaRepository.findMenorPrecoOfertaVendaEQuantidadeDisponivelBySigla(acaoQueryBanco[0]).split(",");
+            acaoFinal[0] = acaoQueryBanco[1];
+            String[] valorAtualEQuantidadeDisponivel = vendaOfertaRepository.findMenorPrecoOfertaVendaEQuantidadeDisponivelBySigla(acaoQueryBanco[1]).split(",");
             acaoFinal[1] = valorAtualEQuantidadeDisponivel[0];
-            acaoFinal[2] = acaoQueryBanco[1];
-            acaoFinal[3] = acaoQueryBanco[2];
+            acaoFinal[2] = acaoQueryBanco[2];
+            acaoFinal[3] = acaoQueryBanco[3];
 
             Double valorAtualDouble = Double.parseDouble(valorAtualEQuantidadeDisponivel[0]);
             Double precoMedio = Double.parseDouble(acaoFinal[3]);
@@ -133,6 +133,7 @@ public class CarteiraService {
             String variacaoFormatada = String.format("%.2f", variacao);
             acaoFinal[4] = variacaoFormatada;
             acaoFinal[5] = valorAtualEQuantidadeDisponivel[1];
+            acaoFinal[6] = acaoQueryBanco[0];
             acoes.add(acaoFinal);
         }
 

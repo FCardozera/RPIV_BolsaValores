@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
+import com.unipampa.stocktrade.model.entity.usuario.Cliente;
+import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 import com.unipampa.stocktrade.service.InvistaLogadoService;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,15 +30,17 @@ public class InvistaLogadoController {
     public ModelAndView invistaLogado(HttpSession session, @RequestParam(required = false) String busca, @RequestParam(required = false) String preco) {
         ModelAndView mv = new ModelAndView("invistaLogado");
         service.updateSession(session);
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
+        Cliente cliente = (Cliente) usuario;
 
         if (busca != null && busca != "") {
-            List<String[]> listaAcoes = service.buscarAcoesBySigla(busca);
+            List<String[]> listaAcoes = service.buscarAcoesBySigla(busca, cliente);
             mv.addObject("acoesBD", listaAcoes);
         } else if (preco != null && preco !=  "") {
-            List<String[]> listaAcoes = service.buscarAcoesByPreco(preco);
+            List<String[]> listaAcoes = service.buscarAcoesByPreco(preco, cliente);
             mv.addObject("acoesBD", listaAcoes);
         } else {
-            List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidadeVenda();
+            List<String[]> acoesBancoDeDados = service.getAcoesSiglaPrecoQuantidadeVenda(cliente);
             mv.addObject("acoesBD", acoesBancoDeDados);
         }
 

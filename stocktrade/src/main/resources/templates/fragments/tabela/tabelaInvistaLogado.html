@@ -7,6 +7,7 @@
   <table class="table table-custom margin-table accordion">
     <thead>
       <tr>
+        <th scope="col">EMPRESA</th>
         <th scope="col">SIGLA</th>
         <th scope="col">PREÇO ATUAL</th>
         <th scope="col">VARIAÇÃO</th>
@@ -18,10 +19,11 @@
       <div th:each="acao, acaoStat : ${acoesBD}">
         <tr>
           <div class="accordion-header" id="panelsStayOpen-headingOne">
+            <td th:text="${acao[4]}"></td>
             <td th:text="${acao[0]}" th:id="siglaAcao + ${acaoStat.index}"></td>
             <td th:text="'R$ ' + ${acao[1]}"></td>
-            <td>??</td>
-            <td th:text="${acao[2]}"></td>
+            <td>0.0%</td>
+            <td th:text="${acao[3]}"></td>
             <td
               data-bs-toggle="collapse"
               th:attr="data-bs-target='#r' + ${acaoStat.index}"

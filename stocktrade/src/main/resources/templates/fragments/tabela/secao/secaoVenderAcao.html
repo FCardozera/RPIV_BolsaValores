@@ -22,8 +22,6 @@
       placeholder="Insira a quantidade de ações"
       oninput="verificarQuantidadeEPrecoVenda(this)"
       onblur="formatarQuantidade(this)"
-      min="1"
-      step="0.01"
     />
   </div>
 
@@ -35,12 +33,11 @@
   <div class="input-preco-acao-venda text-start fw-bold">
     <p class="text-uppercase">Preço desejado por ação</p>
     <input
-      type="text"
+      type="number"
       class="form-control custom-input-acoes quantidadePrecoAcoesInputVenda"
       placeholder="Insira o preço desejado por ação"
       oninput="verificarQuantidadeEPrecoVenda(this)"
       onblur="verificarCasasDecimaisVenda(this)"
-      min="0.01"
     />
   </div>
 
@@ -54,7 +51,7 @@
   </div>
 
   <div class="valor-total-da-operacao text-uppercase fw-bold">
-    <span class="valor-total-da-venda">R$ XX.XX</span>
+    <span class="valor-total-da-venda">R$ </span>
   </div>
 
   <div class="label-saldo-atual text-uppercase text-start fw-bold">
