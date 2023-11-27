@@ -18,10 +18,10 @@ public interface VendaOfertaRepository extends JpaRepository<VendaOferta, UUID> 
     @Query("SELECT o FROM vendaOferta o JOIN o.acao a WHERE a.sigla = :siglaAcao")
     public List<VendaOferta> findOfertasVendaBySigla(@Param("siglaAcao") String siglaAcao, Pageable pageable);
 
-    @Query("SELECT a.sigla, MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a GROUP BY a.sigla")
+    @Query("SELECT a.empresa.nome, a.sigla, MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a GROUP BY a.empresa.nome, a.sigla")
     public List<String[]> findOfertasVendaBySiglaAndPreco();
 
-    @Query("SELECT a.sigla, MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a WHERE (LOWER(a.sigla) LIKE LOWER(CONCAT('%', :busca, '%')) OR LOWER(a.empresa.nome) LIKE LOWER(CONCAT('%', :busca, '%'))) GROUP BY a.sigla")
+    @Query("SELECT a.empresa.nome, a.sigla, MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a WHERE (LOWER(a.sigla) LIKE LOWER(CONCAT('%', :busca, '%')) OR LOWER(a.empresa.nome) LIKE LOWER(CONCAT('%', :busca, '%'))) GROUP BY a.empresa.nome, a.sigla")
     public List<String[]> findOfertaBySiglaOrEmpresaNome(@Param("busca") String busca);
 
     @Query("SELECT MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a WHERE a.sigla = :siglaAcao")
@@ -30,6 +30,6 @@ public interface VendaOfertaRepository extends JpaRepository<VendaOferta, UUID> 
     @Query("SELECT a.sigla, o.valorOferta, COUNT(*) FROM vendaOferta o JOIN o.acao a WHERE o.cliente.id = :clienteId GROUP BY a.sigla, o.valorOferta")
     public List<String[]> findOfertasVendaByClienteId(@Param("clienteId") UUID clienteId);
 
-    @Query("SELECT a.sigla, MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a WHERE o.valorOferta <= :precoAcao GROUP BY a.sigla")
+    @Query("SELECT a.empresa.nome, a.sigla, MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a WHERE o.valorOferta <= :precoAcao GROUP BY a.empresa.nome, a.sigla")
     public List<String[]> findOfertasVendaByPreco(@Param("precoAcao") Double precoAcao);
 }

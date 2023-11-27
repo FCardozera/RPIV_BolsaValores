@@ -280,99 +280,107 @@
     }
   </script>
 
-<script>
-  function verificarQuantidadeEPrecoCompra(event) {
-    const quantidadeInput = document.getElementsByClassName(
-      "quantidadeAcoesInputCompra"
-    );
-    const precoInput = document.getElementsByClassName(
-      "quantidadePrecoAcoesInputCompra"
-    );
-
-    for (let i = 0; i < quantidadeInput.length; i++) {
-      const quantidadeValue = quantidadeInput[i].value.trim();
-      if (/^\d+$/.test(quantidadeValue) && precoInput[i].value != "") {
-        let quantidade = parseInt(quantidadeValue, 10);
-        const preco = parseFloat(precoInput[i].value);
-
-        const valorTotal = quantidade * preco;
-
-        const valorTotalDaCompra = document.getElementsByClassName(
-          "valor-total-da-compra"
-        );
-        valorTotalDaCompra[i].innerHTML = "R$ " + valorTotal.toFixed(2);
-
-        console.log(valorTotal.toFixed(2));
-      } else {
-        const valorTotalDaCompra = document.getElementsByClassName(
-          "valor-total-da-compra"
-        );
-        valorTotalDaCompra[i].innerHTML = "R$ " + "XX.XX";
-      }
-    }
-  }
-</script>
-
-<script>
-  function verificarQuantidadeEPrecoVenda(event) {
-    const quantidadeInput = document.getElementsByClassName(
-      "quantidadeAcoesInputVenda"
-    );
-    const precoInput = document.getElementsByClassName(
-      "quantidadePrecoAcoesInputVenda"
-    );
-
-    for (let i = 0; i < quantidadeInput.length; i++) {
-      const quantidadeValue = quantidadeInput[i].value.trim();
-      if (/^\d+$/.test(quantidadeValue) && precoInput[i].value != "") {
-        let quantidade = parseInt(quantidadeValue, 10);
-        const preco = parseFloat(precoInput[i].value);
-
-        const valorTotal = quantidade * preco;
-
-        const valorTotalDaVenda = document.getElementsByClassName(
-          "valor-total-da-venda"
-        );
-        valorTotalDaVenda[i].innerHTML = "R$ " + valorTotal.toFixed(2);
-
-        console.log(valorTotal.toFixed(2));
-      } else {
-        const valorTotalDaVenda = document.getElementsByClassName(
-          "valor-total-da-venda"
-        );
-        valorTotalDaVenda[i].innerHTML = "R$ " + "XX.XX";
-      }
-    }
-  }
-</script>
-
-<script>
-  function verificarCasasDecimaisCompra(input) {
-    if (input.value !== "") {
+  <script>
+    function verificarQuantidadeEPrecoCompra(input) {
+      const quantidadeInput = document.getElementsByClassName(
+        "quantidadeAcoesInputCompra"
+      );
       const precoInput = document.getElementsByClassName(
         "quantidadePrecoAcoesInputCompra"
       );
 
-      const preco = parseFloat(input.value);
+      if (input.value.length > 8) {
+        input.value = input.value.slice(0, 8);
+      }
 
-      input.value = preco.toFixed(2);
+      for (let i = 0; i < quantidadeInput.length; i++) {
+        const quantidadeValue = quantidadeInput[i].value.trim();
+        if (/^\d+$/.test(quantidadeValue) && precoInput[i].value != "") {
+          let quantidade = parseInt(quantidadeValue, 10);
+          const preco = parseFloat(precoInput[i].value);
+
+          const valorTotal = quantidade * preco;
+
+          const valorTotalDaCompra = document.getElementsByClassName(
+            "valor-total-da-compra"
+          );
+          valorTotalDaCompra[i].innerHTML = "R$ " + valorTotal.toFixed(2);
+
+          console.log(valorTotal.toFixed(2));
+        } else {
+          const valorTotalDaCompra = document.getElementsByClassName(
+            "valor-total-da-compra"
+          );
+          valorTotalDaCompra[i].innerHTML = "R$ " + "";
+        }
+      }
     }
-  }
-</script>
+  </script>
 
-<script>
-  function verificarCasasDecimaisVenda(input) {
-    if (input.value !== "") {
+  <script>
+    function verificarQuantidadeEPrecoVenda(input) {
+      if (input.value.length > 8) {
+        input.value = input.value.slice(0, 8);
+      }
+
+      const quantidadeInput = document.getElementsByClassName(
+        "quantidadeAcoesInputVenda"
+      );
       const precoInput = document.getElementsByClassName(
         "quantidadePrecoAcoesInputVenda"
       );
 
-      const preco = parseFloat(input.value);
+      for (let i = 0; i < quantidadeInput.length; i++) {
+        const quantidadeValue = quantidadeInput[i].value.trim();
+        if (/^\d+$/.test(quantidadeValue) && precoInput[i].value != "") {
+          let quantidade = parseInt(quantidadeValue, 10);
+          const preco = parseFloat(precoInput[i].value);
 
-      input.value = preco.toFixed(2);
+          const valorTotal = quantidade * preco;
+
+          const valorTotalDaVenda = document.getElementsByClassName(
+            "valor-total-da-venda"
+          );
+          valorTotalDaVenda[i].innerHTML = "R$ " + valorTotal.toFixed(2);
+
+          console.log(valorTotal.toFixed(2));
+        } else {
+          const valorTotalDaVenda = document.getElementsByClassName(
+            "valor-total-da-venda"
+          );
+          valorTotalDaVenda[i].innerHTML = "R$ " + "";
+        }
+      }
     }
-  }
-</script>
+  </script>
+
+  <script>
+    function verificarCasasDecimaisCompra(input) {
+      if (input.value !== "") {
+        const precoInput = document.getElementsByClassName(
+          "quantidadePrecoAcoesInputCompra"
+        );
+
+        const preco = parseFloat(input.value);
+
+        input.value = preco.toFixed(2);
+      }
+    }
+  </script>
+
+  <script>
+    function verificarCasasDecimaisVenda(input) {
+      if (input.value !== "") {
+        const precoInput = document.getElementsByClassName(
+          "quantidadePrecoAcoesInputVenda"
+        );
+
+        const preco = parseFloat(input.value);
+
+        input.value = preco.toFixed(2);
+      }
+    }
+  </script>
 
 </body>
 
