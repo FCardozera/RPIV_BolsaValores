@@ -1,5 +1,5 @@
 <div class="container row justify-content-center" th:fragment="tabelaMovimentacoes">
-    <link href="css/stylesheet.css" rel="stylesheet" />
+    <link href="../../../static/css/stylesheet.css" rel="stylesheet" />
 
     <table class="table table-custom margin-table accordion">
         <thead>
@@ -10,15 +10,12 @@
             </tr>
         </thead>
         <tbody>
-            <div th:each="movimentacao, movimentacaoStat : ${movimentacoes}">
-                <tr>
-                    <div class="accordion-header" id="panelsStayOpen-headingOne">
-                        <td th:text="${movimentacao.data}"></td>
-                        <td th:text="${movimentacao.tipo}"></td>
-                        <td th:text="${movimentacao.valor}"></td>
-                    </div>
-                </tr>
-            </div>
+            <!-- Iterar sobre a lista de movimentações já ordenada -->
+            <tr th:each="movimentacao : ${movimentacoes}">
+                <td th:text="${#dates.format(movimentacao.data, 'dd/MM/yyyy - HH:mm')}"></td>
+                <td th:text="${#strings.replace(#strings.replace(#strings.replace(#strings.replace(movimentacao.tipo, 'DEPOSITO', 'Depósito'), 'TRANSFERENCIA', 'Transferência'), 'DIVIDENDO', 'Dividendo'), 'SAQUE', 'Saque')}"></td>
+                <td th:text="'R$ ' + ${movimentacao.valor}"></td>
+            </tr>
         </tbody>
     </table>
 </div>

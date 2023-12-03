@@ -19,7 +19,6 @@ public class HistoricoService {
     private ClienteRepository clienteRepository;
 
     public Set<Movimentacao> getMovimentacoes(HttpSession session) {
-
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         Cliente cliente = clienteRepository.findById(usuario.getId()).get();
 
@@ -29,5 +28,4 @@ public class HistoricoService {
 
         return cliente.getMovimentacoes();
     }
-    
 }

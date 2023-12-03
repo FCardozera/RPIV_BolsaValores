@@ -7,9 +7,12 @@ body {
   color: var(--white);
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-footer {
+.footer {
   margin-top: auto;
   background-color: var(--dark-blue);
   bottom: 0;
@@ -65,6 +68,7 @@ footer {
   background: -webkit-radial-gradient(circle, hsla(231, 98%, 16%, 1) 0%, hsla(230, 100%, 20%, 1) 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#010D50", endColorstr="#001167", GradientType=1);
 }
+
 /* END CSS HEADER */
 
 /* CSS BOTAO */
@@ -135,7 +139,7 @@ footer {
   max-width: 550px;
 }
 
-.width800px{
+.width800px {
   width: 800px;
 }
 
@@ -368,7 +372,7 @@ footer {
   margin-bottom: 10%;
 }
 
-.mt-60{
+.mt-60 {
   margin-top: 60px;
 }
 
@@ -381,7 +385,7 @@ footer {
   margin-left: -340;
 }
 
-.margin-top{
+.margin-top {
   margin-top: -50;
 }
 
@@ -413,11 +417,11 @@ footer {
   color: var(--white)
 }
 
-.verde{
+.verde {
   color: var(--light-green)
 }
 
-.azul-claro{
+.azul-claro {
   color: var(--light-blue)
 }
 
@@ -463,7 +467,7 @@ h4 {
   font-size: 56px;
 }
 
-.fonte-size-404{
+.fonte-size-404 {
   font-size: 280px;
 }
 
@@ -498,58 +502,65 @@ h4 {
   padding-left: 100px;
 }
 
-.custom-padding-top{
+.custom-padding-top {
   padding-top: 45px;
 }
 
-.custom-padding-bottom{
+.custom-padding-bottom {
   padding-bottom: 6.5%;
 }
 
-.custom-padding-bottom-text{
+.custom-padding-bottom-text {
   padding-bottom: 20px;
 }
 
-.custom-padding-right-index{
+.custom-padding-right-index {
   padding-right: 280px
 }
+
 /* CSS TABLE CARTEIRA */
 .table-custom {
-  padding: 40px; /* Espaçamento interno das células (ajuste conforme necessário) */
-  text-align: center; /* Alinhamento de texto centralizado */
+  padding: 40px;
+  /* Espaçamento interno das células (ajuste conforme necessário) */
+  text-align: center;
+  /* Alinhamento de texto centralizado */
   color: white;
   width: 1200px;
   font-size: 17px;
 }
 
 .table-custom-invista {
-  text-align: center; /* Alinhamento de texto centralizado */
+  text-align: center;
+  /* Alinhamento de texto centralizado */
   color: white;
   font-size: 17px;
 }
 
 #saldo {
-  opacity: 1; /* Defina a opacidade inicial para 1 (visível) */
-  transition: opacity 0.2s ease-in-out; /* Adicione uma transição suave para a propriedade de opacidade */
+  opacity: 1;
+  /* Defina a opacidade inicial para 1 (visível) */
+  transition: opacity 0.2s ease-in-out;
+  /* Adicione uma transição suave para a propriedade de opacidade */
 }
 
 #toggleEye {
-  cursor: pointer; /* Adicione um cursor de apontador ao ícone do olho */
+  cursor: pointer;
+  /* Adicione um cursor de apontador ao ícone do olho */
 }
 
-.custom-margin-left{
+.custom-margin-left {
   margin-left: 15%;
 }
 
-.custom-margin-left2{
+.custom-margin-left2 {
   margin-left: 30%;
 }
 
-.margin-table{
+.margin-table {
   margin-left: 400px;
 }
 
-.margin-left{
+.margin-left {
   margin-left: 10px
 }
 
@@ -578,12 +589,12 @@ h4 {
   margin-bottom: 0px;
 }
 
-.quantidade-disponivel p:first-child  {
+.quantidade-disponivel p:first-child {
   margin-bottom: 10px;
 }
 
-.button-comprar { 
-  grid-area: button-comprar; 
+.button-comprar {
+  grid-area: button-comprar;
   width: auto;
 }
 
@@ -602,36 +613,36 @@ h4 {
   background-color: #2DC24E;
 }
 
-.senha-autenticacao { 
-  grid-area: senha-autenticacao; 
+.senha-autenticacao {
+  grid-area: senha-autenticacao;
 }
 
-.senha-autenticacao img { 
+.senha-autenticacao img {
   width: 21px;
   margin-bottom: 7px;
   margin-right: 7px;
 }
 
-.senha-autenticacao input { 
+.senha-autenticacao input {
   width: 325px;
 }
 
-.label-saldo-atual { 
-  grid-area: label-saldo-atual; 
+.label-saldo-atual {
+  grid-area: label-saldo-atual;
   margin-bottom: 20px;
 }
 
-.saldo-atual { 
-  grid-area: saldo-atual; 
+.saldo-atual {
+  grid-area: saldo-atual;
 }
 
-.label-valor-total-operacao { 
+.label-valor-total-operacao {
   grid-area: label-valor-total-operacao;
   margin-bottom: 20px;
 }
 
 .valor-total-da-operacao {
-  grid-area: valor-total-da-operacao; 
+  grid-area: valor-total-da-operacao;
 }
 
 .input-preco-acao-compra {
@@ -640,28 +651,28 @@ h4 {
   width: 350px;
 }
 
-.input-preco-acao-compra p { 
+.input-preco-acao-compra p {
   margin-bottom: 0px;
 }
 
-.input-quantidade { 
+.input-quantidade {
   margin-bottom: 20px;
-  grid-area: input-quantidade; 
+  grid-area: input-quantidade;
 }
 
-.input-quantidade p { 
+.input-quantidade p {
   margin-bottom: 0px;
 }
 
-.preco-atual { 
-  grid-area: preco-atual; 
+.preco-atual {
+  grid-area: preco-atual;
 }
 
-.preco-atual p:first-child { 
+.preco-atual p:first-child {
   margin-bottom: 10px;
 }
 
-.preco-atual p:last-child { 
+.preco-atual p:last-child {
   margin-bottom: 0px;
 }
 
@@ -740,8 +751,8 @@ h4 {
     "button-vender button-vender";
 }
 
-.button-vender { 
-  grid-area: button-vender; 
+.button-vender {
+  grid-area: button-vender;
   width: auto;
 }
 
@@ -760,36 +771,36 @@ h4 {
   background-color: #FF0000;
 }
 
-.senha-autenticacao { 
-  grid-area: senha-autenticacao; 
+.senha-autenticacao {
+  grid-area: senha-autenticacao;
 }
 
-.senha-autenticacao img { 
+.senha-autenticacao img {
   width: 21px;
   margin-bottom: 7px;
   margin-right: 7px;
 }
 
-.senha-autenticacao input { 
+.senha-autenticacao input {
   width: 325px;
 }
 
-.label-saldo-atual { 
-  grid-area: label-saldo-atual; 
+.label-saldo-atual {
+  grid-area: label-saldo-atual;
   margin-bottom: 20px;
 }
 
-.saldo-atual { 
-  grid-area: saldo-atual; 
+.saldo-atual {
+  grid-area: saldo-atual;
 }
 
-.label-valor-total-operacao { 
+.label-valor-total-operacao {
   grid-area: label-valor-total-operacao;
   margin-bottom: 20px;
 }
 
 .valor-total-da-operacao {
-  grid-area: valor-total-da-operacao; 
+  grid-area: valor-total-da-operacao;
 }
 
 .input-preco-acao-venda {
@@ -798,28 +809,28 @@ h4 {
   width: 350px;
 }
 
-.input-preco-acao-venda p { 
+.input-preco-acao-venda p {
   margin-bottom: 0px;
 }
 
-.input-quantidade { 
+.input-quantidade {
   margin-bottom: 20px;
-  grid-area: input-quantidade; 
+  grid-area: input-quantidade;
 }
 
-.input-quantidade p { 
+.input-quantidade p {
   margin-bottom: 0px;
 }
 
-.preco-atual { 
-  grid-area: preco-atual; 
+.preco-atual {
+  grid-area: preco-atual;
 }
 
-.preco-atual p:first-child { 
+.preco-atual p:first-child {
   margin-bottom: 10px;
 }
 
-.preco-atual p:last-child { 
+.preco-atual p:last-child {
   margin-bottom: 0px;
 }
 
@@ -872,7 +883,7 @@ h4 {
 
 /* CSS NAVBAR */
 .navbar {
-  background-color: #010725; 
+  background-color: #010725;
 }
 
 .btn-custom {
@@ -882,16 +893,16 @@ h4 {
 }
 
 .input-custom {
-  background-color: white; 
-  color: white; 
+  background-color: white;
+  color: white;
   border-radius: 20px;
 }
 
 /* Estilo para o hover do botão Pesquisar */
 .btn-custom:hover {
-  background-color: var(--dark-blue); 
-  color: white; 
-  border-style : var(--light-blue);
+  background-color: var(--dark-blue);
+  color: white;
+  border-style: var(--light-blue);
 }
 
 /* END CSS CUSTOM PADDING */
@@ -910,6 +921,7 @@ h4 {
   box-shadow: 0 22px 35px -16px rgba(0, 0, 0, 0.1);
   width: 700px;
 }
+
 select.flat-select {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -951,4 +963,5 @@ select.flat-select:hover {
 #html {
   display: none;
 }
+
 /* END CSS GRAFICO */

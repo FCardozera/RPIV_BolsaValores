@@ -8,6 +8,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.service.HistoricoService;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,9 +27,11 @@ public class HistoricoController {
     @GetMapping
     public ModelAndView historicoPagina(HttpSession session) {
         Set<Movimentacao> movimentacoes = historicoService.getMovimentacoes(session);
-
+        List<Movimentacao> movimentacoesList = new ArrayList<>();
+        movimentacoesList.addAll(movimentacoes);
+        Collections.sort(movimentacoesList, Comparator.comparing(Movimentacao::getData).reversed());
         ModelAndView mv = new ModelAndView("/historico");
-        mv.addObject("movimentacoes", movimentacoes);
+        mv.addObject("movimentacoes", movimentacoesList);
 
         return mv;
     }
