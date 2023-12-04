@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head
-    th:replace="~{fragments/headFragment :: head('StockTrade - Sobre')}"
-  ></head>
-  <body id="sobre-page">
-    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
 
-    <main>
-      <div th:replace="~{fragments/headerFragment :: header('Sobre')}"></div>
+<head th:replace="~{fragments/headFragment :: head('StockTrade - Sobre')}"></head>
 
-      <div class="container mb-4 justify-content-center">
+<body id="sobre-page">
+  <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+
+  <main>
+    <div th:replace="~{fragments/headerFragment :: header('Sobre')}"></div>
+
+    <div class="container-fluid container-img-background3">
+    
+      <div class="container">
         <div class="container row justify-content-center">
-          <div class="col-md-6 mb-5 texts justify-content-center">
-            <h2 class="max-width-550px">Sobre StockTrade</h2>
-            <p class="fs-6 mt-4 mb-3 max-width-550px">
+          <div class="col-md-6 mb-5 justify-content-center custom-card8">
+            <h2 class="max-width-550px custom-padding-left9">Sobre StockTrade</h2>
+            <p class="fs-6 mt-4 mb-3 max-width-550px custom-padding-left9">
               A StockTrade, uma empresa líder no mercado financeiro,
               destacando-se como uma plataforma revolucionária para investidores
               de todos os níveis. Apresenta uma interface intuitiva e um amplo
@@ -33,14 +35,8 @@
               <!-- Card 1 -->
               <div class="mb-3 me-3 custom-card">
                 <div class="row g-0 pt-3">
-                  <div
-                    class="col-md-4 d-flex justify-content-center align-items-center"
-                  >
-                    <img
-                      src="icons/seguranca-icon.png"
-                      class="img-fluid rounded-start"
-                      alt="seguranca"
-                    />
+                  <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <img src="icons/seguranca-icon.png" class="img-fluid rounded-start" alt="seguranca" />
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
@@ -58,14 +54,8 @@
               <!-- Card 2 -->
               <div class="mb-3 custom-card ms-5 justify-content-end">
                 <div class="row g-0 pt-3">
-                  <div
-                    class="col-md-4 d-flex justify-content-center align-items-center"
-                  >
-                    <img
-                      src="icons/conexao-icon.png"
-                      class="img-fluid rounded-start"
-                      alt="conexao"
-                    />
+                  <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <img src="icons/conexao-icon.png" class="img-fluid rounded-start" alt="conexao" />
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
@@ -86,14 +76,8 @@
               <!-- Card 3 -->
               <div class="mb-3 me-3 custom-card">
                 <div class="row g-0 pt-3">
-                  <div
-                    class="col-md-4 d-flex justify-content-center align-items-center"
-                  >
-                    <img
-                      src="icons/transparencia-icon.png"
-                      class="img-fluid rounded-start"
-                      alt="transparencia"
-                    />
+                  <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <img src="icons/transparencia-icon.png" class="img-fluid rounded-start" alt="transparencia" />
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
@@ -112,14 +96,8 @@
               <!-- Card 4 -->
               <div class="mb-3 ms-5 custom-card">
                 <div class="row g-0 pt-3">
-                  <div
-                    class="col-md-4 d-flex justify-content-center align-items-center"
-                  >
-                    <img
-                      src="icons/edu-financeira-icon.png"
-                      class="img-fluid rounded-start"
-                      alt="edu-financeira"
-                    />
+                  <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <img src="icons/edu-financeira-icon.png" class="img-fluid rounded-start" alt="edu-financeira" />
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
@@ -137,10 +115,13 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
-    </main>
 
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+    <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
+  </main>
+
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>
