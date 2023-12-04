@@ -376,6 +376,10 @@ body {
   margin-top: 60px;
 }
 
+.mt-100{
+  margin-top: 100px
+}
+
 .nav-link.active {
   text-decoration: underline !important;
   border-radius: 20px;
@@ -471,6 +475,11 @@ h4 {
   font-size: 280px;
 }
 
+.fonte-size-index{
+  font-size: 90px;
+}
+
+
 /* END CSS OUTROS */
 
 /* CSS CUSTOM PADDING */
@@ -500,6 +509,10 @@ h4 {
 
 .custom-padding-left7 {
   padding-left: 100px;
+}
+
+.custom-padding-left8{
+  padding-left: 950px
 }
 
 .custom-padding-top {
@@ -562,6 +575,10 @@ h4 {
 
 .margin-left {
   margin-left: 10px
+}
+
+.margim-cards-index{
+  margin-left: 584px
 }
 
 /* CSS ACORDEAO TABLE COMPRAR */
