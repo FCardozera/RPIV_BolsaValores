@@ -358,6 +358,7 @@ public class Cliente extends Usuario {
 
     public Movimentacao adicionarDividendo(Double quantidade, Double valorDividendo) {
         Movimentacao movimentacao = new Movimentacao(null, quantidade * valorDividendo, Instant.now(), TipoMovimentacao.DIVIDENDO, this);
+        aumentarSaldo(quantidade * valorDividendo);
         return movimentacao;
     }
 
