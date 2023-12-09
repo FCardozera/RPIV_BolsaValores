@@ -229,6 +229,10 @@ public class CarteiraService {
             return ResponseEntity.badRequest().body("Você não pode vender ações que não possui");
         }
 
+        if (acoesCliente.size() < dados.quantidadeAcoes()) {
+            return ResponseEntity.badRequest().body("Você não pode vender mais ações do que possui");
+        }
+
         Iterator<Acao> acoesIteratorAgendarVendaOferta = acoesCliente.iterator();
         if (ofertasCompra.isEmpty()) {
             agendarVendaOferta(dados.quantidadeAcoes(), cliente, dados, acoesIteratorAgendarVendaOferta);
