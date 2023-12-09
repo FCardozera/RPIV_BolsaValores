@@ -25,6 +25,7 @@ import com.unipampa.stocktrade.model.entity.oferta.enums.TipoOferta;
 import com.unipampa.stocktrade.model.entity.oferta.factoryMethod.OfertaFactory;
 import com.unipampa.stocktrade.model.entity.oferta.iterator.vendaOferta.VendaOfertaIterator;
 import com.unipampa.stocktrade.model.entity.usuario.Cliente;
+import com.unipampa.stocktrade.model.entity.usuario.Empresa;
 import com.unipampa.stocktrade.model.entity.usuario.Usuario;
 
 import com.unipampa.stocktrade.model.repository.acao.AcaoRepository;
@@ -224,6 +225,10 @@ public class CarteiraService {
         List<CompraOferta> ofertasCompra = compraOfertaRepository.findOfertasCompraBySiglaAndPreco(dados.siglaAcao(), PageRequest.of(0, dados.quantidadeAcoes()), dados.precoAcao());
         List<Acao> acoesCliente = acaoRepository.findAcoesClienteByClienteIdSigla(cliente.getId(), dados.siglaAcao());
 
+        if (acoesCliente.isEmpty()) {
+            return ResponseEntity.badRequest().body("Você não pode vender ações que não possui");
+        }
+
         Iterator<Acao> acoesIteratorAgendarVendaOferta = acoesCliente.iterator();
         if (ofertasCompra.isEmpty()) {
             agendarVendaOferta(dados.quantidadeAcoes(), cliente, dados, acoesIteratorAgendarVendaOferta);
@@ -294,7 +299,9 @@ public class CarteiraService {
         }
 
         for (int i = 0; i < quantidadeAgendamento; i++) {
-            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), acoesIterator.next().getEmpresa(), acoesIterator.next(), TipoOferta.VENDA);
+            Acao acao = acoesIterator.next();
+            Empresa empresa = acao.getEmpresa();
+            VendaOferta oferta = (VendaOferta) OfertaFactory.novaOferta(null, cliente, dados.precoAcao(), Instant.now(), dados.siglaAcao(), empresa, acao, TipoOferta.VENDA);
             vendaOfertaRepository.save(oferta);
         }
 
