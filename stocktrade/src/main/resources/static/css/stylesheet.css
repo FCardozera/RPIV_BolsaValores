@@ -386,6 +386,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  background-color: #010725;
 }
 
 
@@ -937,9 +938,29 @@ h4 {
 }
 
 .btn-custom {
-  color: white;
+  color: var(--white);
   border: 1px solid var(--white);
   border-radius: 20px;
+  transition: background-color 0.5s, color 0.5s, border-style 0.5s;
+}
+
+.btn-custom:hover {
+  background-color: var(--dark-blue);
+  color: white;
+  border-style: var(--light-blue);
+}
+
+.btn-custom2 {
+  color: var(--white);
+  border: 2px solid var(--red);
+  border-radius: 20px;
+  transition: background-color 0.5s, color 0.5s, border-style 0.5s;
+}
+
+.btn-custom2:hover {
+  background-color: var(--ligther-red);
+  color: white;
+  border-style: var(--light-blue);
 }
 
 .input-custom {
@@ -948,12 +969,6 @@ h4 {
   border-radius: 20px;
 }
 
-/* Estilo para o hover do botão Pesquisar */
-.btn-custom:hover {
-  background-color: var(--dark-blue);
-  color: white;
-  border-style: var(--light-blue);
-}
 
 /* END CSS CUSTOM PADDING */
 
@@ -1012,6 +1027,79 @@ select.flat-select:hover {
 
 #html {
   display: none;
+}
+
+#containerCaroussel {
+  width: 50vw;
+  mask: linear-gradient(
+    90deg,
+    transparent,
+    white 40%,
+    white 60%,
+    transparent
+  );
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent,
+    white 40%,
+    white 60%,
+    transparent
+  );
+  margin: 0 auto;
+  margin-top: 30px;
+  font-size: large;
+}
+
+ul {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  color: var(--text-color);
+  padding: 10px 20px;
+  border-radius: 7px;
+  box-shadow: 2px 2px 2px var(--dark-blue-shadow),
+    2px 3px 3px var(--dark-blue-shadow),
+    2px 5px 5px var(--dark-blue-shadow),
+    2px 8px 8px var(--dark-blue-shadow);
+}
+
+#containerCaroussel[data-animated] {
+  overflow: hidden;
+}
+
+#containerCaroussel[data-animated] #list {
+  width: max-content;
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+     margin-left: 100%;
+  }
+  100% {
+     margin-left: -100%;
+  }
+}
+
+.customGradiente {
+  background: radial-gradient(circle, rgba(16,12,87,1) 0%, rgba(1,7,37,1) 30%);
+}
+
+.customGradiente2 {
+  background: linear-gradient(180deg, rgba(1,10,53,1) 5%, rgba(1,7,37,1) 80%);
+}
+
+.perfilIcon {
+  transition: width 0.3s, height 0.3s; /* Adiciona uma transição suave de 0.3 segundos */
+}
+
+.perfilIcon:hover {
+  width: 38px; /* Altere o tamanho conforme necessário */
+  height: 42px; /* Altere o tamanho conforme necessário */
 }
 
 /* END CSS GRAFICO */

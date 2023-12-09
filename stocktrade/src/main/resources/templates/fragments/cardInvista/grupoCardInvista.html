@@ -1,9 +1,16 @@
-<div th:fragment="grupoCardInvista" class="card-group justify-content-center mb-5">
+<div
+  th:fragment="grupoCardInvista"
+  class="card-group justify-content-center mb-5"
+>
+  <div
+    th:replace="~{fragments/cardInvista/cardInvista :: cardInvista('FIIs (Em breve)', 'Fundo de investimento imobiliário é uma comunhão de recursos destinados à aplicação em empreendimentos imobiliários.', ${ {'Alta Liquidez', 'Dividendos', 'Médio Risco', 'Longo Prazo'} }, 'Em breve', '/')}"
+  ></div>
 
-    <div th:replace="~{fragments/cardInvista/cardInvista :: cardInvista('FIIs', 'Fundo de investimento imobiliário é uma comunhão de recursos destinados à aplicação em empreendimentos imobiliários.', ${ {'Alta Liquidez', 'Dividendos', 'Médio Risco', 'Longo Prazo'} })}"></div>
+  <div
+    th:replace="~{fragments/cardInvista/cardInvista :: cardInvista('Ações', 'Parcelas que compõem o capital social de uma empresa, ou seja, são as unidades de títulos emitidas por sociedades anônimas.', ${ {'Alta Rentabilidade', 'Dividendos', 'Alto Risco', 'Curto/Médio Prazo'} }, 'Invista Agora!', '/login')}"
+  ></div>
 
-    <div th:replace="~{fragments/cardInvista/cardInvista :: cardInvista('Ações', 'Parcelas que compõem o capital social de uma empresa, ou seja, são as unidades de títulos emitidas por sociedades anônimas.', ${ {'Alta Rentabilidade', 'Dividendos', 'Alto Risco', 'Curto/Médio Prazo'} })}"></div>
-
-    <div th:replace="~{fragments/cardInvista/cardInvista :: cardInvista('ETFs', 'Um exchange-traded fund, ou fundo de índice, é um fundo de investimento negociado na Bolsa de Valores como se fosse uma ação.', ${ {'Alta Liquidez', 'Alto Risco', 'Baixa/Alta Rentabilidade', 'Curto/Longo Prazo'} })}"></div>
-    
+  <div
+    th:replace="~{fragments/cardInvista/cardInvista :: cardInvista('ETFs (Em breve)', 'Um exchange-traded fund, ou fundo de índice, é um fundo de investimento negociado na Bolsa de Valores como se fosse uma ação.', ${ {'Alta Liquidez', 'Alto Risco', 'Baixa/Alta Rentabilidade', 'Curto/Longo Prazo'} }, 'Em breve', '/')}"
+  ></div>
 </div>
