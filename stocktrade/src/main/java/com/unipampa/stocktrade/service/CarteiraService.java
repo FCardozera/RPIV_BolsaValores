@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
+import com.unipampa.stocktrade.controller.dto.oferta.ExcluirOfertaRequestDTO;
 import com.unipampa.stocktrade.model.entity.acao.Acao;
 import com.unipampa.stocktrade.model.entity.acao.CompraAcao;
 import com.unipampa.stocktrade.model.entity.acao.VendaAcao;
@@ -418,6 +419,63 @@ public class CarteiraService {
             return siglaPiorAtivo + " | R$" + lucroPiorAtivo + " (" + porcentagemLucroPiorAtivo + "%)";
         } else {
             return siglaPiorAtivo + " | R$" + lucroPiorAtivo + " (" + porcentagemLucroPiorAtivo + "%)";
+        }
+    }
+
+    public Object excluirOfertaCompra(HttpSession session, ExcluirOfertaRequestDTO dados) {
+
+        try {
+            Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
+
+            if (usuario == null) {
+                return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SEM_USUARIO, null, registroRepository));
+            }
+
+            Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
+
+            List<CompraOferta> ofertasCompra = compraOfertaRepository.findOfertasCompraBySiglaAndPrecoAndIdUser(dados.sigla(), dados.preco(), cliente.getId());
+
+            if (ofertasCompra.isEmpty()) {
+                return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.OFERTA_NAO_ENCONTRADA, null, registroRepository));
+            }
+
+            compraOfertaRepository.deleteAll(ofertasCompra);
+
+            return ResponseEntity.ok("Oferta excluída");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.ERRO_INTERNO, null, registroRepository));
+        }
+        
+    }
+
+    public Object excluirOfertaVenda(HttpSession session, ExcluirOfertaRequestDTO dados) {
+        try {
+            Usuario usuario = (Usuario) session.getAttribute(USUARIO_LOGADO);
+
+            if (usuario == null) {
+                return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.SEM_USUARIO, null, registroRepository));
+            }
+
+            Cliente cliente = clienteRepository.findByEmail(usuario.getEmail());
+
+            List<VendaOferta> ofertasVenda = vendaOfertaRepository.findOfertasVendaBySiglaAndPrecoAndIdUser(dados.sigla(), dados.preco(), cliente.getId());
+
+            if (ofertasVenda.isEmpty()) {
+                return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.OFERTA_NAO_ENCONTRADA, null, registroRepository));
+            }
+
+            for (VendaOferta vendaOferta : ofertasVenda) {
+                vendaOferta.setAcao(null);
+                vendaOferta.setCliente(null);
+
+                vendaOfertaRepository.save(vendaOferta);
+
+                vendaOfertaRepository.deleteById(vendaOferta.getId());
+            }
+
+            return ResponseEntity.ok("Oferta excluída");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ExceptionHandlerChain.handle(TipoException.ERRO_INTERNO, null, registroRepository));
         }
     }
  

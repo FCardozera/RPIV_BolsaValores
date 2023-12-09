@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.unipampa.stocktrade.controller.dto.acao.CompraAcoesDTO;
 import com.unipampa.stocktrade.controller.dto.acao.VendaAcoesDTO;
+import com.unipampa.stocktrade.controller.dto.oferta.ExcluirOfertaRequestDTO;
 import com.unipampa.stocktrade.service.CarteiraService;
 
 import jakarta.servlet.http.HttpSession;
@@ -57,6 +59,16 @@ public class CarteiraController {
     @PostMapping("/vender")
     public Object venderAcoes(HttpSession session, @RequestBody VendaAcoesDTO dados){
         return carteiraService.venderAcoes(session, dados);
+    }
+
+    @DeleteMapping("/excluir-oferta-compra")
+    public Object excluirOfertaCompra(HttpSession session, @RequestBody ExcluirOfertaRequestDTO dados){
+        return carteiraService.excluirOfertaCompra(session, dados);
+    }
+
+    @DeleteMapping("/excluir-oferta-venda")
+    public Object excluirOfertaVenda(HttpSession session, @RequestBody ExcluirOfertaRequestDTO dados){
+        return carteiraService.excluirOfertaVenda(session, dados);
     }
 
 }

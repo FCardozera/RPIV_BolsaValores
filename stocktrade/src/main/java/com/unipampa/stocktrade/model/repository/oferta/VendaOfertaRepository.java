@@ -32,4 +32,7 @@ public interface VendaOfertaRepository extends JpaRepository<VendaOferta, UUID> 
 
     @Query("SELECT a.empresa.nome, a.sigla, MIN(o.valorOferta), COUNT(a.sigla) FROM vendaOferta o JOIN o.acao a WHERE o.valorOferta <= :precoAcao GROUP BY a.empresa.nome, a.sigla")
     public List<String[]> findOfertasVendaByPreco(@Param("precoAcao") Double precoAcao);
+
+    @Query("SELECT o FROM vendaOferta o JOIN o.acao a WHERE a.sigla = :sigla AND o.valorOferta = :preco AND o.cliente.id = :idUser")
+    public List<VendaOferta> findOfertasVendaBySiglaAndPrecoAndIdUser(String sigla, Double preco, UUID idUser);
 }

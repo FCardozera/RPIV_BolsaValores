@@ -9,7 +9,9 @@ public enum TipoException {
     SALDO_INSUFICIENTE(4),
     SIGLA_INVALIDA(5),
     QTD_ACOES_INSUFICIENTE(6),
-    ACOES_AINDA_VINCULADAS(7);
+    ACOES_AINDA_VINCULADAS(7),
+    ERRO_INTERNO(8),
+    OFERTA_NAO_ENCONTRADA(9);
 
     private int codigo;
 

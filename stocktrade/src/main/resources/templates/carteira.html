@@ -480,6 +480,80 @@
     }
   </script>
 
+  <script>
+    function excluirOfertaCompra(input) {
+      
+      const siglaAcao = input.parentElement.parentElement.querySelector('td').innerText
+      const precoAcao = input.parentElement.parentElement.querySelector('td:nth-child(2)').innerText.replace("R$ ", "");
+    
+      const data = {
+        sigla: siglaAcao,
+        preco: precoAcao
+      }
+
+      console.log('enviado')
+
+      fetch("/carteira/excluir-oferta-compra", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.href = "/carteira";
+          } else {
+            console.log(response.data);
+            response.text().then(data => {
+              alert(data);
+            });
+          }
+        })
+        .catch((error) => {
+          alert("Ocorreu um erro ao excluir a oferta de compra!");
+          console.error(error);
+        });
+
+    }
+
+    function excluirOfertaVenda(input) {
+      
+      const siglaAcao = input.parentElement.parentElement.querySelector('td').innerText
+      const precoAcao = input.parentElement.parentElement.querySelector('td:nth-child(2)').innerText.replace("R$ ", "");
+    
+      const data = {
+        sigla: siglaAcao,
+        preco: precoAcao
+      }
+
+      console.log('enviado')
+
+      fetch("/carteira/excluir-oferta-venda", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.href = "/carteira";
+          } else {
+            console.log(response.data);
+            response.text().then(data => {
+              alert(data);
+            });
+          }
+        })
+        .catch((error) => {
+          alert("Ocorreu um erro ao excluir a oferta de venda!");
+          console.error(error);
+        });
+
+    }
+  </script>
+
 </body>
 
 </html>
