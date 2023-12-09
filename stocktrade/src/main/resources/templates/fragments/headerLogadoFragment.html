@@ -1,79 +1,88 @@
 <div class="container-fluid pt-3" th:fragment="header(currentPage)">
-  <header class="d-flex align-items-center justify-content-between py-3 mb-4 flex-nowrap mx-5">
+  <header
+    class="d-flex align-items-center justify-content-between py-3 mb-4 flex-nowrap mx-5"
+  >
     <!-- logo -->
     <a href="/indexLogado">
-      <img src="../images/logo-bg-off.png" alt="Logo" class="img-fluid logo small-logo2 me-5" />
+      <img
+        src="../images/logo-bg-off.png"
+        alt="Logo"
+        class="img-fluid logo small-logo2 me-5"
+      />
     </a>
 
     <ul class="nav col-12 col-md-auto mb-2 mb-md-0 me-auto">
+      <li
+        th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/indexLogado', 'Home', ${currentPage})}"
+      ></li>
 
-      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/indexLogado', 'Home', ${currentPage})}"></li>
+      <li
+        th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/carteira', 'Carteira', ${currentPage})}"
+      ></li>
 
-      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/carteira', 'Carteira', ${currentPage})}"></li>
+      <li
+        th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/invistaLogado', 'Invista', ${currentPage})}"
+      ></li>
 
-      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/invistaLogado', 'Invista', ${currentPage})}"></li>
+      <li
+        th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/contatoLogado', 'Contato', ${currentPage})}"
+      ></li>
 
-      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/contatoLogado', 'Contato', ${currentPage})}"></li>
-
-      <li th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/historico', 'Histórico', ${currentPage})}"></li>
-
+      <li
+        th:replace="~{fragments/header/navLinkHeader :: navLinkHeader('/historico', 'Histórico', ${currentPage})}"
+      ></li>
     </ul>
 
-
-    <!-- <nav class="navbar navbar-light bg-custom">
-      <div class="container-fluid">
-        <form class="d-flex">
-          <input class="form-control me-2 input-custom" type="search" placeholder="Busque no site..."
-            aria-label="Search">
-          <button class="btn btn-outline-success btn-custom" type="submit">Pesquisar</button>
-        </form>
-      </div>
-    </nav> -->
-
-
     <div class="col-md-3 text-end">
-      <button type="button" class="btn btn-outline-danger botao3 mb-2 mt-2" onclick=sair()>Sair</button>
-      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="17" fill="currentColor" class="bi bi-bell-fill"
-        viewBox="0 0 16 16">
-        <path
-          d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
-      </svg>
+      <button
+        type="button"
+        class="btn btn-custom2 mb-2 mt-2 me-3 fw-bold text-uppercase"
+        onclick="sair()"
+      >
+        Sair
+      </button>
 
       <a href="/infoPerfil" class="text-decoration-none">
-        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="40" fill="currentColor"
-          class="bi bi-person-circle text-decoration-none" viewBox="0 0 16 16">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="40"
+          height="50"
+          fill="white"
+          class="bi bi-person-circle text-decoration-none perfilIcon"
+          viewBox="0 0 16 16"
+        >
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-          <path fill-rule="evenodd"
-            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+          <path
+            fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+          />
         </svg>
       </a>
-
-
-      <svg width="19" height="19" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
-        <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#fff" />
-      </svg>
     </div>
 
     <script>
-
       function sair(event) {
-        fetch("/login", {
-          method: "put",
-          headers: {
-            "Content-Type": "application/json",
-          }
-        })
-          .then(response => {
-            if (response.ok) {
-              window.location.href = '/';
-            } else {
-              console.log(response)
-            }
+        var confirmacao = confirm("Tem certeza que deseja sair?");
+
+        if (confirmacao) {
+          fetch("/login", {
+            method: "put",
+            headers: {
+              "Content-Type": "application/json",
+            },
           })
-          .catch(error => {
-            alert("Ocorreu um erro ao realizar login!");
-            console.error(error);
-          });
+            .then((response) => {
+              if (response.ok) {
+                window.location.href = "/";
+              } else {
+                console.log(response);
+              }
+            })
+            .catch((error) => {
+              alert("Ocorreu um erro ao realizar login!");
+              console.error(error);
+            });
+        }
       }
     </script>
   </header>
