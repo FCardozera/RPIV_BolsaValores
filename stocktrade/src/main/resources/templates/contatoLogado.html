@@ -1,54 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head th:replace="~{fragments/headFragment :: head('StockTrade - Contato')}"></head>
-  <body id="contato-page" class="customGradiente2">
-    <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
 
-    <main>
-      <div th:replace="~{fragments/headerLogadoFragment :: header('Contato')}"></div>
+<head th:replace="~{fragments/headFragment :: head('StockTrade - Contato')}"></head>
 
-      <div class="container-fluid justify-content-center pe-5 ps-5 pdb5 mt-5 pt-3">
-        <div class="row justify-content-center mt-5">
+<body id="contato-page" class="customGradiente2">
+  <svg xmlns="images/logo-bg-off.png" style="display: none"></svg>
+
+  <main>
+    <div th:replace="~{fragments/headerFragment :: header('Contato')}"></div>
+
+    <div class="container-fluid container-img-background4 pb-5">
+      <div class="container-fluid justify-content-center pt-5 pe-5 ps-5 pb-5">
+        <div class="row justify-content-center ">
           <!-- Coluna dos campos do formulário -->
-          <div class="col-md-6">
-            <h1>Contate-nos!</h1>
-            <form>
+          <div class="card4">
+            <div class="col-md-12">
+              <h1 class="mb-5 text-color-blue pt-2">Contate-nos!</h1>
+              <form>
                 <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label for="nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control custom-input" id="nome" placeholder="Digite seu nome">
-                    </div>  
-                    <div class="col-md-6 mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control custom-input" id="email" placeholder="Digite seu email">
-                    </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="nome" class="form-label text-color-blue">Nome</label>
+                    <input type="text" class="form-control custom-input" id="nome" placeholder="Digite seu nome">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label text-color-blue">Email</label>
+                    <input type="email" class="form-control custom-input" id="email" placeholder="Digite seu email">
+                  </div>
                 </div>
                 <div class="form-row">
-                    <div class="mb-3">
-                        <label for="empresa" class="form-label">Empresa</label>
-                        <input type="text" class="form-control custom-input" id="empresa" placeholder="Digite o nome da empresa">
-                      </div>
-                      <div class="mb-3">
-                        <label for="assunto" class="form-label">Assunto</label>
-                        <input type="text" class="form-control custom-input" id="assunto" placeholder="Digite o assunto">
-                      </div>
+                  <div class="mb-3">
+                    <label for="empresa" class="form-label text-color-blue">Empresa</label>
+                    <input type="text" class="form-control custom-input" id="empresa"
+                      placeholder="Digite o nome da empresa">
+                  </div>
+                  <div class="mb-3">
+                    <label for="assunto" class="form-label text-color-blue">Assunto</label>
+                    <input type="text" class="form-control custom-input" id="assunto" placeholder="Digite o assunto">
+                  </div>
                 </div>
-              
-              <div class="mb-3 ps-1">
-                <label for="mensagem" class="form-label">Mensagem</label>
-                <textarea class="form-control custom-input" id="mensagem" rows="50" placeholder="Digite sua mensagem"></textarea>
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-outline-primary botao1 me-4">Enviar mensagem</button>
-              </div>
-            </form>
+
+                <div class="mb-3 ps-1">
+                  <label for="mensagem" class="form-label text-color-blue">Mensagem</label>
+                  <textarea class="form-control custom-input mb-5" id="mensagem" rows="50"
+                    placeholder="Digite sua mensagem"></textarea>
+                </div>
+                <div class="text-center pb-4">
+                  <button type="submit" class="btn btn-outline-primary botao1">Enviar mensagem</button>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>        
-    </main>
+        </div>
+      </div>
+    </div>
 
-    <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
 
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  </main>
 
-  </body>
+  <footer th:replace="~{fragments/footerFragment :: footer}"></footer>
+
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
 </html>
