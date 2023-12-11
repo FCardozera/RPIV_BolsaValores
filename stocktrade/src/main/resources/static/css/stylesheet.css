@@ -1102,12 +1102,12 @@ li {
 }
 
 .perfilIcon {
-  transition: width 0.3s, height 0.3s; /* Adiciona uma transição suave de 0.3 segundos */
+  transition: width 0.3s, height 0.3s;
 }
 
 .perfilIcon:hover {
-  width: 38px; /* Altere o tamanho conforme necessário */
-  height: 42px; /* Altere o tamanho conforme necessário */
+  width: 38px;
+  height: 42px;
 }
 
 /* END CSS GRAFICO */

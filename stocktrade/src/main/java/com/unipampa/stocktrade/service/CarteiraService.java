@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -345,7 +346,11 @@ public class CarteiraService {
             porcentagemLucroTotal = ((totalAtual * 100)/totalInvestido) - 100;
         }
 
+        String lucroTotalString = String.format(Locale.US, "%.2f", lucroTotal);
+        lucroTotal = Double.parseDouble(lucroTotalString);
+        
         String porcentagemFormatada = String.format("%.2f", porcentagemLucroTotal);
+
         if (lucroTotal > 0) {
             return "R$+" + lucroTotal + " (" + porcentagemFormatada + "%)";
         } else if (lucroTotal < 0) {
@@ -384,6 +389,9 @@ public class CarteiraService {
                 porcentagemLucroMelhorAtivo = acao[4];
             }
         }
+
+        String lucroMelhorAtivoString = String.format(Locale.US, "%.2f", lucroMelhorAtivo);
+        lucroMelhorAtivo = Double.parseDouble(lucroMelhorAtivoString);
         
         if (lucroMelhorAtivo > 0) {
             return siglaMelhorAtivo + " | R$+" + lucroMelhorAtivo + " (" + porcentagemLucroMelhorAtivo + "%)";
@@ -423,7 +431,10 @@ public class CarteiraService {
                 porcentagemLucroPiorAtivo = acao[4];
             }
         }
-        
+
+        String lucroPiorAtivoString = String.format(Locale.US, "%.2f", lucroPiorAtivo);
+        lucroPiorAtivo = Double.parseDouble(lucroPiorAtivoString);
+                
         if (lucroPiorAtivo > 0) {
             return siglaPiorAtivo + " | R$+" + lucroPiorAtivo + " (" + porcentagemLucroPiorAtivo + "%)";
         } else if (lucroPiorAtivo < 0) {
