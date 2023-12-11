@@ -20,10 +20,7 @@
           <h5>Todas as movimentações</h5>
         </div>
       </div>
-
-      <div
-        th:replace="~{fragments/tabela/tabelaMovimentacoes :: tabelaMovimentacoes}"
-      ></div>
+      <div th:replace ="~{fragments/tabela/secao/secaoGeralHistorico :: secaoGeralHistorico}"></div>
     </main>
 
     <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
@@ -40,5 +37,31 @@
       src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.js"
     ></script>
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      function sumirContainerNegociacoesEAparecerContainerMovimentacoes(event) {
+        const containerNegociacoes =
+          document.getElementsByClassName("container-negociacoes");
+        const containerMovimentacoes =
+          document.getElementsByClassName("container-movimentacoes");
+  
+        for (i = 0; i < containerNegociacoes.length; i++) {
+          containerNegociacoes.item(i).style.display = "none";
+          containerMovimentacoes.item(i).style.display = "flex";
+        }
+      }
+  
+      function sumirContainerMovimentacoesEAparecerContainerNegociacoes(event) {
+        const containerNegociacoes =
+          document.getElementsByClassName("container-negociacoes");
+        const containerMovimentacoes =
+          document.getElementsByClassName("container-movimentacoes");
+  
+        for (i = 0; i < containerNegociacoes.length; i++) {
+          containerNegociacoes.item(i).style.display = "flex";
+          containerMovimentacoes.item(i).style.display = "none";
+        }
+      }
+    </script>
   </body>
 </html>

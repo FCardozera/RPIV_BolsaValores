@@ -642,6 +642,51 @@ h4 {
     "button-comprar button-comprar";
 }
 
+/* CSS ACORDEAO TABLE COMPRAR */
+.container-botoes-movimentacao-negociacao{
+  display:flex
+}
+
+.container-movimentacoes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container-negociacoes {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label-historico {
+  border: 0px solid #000;
+  background-color: var(--darker-blue);
+  padding-bottom: 7px;
+  color: white;
+  width: 100%;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.label-ativo {
+  color: #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+
+.label-inativo {
+  color: rgba(255, 255, 255, 0.3);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.label-inativo:hover {
+  color: var(--white);
+  border-bottom: 2px solid var(--white);
+}
+
 .quantidade-disponivel {
   grid-area: quantidade-disponivel;
   text-wrap: nowrap;
