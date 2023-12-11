@@ -1,0 +1,20 @@
+<div class="container-movimentacoes" th:fragment="secaoHistoricoMovimentacoes">
+  <div class="container-botoes-movimentacao-negociacao">
+    <div class="text-uppercase fw-bold">
+      <button class="label-historico label-ativo text-uppercase fw-bold">
+        Movimentações
+      </button>
+    </div>
+  
+    <div class="text-uppercase fw-bold">
+      <button
+        class="label-historico label-inativo text-uppercase fw-bold"
+        onclick="sumirContainerMovimentacoesEAparecerContainerNegociacoes(this)"
+      >
+        Negociações
+      </button>
+    </div>
+  </div>
+  
+  <div id="tabelaMovimentacoes" th:replace="~{fragments/tabela/tabelaMovimentacoes :: tabelaMovimentacoes}"></div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container row justify-content-center" th:fragment="tabelaNegociacoes">
+    <link href="../../../static/css/stylesheet.css" rel="stylesheet" />
+
+    <table class="table table-custom accordion">
+        <thead>
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Empresa</th>
+                <th scope="col">Sigla</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Preço Médio</th>
+                <th scope="col">Valor Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterar sobre a lista de movimentações já ordenada -->
+            <tr th:each="negociacao : ${negociacoes}">
+                <td th:text="${#dates.format(negociacao[0], 'dd/MM/yyyy - HH:mm')}"></td>
+                <td th:text="${negociacao[1]}"></td>
+                <td th:text="${negociacao[2]}"></td>
+                <td th:text="${negociacao[3]}"></td>
+                <td th:text="${negociacao[4]}"></td>
+                <td th:text="'R$ ' + ${negociacao[5]}"></td>
+                <td th:text="'R$ ' + ${negociacao[6]}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
