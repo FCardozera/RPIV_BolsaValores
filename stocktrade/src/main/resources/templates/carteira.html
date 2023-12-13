@@ -89,7 +89,13 @@
         </div>
       </div>
 
-      <div th:replace="~{fragments/tabela/tabelaAcoesUser :: tabelaAcoesUser}"></div>
+      <div th:if="${acoesUsuario != null and not #lists.isEmpty(acoesUsuario)}">
+        <div th:replace="~{fragments/tabela/tabelaAcoesUser :: tabelaAcoesUser}"></div>
+      </div>
+
+      <div th:if="${acoesUsuario == null or #lists.isEmpty(acoesUsuario)}">
+        <h5 class="text-center">Você não possui ações</h5>
+      </div>
 
     </div>
 
@@ -103,7 +109,13 @@
         </div>
       </div>
 
-      <div th:replace="~{fragments/tabela/tabelaOfertasCompraUser :: tabelaOfertasCompraUser}"></div>
+      <div th:if="${ofertasCompra != null and not #lists.isEmpty(ofertasCompra)}">
+        <div th:replace="~{fragments/tabela/tabelaOfertasCompraUser :: tabelaOfertasCompraUser}"></div>
+      </div>
+
+      <div th:if="${ofertasCompra == null or #lists.isEmpty(ofertasCompra)}">
+        <h5 class="text-center">Você não possui ofertas de compra</h5>
+      </div>
     </div>
 
     <div class="container-fluid mt-2 mb-2">
@@ -116,7 +128,14 @@
         </div>
       </div>
 
-      <div th:replace="~{fragments/tabela/tabelaOfertasVendaUser :: tabelaOfertasVendaUser}"></div>
+      <div th:if="${ofertasVenda != null and not #lists.isEmpty(ofertasVenda)}">
+        <div th:replace="~{fragments/tabela/tabelaOfertasVendaUser :: tabelaOfertasVendaUser}"></div>
+      </div>
+
+      <div th:if="${ofertasVenda == null or #lists.isEmpty(ofertasVenda)}">
+        <h5 class="text-center">Você não possui ofertas de venda</h5>
+      </div>
+
     </div>
 
   </main>

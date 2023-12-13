@@ -20,7 +20,10 @@
           <h5>Todas as movimentações</h5>
         </div>
       </div>
-      <div th:replace ="~{fragments/tabela/secao/secaoGeralHistorico :: secaoGeralHistorico}"></div>
+
+      <div
+        th:replace="~{fragments/tabela/secao/secaoGeralHistorico :: secaoGeralHistorico}"
+      ></div>
     </main>
 
     <footer th:replace="~{fragments/footerLogadoFragment :: footer}"></footer>
@@ -40,23 +43,27 @@
 
     <script>
       function sumirContainerNegociacoesEAparecerContainerMovimentacoes(event) {
-        const containerNegociacoes =
-          document.getElementsByClassName("container-negociacoes");
-        const containerMovimentacoes =
-          document.getElementsByClassName("container-movimentacoes");
-  
+        const containerNegociacoes = document.getElementsByClassName(
+          "container-negociacoes"
+        );
+        const containerMovimentacoes = document.getElementsByClassName(
+          "container-movimentacoes"
+        );
+
         for (i = 0; i < containerNegociacoes.length; i++) {
           containerNegociacoes.item(i).style.display = "none";
           containerMovimentacoes.item(i).style.display = "flex";
         }
       }
-  
+
       function sumirContainerMovimentacoesEAparecerContainerNegociacoes(event) {
-        const containerNegociacoes =
-          document.getElementsByClassName("container-negociacoes");
-        const containerMovimentacoes =
-          document.getElementsByClassName("container-movimentacoes");
-  
+        const containerNegociacoes = document.getElementsByClassName(
+          "container-negociacoes"
+        );
+        const containerMovimentacoes = document.getElementsByClassName(
+          "container-movimentacoes"
+        );
+
         for (i = 0; i < containerNegociacoes.length; i++) {
           containerNegociacoes.item(i).style.display = "flex";
           containerMovimentacoes.item(i).style.display = "none";

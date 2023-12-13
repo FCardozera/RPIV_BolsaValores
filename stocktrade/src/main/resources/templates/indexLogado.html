@@ -13,23 +13,31 @@
       <div class="container-fluid mt-2 mb-2">
         <div class="row ms-5 mt-5">
           <div class="col-md-6 custom-padding-left">
-            <h1 class="h5 fw-bold">Preços diários por valor de mercado</h1>
-          <!-- Data/Hora -->
-          <p class="fs-8 mb-3 max-width-800px cinza" id="data-hora">
-          </p>
+            <div
+              th:if="${acoesUsuario != null and not #lists.isEmpty(acoesUsuario)}"
+            >
+              <h1 class="h5 fw-bold">Variações das suas ações</h1>
+
+              <!-- Data/Hora -->
+              <p class="fs-8 mb-3 max-width-800px cinza" id="data-hora"></p>
+            </div>
           </div>
+
+          <div th:if="${acoesUsuario == null or #lists.isEmpty(acoesUsuario)}">
+            <h4 class="h4 custom-padding-left">Negocie na StockTrade!</h4>
+          </div>
+
         </div>
       </div>
 
       <div class="container mb-10">
         <div id="containerCaroussel" data-animated>
-          <ul id="list" >
+          <ul id="list">
             <div th:each="acao, acaoStat : ${acoesUsuario} ">
-              <li th:text="${acao[6]} + ' | ' + ${acao[0]} + ' | ' + ${acao[4]} + '%'"></li>
-
+              <li
+                th:text="${acao[6]} + ' | ' + ${acao[0]} + ' | ' + ${acao[4]} + '%'"
+              ></li>
             </div>
-
-
           </ul>
         </div>
 

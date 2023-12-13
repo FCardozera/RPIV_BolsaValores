@@ -17,6 +17,14 @@ body {
   background-color: var(--dark-blue);
   bottom: 0;
   width: 100%;
+  color: var(--white);
+
+}
+
+.footer > div > ul > li > a:hover {
+  background-color: var(--darker-blue);
+  transition: background-color 0.3s ease;
+  color : var(--gray) !important;
 }
 
 :root {
@@ -177,6 +185,11 @@ body {
   width: 600px !important;
   height: 200px;
   margin: 0;
+  transition: 0.3s ease-in-out;
+}
+
+.custom-card:hover {
+  transform: scale(0.99);
 }
 
 .custom-card2 {
@@ -184,8 +197,21 @@ body {
   color: var(--white);
   border: none;
   border-radius: 65px;
-  width: 80px !important;
-  height: 60px !important;
+  width: 200px !important;
+  height: 80px !important;
+  transition: transform 0.3s ease-in-out;
+  gap: 50px;
+  justify-content: center !important;
+  align-items: center !important; /* Centraliza verticalmente */
+  text-align: center !important; /* Centraliza horizontalmente o texto */
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 6px;
+}
+
+
+.custom-card2:hover {
+  transform: scale(0.95);
 }
 
 .custom-card3 {
@@ -200,14 +226,16 @@ body {
   padding-left: 15px;
   padding-right: 15px;
   margin-left: 48px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.custom-card3:hover {
+  transform: scale(1.03);
 }
 
 .custom-card3:first-child {
   margin-left: 0px;
 }
-
-
-
 
 .custom-card3 a {
   margin-top: 30px;
@@ -247,6 +275,11 @@ body {
   height: 480px !important;
   border-radius: 10px;
   margin-left: 30px;
+  transition: 0.3s ease-in-out;
+}
+
+.custom-card7:hover {
+  transform: scale(0.99);
 }
 
 .custom-card7:first-child {
@@ -268,8 +301,12 @@ body {
   margin: 0;
   padding-top: 20px;
   margin-top: 60px;
+  transition: 0.3s ease-in-out;
 }
 
+.custom-card8:hover {
+  transform: scale(0.99);
+}
 
 .texto-card7 {
   padding-left: 15px;
@@ -483,7 +520,6 @@ body {
 
 .custom-sublinhado {
   position: relative;
-  transition: color 2s ease;
 }
 
 .custom-sublinhado::after {
@@ -494,7 +530,21 @@ body {
   bottom: -2px;
   left: 0;
   background-color: var(--ligther-blue);
+  animation: pulsate 2s infinite; /* Adiciona a animação de pulsação */
 }
+
+@keyframes pulsate {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 
 h1 {
   font-size: 80px;
@@ -575,9 +625,7 @@ h4 {
 /* CSS TABLE CARTEIRA */
 .table-custom {
   padding: 40px;
-  /* Espaçamento interno das células (ajuste conforme necessário) */
   text-align: center;
-  /* Alinhamento de texto centralizado */
   color: white;
   width: 1200px;
   font-size: 17px;
@@ -585,21 +633,17 @@ h4 {
 
 .table-custom-invista {
   text-align: center;
-  /* Alinhamento de texto centralizado */
   color: white;
   font-size: 17px;
 }
 
 #saldo {
   opacity: 1;
-  /* Defina a opacidade inicial para 1 (visível) */
   transition: opacity 0.2s ease-in-out;
-  /* Adicione uma transição suave para a propriedade de opacidade */
 }
 
 #toggleEye {
   cursor: pointer;
-  /* Adicione um cursor de apontador ao ícone do olho */
 }
 
 .custom-margin-left {
@@ -1011,9 +1055,9 @@ h4 {
 }
 
 .btn-custom2:hover {
+  border: 2px solid var(--white);
   background-color: var(--ligther-red);
   color: white;
-  border-style: var(--light-blue);
 }
 
 .input-custom {
@@ -1147,12 +1191,13 @@ li {
 }
 
 .perfilIcon {
-  transition: width 0.3s, height 0.3s;
+  transition: width 0.5s, height 0.5s fill 0.6s;
 }
 
 .perfilIcon:hover {
   width: 38px;
   height: 42px;
+  fill: #081a7d;
 }
 
 /* END CSS GRAFICO */

@@ -32,7 +32,7 @@ public class HistoricoController {
         List<Object[]> negociacoesList = historicoService.getNegociacoes(session);
         movimentacoesList.addAll(movimentacoes);
         Collections.sort(movimentacoesList, Comparator.comparing(Movimentacao::getData).reversed());
-        ModelAndView mv = new ModelAndView("/historico");
+        ModelAndView mv = new ModelAndView("historico");
         mv.addObject("movimentacoes", movimentacoesList);
         mv.addObject("negociacoes", negociacoesList);
 
