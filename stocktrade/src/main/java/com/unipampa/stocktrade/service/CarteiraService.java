@@ -70,6 +70,8 @@ public class CarteiraService {
     public HttpSession updateSession(HttpSession session) {
         Usuario usuarioLogado = (Usuario) session.getAttribute(USUARIO_LOGADO);
         Usuario usuario = clienteRepository.findByEmail(usuarioLogado.getEmail());
+        Cliente cliente = (Cliente) usuario;
+        cliente.fixarSaldoAtual();
         session.setAttribute(USUARIO_LOGADO, usuario);
         return session;
     }

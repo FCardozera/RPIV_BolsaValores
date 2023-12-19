@@ -1,5 +1,6 @@
 package com.unipampa.stocktrade.model.entity.usuario;
 
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
@@ -360,6 +361,11 @@ public class Cliente extends Usuario {
         Movimentacao movimentacao = new Movimentacao(null, quantidade * valorDividendo, Instant.now(), TipoMovimentacao.DIVIDENDO, this);
         aumentarSaldo(quantidade * valorDividendo);
         return movimentacao;
+    }
+
+    public void fixarSaldoAtual() {
+        DecimalFormat df = new DecimalFormat("#.##");
+        saldo = Double.parseDouble(df.format(saldo).replace(",", "."));
     }
 
 }
