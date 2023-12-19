@@ -26,7 +26,9 @@ public class AuthenticationAspect {
 
     @Pointcut("execution(* com.unipampa.stocktrade.controller.LoginController.loginPagina(..)) ||" +
               "execution(* com.unipampa.stocktrade.controller.IndexController.index(..)) ||" +
-              "execution(* com.unipampa.stocktrade.controller.CadastroController.cadastroPagina(..))")
+              "execution(* com.unipampa.stocktrade.controller.CadastroController.cadastroPagina(..)) ||" +
+              "execution(* com.unipampa.stocktrade.controller.ContatoController.contatoPagina(..))" 
+              )
     public void notLoggedPointcut() {
     }
 
@@ -34,7 +36,8 @@ public class AuthenticationAspect {
     "execution(* com.unipampa.stocktrade.controller.CarteiraController.carteiraPagina(..)) ||" +
     "execution(* com.unipampa.stocktrade.controller.PerfilController.perfilPagina(..)) ||" + 
     "execution(* com.unipampa.stocktrade.controller.InvistaLogadoController.invistaLogado(..)) ||" +
-    "execution(* com.unipampa.stocktrade.controller.HistoricoController.historicoPagina(..))"
+    "execution(* com.unipampa.stocktrade.controller.HistoricoController.historicoPagina(..)) ||" +
+    "execution(* com.unipampa.stocktrade.controller.ContatoLogadoController.contatoPagina(..))"
     )
     public void loggedPointcut() {
     }
