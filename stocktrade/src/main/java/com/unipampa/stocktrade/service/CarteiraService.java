@@ -123,10 +123,12 @@ public class CarteiraService {
         for (String[] acaoQueryBanco : acoesString) {
             String[] acaoFinal = new String[7];
 
+            Integer quantidadeAcoes = acaoRepository.findQntAcoesBySiglaClienteId(acaoQueryBanco[1], cliente.getId());
+
             acaoFinal[0] = acaoQueryBanco[1];
             String[] valorAtualEQuantidadeDisponivel = vendaOfertaRepository.findMenorPrecoOfertaVendaEQuantidadeDisponivelBySigla(acaoQueryBanco[1]).split(",");
             acaoFinal[1] = valorAtualEQuantidadeDisponivel[0];
-            acaoFinal[2] = acaoQueryBanco[2];
+            acaoFinal[2] = String.valueOf(quantidadeAcoes);
             acaoFinal[3] = acaoQueryBanco[3];
 
             Double valorAtualDouble = Double.parseDouble(valorAtualEQuantidadeDisponivel[0]);
