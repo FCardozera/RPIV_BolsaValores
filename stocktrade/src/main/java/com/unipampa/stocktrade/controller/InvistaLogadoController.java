@@ -30,8 +30,9 @@ public class InvistaLogadoController {
     public ModelAndView invistaLogado(HttpSession session, @RequestParam(required = false) String busca, @RequestParam(required = false) String preco) {
         ModelAndView mv = new ModelAndView("invistaLogado");
         service.updateSession(session);
-        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         Cliente cliente = (Cliente) usuario;
+        
 
         if (busca != null && busca != "") {
             List<String[]> listaAcoes = service.buscarAcoesBySigla(busca, cliente);
