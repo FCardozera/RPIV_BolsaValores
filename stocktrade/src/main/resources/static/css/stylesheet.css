@@ -160,7 +160,7 @@ body {
   border: none;
   border-radius: 20px;
   width: 100%;
-  height: 50px;
+  height: 45px;
 }
 
 .custom-input::placeholder {
@@ -168,6 +168,26 @@ body {
 }
 
 .custom-input:focus {
+  background-color: rgb(95, 95, 95);
+  border-color: var(--gray);
+  box-shadow: none;
+  color: var(--white) !important;
+}
+
+.custom-input2 {
+  background-color: var(--dark-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+  height: 45px;
+}
+
+.custom-input2::placeholder {
+  color: var(--gray);
+}
+
+.custom-input2:focus {
   background-color: rgb(95, 95, 95);
   border-color: var(--gray);
   box-shadow: none;
@@ -202,8 +222,8 @@ body {
   transition: transform 0.3s ease-in-out;
   gap: 50px;
   justify-content: center !important;
-  align-items: center !important; /* Centraliza verticalmente */
-  text-align: center !important; /* Centraliza horizontalmente o texto */
+  align-items: center !important;
+  text-align: center !important;
   margin-top: 0px;
   margin-bottom: 0px;
   padding-top: 6px;
@@ -226,6 +246,7 @@ body {
   padding-left: 15px;
   padding-right: 15px;
   margin-left: 48px;
+  margin-bottom: 50px;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -323,11 +344,9 @@ body {
 
 .card2 {
   max-width: 600px;
-  /* overflow-y: auto; */
   border-radius: 20px;
   margin-top: 10%;
   margin-bottom: 10%;
-  /* padding-left: 20%; */
 }
 
 .card3 {
@@ -530,7 +549,7 @@ body {
   bottom: -2px;
   left: 0;
   background-color: var(--ligther-blue);
-  animation: pulsate 2s infinite; /* Adiciona a animação de pulsação */
+  animation: pulsate 2s infinite;
 }
 
 @keyframes pulsate {

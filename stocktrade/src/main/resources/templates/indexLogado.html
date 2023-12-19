@@ -16,6 +16,7 @@
             <div
               th:if="${acoesUsuario != null and not #lists.isEmpty(acoesUsuario)}"
             >
+              <h1 class="h4 fw-bold" th:text="'Olá, ' + ${session.usuarioLogado.nome}"></h1>
               <h1 class="h5 fw-bold">Variações das suas ações</h1>
 
               <!-- Data/Hora -->
@@ -24,6 +25,7 @@
           </div>
 
           <div th:if="${acoesUsuario == null or #lists.isEmpty(acoesUsuario)}">
+            <h1 class="h4 fw-bold custom-padding-left" th:text="'Olá, ' + ${session.usuarioLogado.nome}"></h1>
             <h4 class="h4 custom-padding-left">Negocie na StockTrade!</h4>
           </div>
 

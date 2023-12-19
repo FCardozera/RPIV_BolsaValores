@@ -9,25 +9,30 @@
     <main>
         <div th:replace="~{fragments/headerAdmFragment :: header('indexAdm')}"></div>
 
-        <div class="container-fluid justify-content-center pe-5 ps-5">
+        <div class="container justify-content-center align-items-center pe-5 ps-5">
             <div class="row justify-content-center">
                 <div class="col-md-10 justify-content-center align-items-center text-center mx-auto">
                     <h4>Gestão de Dividendos</h4>
                     <div class="col-md-6 mb-3 mx-auto mt-5">
-                        <label for="sigla" class="form-label fs-4">Sigla</label>
+                        <h4 class="h5 text-start">
+                            Sigla
+                        </h4>
                         <input
-                            class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0"
-                            id="sigla"></input>
+                            class="form-control custom-input2 align-items-center justify-content-center text-center mt-0"
+                            id="sigla" placeholder="Digite a sigla da ação">
+                        </input>
                     </div>
                     <div class="col-md-6 mb-3 mx-auto mt-4">
-                        <label for="precoAcao" class="form-label fs-4">Preço por ação</label>
+                        <h4 class="h5 text-start">
+                            Preço por ação
+                        </h4>
                         <input
-                            class="form-control custom-input d-flex align-items-center justify-content-center text-center mt-0"
+                            class="form-control custom-input2 d-flex align-items-center justify-content-center text-center mt-0"
                             onblur="verificarCasasDecimais(this)"
-                            id="precoAcao"></input>
+                            id="precoAcao" placeholder="Digite o preço por ação"></input>
                     </div>
                     <p class="text-danger mt-2" id="error-dividendo"></p>
-                    <div class="custom-padding-top custom-padding-bottom mx-auto">
+                    <div class="custom-padding-bottom mx-auto">
                         <button type="submit" onclick="verificarCamposDividendo(this)"
                             class="btn btn-outline-primary botao1"
                             id="enviarDividendo">Enviar</button>
