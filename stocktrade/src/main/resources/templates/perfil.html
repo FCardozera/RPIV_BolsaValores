@@ -61,7 +61,7 @@
                     placeholder="Digite sua senha para excluir a conta" oninput="limitSenha(this)" />
                   <div class="text-center">
                     <button type="button" class="btn btn-outline-danger botao2 mb-2 mt-2"
-                      onclick="enviarLogin(event)">Excluir Conta</button>
+                      onclick="confirmarExclusaoConta()">Excluir Conta</button>
                   </div>
               </form>
             </div>
@@ -226,6 +226,52 @@
       });
 
       return true;
+    }
+  </script>
+
+  <script>
+    function confirmarExclusaoConta() {
+      if (confirm("Tem certeza que deseja excluir sua conta? Esta ação é irreversível!")) {
+        enviarExclusaoConta();
+      }
+    }
+
+    function enviarExclusaoConta() {
+      let password = document.getElementById("passwordExcluir").value;
+
+      if (password == "") {
+        alert("Preencha todos os campos!");
+        return false;
+      }
+
+      if (password.length < 8) {
+        alert("A senha deve ter no mínimo 8 caracteres!");
+        return false;
+      }
+
+      fetch("/perfil", {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          senha: password
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Conta excluída com sucesso!");
+          window.location.href = '/indexLogado';
+        } else {
+          response.text().then(data => {
+            alert("Erro ao excluir conta: " + data);
+          });
+        }
+      })
+      .catch(error => {
+        alert("Ocorreu um erro ao excluir a conta!");
+        console.error(error);
+      });
     }
   </script>
 </body>

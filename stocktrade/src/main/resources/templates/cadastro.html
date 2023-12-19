@@ -204,6 +204,7 @@
         })
           .then((response) => {
             if (response.ok) {
+              alert(name + " cadastro realizado com sucesso!" + "\n" + "Com o email: " + email);
               window.location.href = "/";
             } else {
               response.text().then(data => {
