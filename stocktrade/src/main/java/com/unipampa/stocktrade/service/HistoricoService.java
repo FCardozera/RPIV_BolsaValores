@@ -1,5 +1,6 @@
 package com.unipampa.stocktrade.service;
 
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,8 +57,8 @@ public class HistoricoService {
             negociacao[2] = compraAcao[2]; // ACAO
             negociacao[3] = "Compra"; // TIPO
             negociacao[4] = compraAcao[3]; // QTD DE AÇÕES
-            negociacao[5] = compraAcao[4]; // PREÇO MEDIO
-            negociacao[6] = compraAcao[5]; // VALOR TOTAL
+            negociacao[5] = fixarCasaDecimal((Double) compraAcao[4]); // PREÇO MEDIO
+            negociacao[6] = fixarCasaDecimal((Double) compraAcao[5]); // VALOR TOTAL
             negociacoes.add(negociacao);
         }
 
@@ -68,8 +69,8 @@ public class HistoricoService {
             negociacao[2] = vendaAcao[2]; // ACAO
             negociacao[3] = "Venda"; // TIPO
             negociacao[4] = vendaAcao[3]; // QTD DE AÇÕES
-            negociacao[5] = vendaAcao[4]; // PREÇO MEDIO
-            negociacao[6] = vendaAcao[5]; // VALOR TOTAL
+            negociacao[5] = fixarCasaDecimal((Double) vendaAcao[4]); // PREÇO MEDIO
+            negociacao[6] = fixarCasaDecimal((Double) vendaAcao[5]); // VALOR TOTAL
             negociacoes.add(negociacao);
         }
         return ordenaListaPorData(negociacoes);
@@ -85,5 +86,11 @@ public class HistoricoService {
             }
         });
         return lista;
+    }
+
+    private Double fixarCasaDecimal(double doubleValue) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        doubleValue = Double.parseDouble(df.format(doubleValue).replace(",", "."));
+        return doubleValue;
     }
 }

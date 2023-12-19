@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.unipampa.stocktrade.service.HistoricoService;
 import com.unipampa.stocktrade.model.entity.movimentacao.Movimentacao;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
