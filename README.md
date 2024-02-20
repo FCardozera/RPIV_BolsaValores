@@ -44,6 +44,11 @@ Projeto do Grupo 3 da disciplina de Resolução de Problemas IV - UNIPAMPA/RS
 - [@Ricardo Costa](https://www.github.com/ricardolhc)
 - [@Tales Soares](https://www.github.com/talessoares)
 
+## Mentores
+
+- Professor Gilleanes Thorwald Araujo Guedes.
+- Professor Silvio Ereno Quincozes.
+
 ## Referência
 
  - [Engenharia de Software Moderna - Marco Túlio Valente](https://awesomeopensource.com/project/elangosundar/awesome-README-templates](https://engsoftmoderna.info/cap1.html)https://engsoftmoderna.info/cap1.html)
